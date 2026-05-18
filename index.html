@@ -1,19 +1,196 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Finance Control</title>
-  <style>
-    body {
-      background-color: #0B0B10;
-      color: white;
-      font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .wrap { padding: 20px; }
-    h1 { font-size: 32px; font-weight: bold; }
-    .card { background-color: #12121A; border-radius: 16px; padding: 16px; margin: 12px 0; border: 1px solid #1F1F2B; }
-    .label { color: #D6A7FF; font-weight: bold; margin-bottom: 8px; font-size: 14px; }
-    input { width:
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Control</title>
+
+<style>
+body{
+background:#0B0B10;
+color:white;
+font-family:Arial;
+padding:20px;
+margin:0;
+}
+
+.card{
+background:#17171f;
+padding:20px;
+border-radius:20px;
+margin-bottom:15px;
+}
+
+input{
+width:100%;
+padding:12px;
+border:none;
+border-radius:12px;
+margin-top:10px;
+background:#222230;
+color:white;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:15px;
+background:#8A05BE;
+color:white;
+font-size:18px;
+margin-top:10px;
+}
+
+.gasto{
+background:#1d1d28;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+display:flex;
+justify-content:space-between;
+}
+
+h1{
+font-size:35px;
+}
+
+.roxo{
+color:#bb86fc;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Finance <span class="roxo">Control</span></h1>
+
+<div class="card">
+<h3>Salário</h3>
+
+<input id="salario" type="number" value="1600">
+
+<h3>Total gasto</h3>
+<h2 id="total">R$ 0</h2>
+
+<h3>Restante</h3>
+<h2 id="restante">R$ 0</h2>
+</div>
+
+<div class="card">
+
+<h3>Adicionar gasto</h3>
+
+<input id="nome" placeholder="Nome do gasto">
+
+<input id="valor" type="number" placeholder="Valor">
+
+<button onclick="addGasto()">Adicionar</button>
+
+</div>
+
+<div id="lista"></div>
+
+<script>
+
+let gastos = [];
+
+function atualizar(){
+
+let salario = Number(document.getElementById('salario').value);
+
+let total = 0;
+
+gastos.forEach(g=>{
+total += g.valor;
+});
+
+document.getElementById('total').innerHTML =
+'R$ ' + total.toFixed(2);
+
+document.getElementById('restante').innerHTML =
+'R$ ' + (salario-total).toFixed(2);
+
+let lista = document.getElementById('lista');
+
+lista.innerHTML = '';
+
+gastos.forEach((g,index)=>{
+
+lista.innerHTML += `
+<div class="gasto">
+<div>
+<b>${g.nome}</b><br>
+R$ ${g.valor.toFixed(2)}
+</div>
+
+<button onclick="remover(${index})"
+style="
+width:auto;
+padding:10px;
+background:red;
+">
+X
+</button>
+</div>
+`;
+
+});
+
+localStorage.setItem(
+'gastos',
+JSON.stringify(gastos)
+);
+
+}
+
+function addGasto(){
+
+let nome =
+document.getElementById('nome').value;
+
+let valor =
+Number(document.getElementById('valor').value);
+
+if(nome=='' || valor<=0){
+return;
+}
+
+gastos.push({
+nome,
+valor
+});
+
+document.getElementById('nome').value = '';
+document.getElementById('valor').value = '';
+
+atualizar();
+
+}
+
+function remover(i){
+
+gastos.splice(i,1);
+
+atualizar();
+
+}
+
+let salvo =
+localStorage.getItem('gastos');
+
+if(salvo){
+gastos = JSON.parse(salvo);
+}
+
+document.getElementById('salario')
+.addEventListener('input', atualizar);
+
+atualizar();
+
+</script>
+
+</body>
+</html>
