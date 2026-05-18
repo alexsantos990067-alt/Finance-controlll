@@ -8,53 +8,153 @@
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
 background:#0B0B10;
 font-family:Arial;
 color:white;
+padding-bottom:100px;
+}
+
+.topo{
+padding:25px 20px;
+}
+
+.logo{
+font-size:34px;
+font-weight:bold;
+}
+
+.logo span{
+color:#BB86FC;
+}
+
+.tela{
+display:none;
 padding:20px;
+}
+
+.ativa{
+display:block;
 }
 
 .card{
 background:#17171F;
-padding:20px;
-border-radius:20px;
-margin-top:20px;
+padding:22px;
+border-radius:28px;
+margin-bottom:20px;
+}
+
+.label{
+color:#A0A0B8;
+margin-bottom:8px;
+}
+
+.valor{
+font-size:38px;
+font-weight:bold;
+}
+
+.roxo{
+color:#BB86FC;
+}
+
+.verde{
+color:#00E676;
 }
 
 input{
 width:100%;
-padding:15px;
+padding:16px;
 border:none;
-border-radius:15px;
+border-radius:18px;
 background:#222230;
 color:white;
-margin-top:10px;
 font-size:16px;
+margin-top:12px;
 }
 
 button{
+cursor:pointer;
+}
+
+.btn{
 width:100%;
-padding:15px;
+padding:16px;
 border:none;
-border-radius:15px;
+border-radius:20px;
 background:#8A05BE;
 color:white;
 font-size:18px;
 margin-top:15px;
 }
 
-h1 span{
-color:#BB86FC;
-}
-
 .gasto{
 background:#20202B;
-padding:15px;
-border-radius:15px;
-margin-top:10px;
+padding:18px;
+border-radius:20px;
+margin-top:12px;
 display:flex;
 justify-content:space-between;
+align-items:center;
+}
+
+.remover{
+background:red;
+border:none;
+padding:10px 15px;
+border-radius:12px;
+color:white;
+}
+
+.menu{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#111118;
+display:flex;
+justify-content:space-around;
+padding:15px 10px;
+border-top:1px solid #222;
+}
+
+.menu button{
+background:none;
+border:none;
+color:#A0A0B8;
+font-size:15px;
+}
+
+.menu .ativo{
+color:#BB86FC;
+font-weight:bold;
+}
+
+.meta{
+height:14px;
+background:#262636;
+border-radius:20px;
+overflow:hidden;
+margin-top:18px;
+}
+
+.barra{
+height:100%;
+background:#8A05BE;
+width:20%;
+}
+
+.ia{
+background:linear-gradient(135deg,#7B1FA2,#9C27B0);
+padding:20px;
+border-radius:25px;
+margin-bottom:20px;
 }
 
 </style>
@@ -62,13 +162,45 @@ justify-content:space-between;
 
 <body>
 
-<h1>
+<div class="topo">
+
+<div class="logo">
 Finance <span>Control</span>
-</h1>
+</div>
+
+</div>
+
+<div id="inicio" class="tela ativa">
+
+<div class="ia">
+
+<h2>
+IA Financeira
+</h2>
+
+<p style="margin-top:10px;">
+Você está controlando bem seus gastos este mês.
+</p>
+
+</div>
 
 <div class="card">
 
-<h3>Salário</h3>
+<div class="label">
+Saldo disponível
+</div>
+
+<div id="saldo" class="valor verde">
+R$ 0
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="label">
+Seu salário
+</div>
 
 <input
 id="salario"
@@ -76,25 +208,21 @@ type="number"
 value="1600"
 >
 
-<h3>
-Saldo disponível
-</h3>
-
-<h1 id="saldo">
-R$ 0
-</h1>
+</div>
 
 </div>
 
+<div id="gastos" class="tela">
+
 <div class="card">
 
-<h3>
+<div class="label">
 Adicionar gasto
-</h3>
+</div>
 
 <input
 id="nome"
-placeholder="Nome"
+placeholder="Nome do gasto"
 >
 
 <input
@@ -103,23 +231,109 @@ type="number"
 placeholder="Valor"
 >
 
-<button onclick="addGasto()">
-Adicionar
+<button
+class="btn"
+onclick="addGasto()">
+Adicionar gasto
 </button>
 
 </div>
 
 <div id="lista"></div>
 
+</div>
+
+<div id="investimentos" class="tela">
+
+<div class="card">
+
+<div class="label">
+Meta financeira
+</div>
+
+<input
+id="meta"
+type="number"
+value="5000"
+>
+
+<div style="margin-top:20px;">
+
+<div class="label">
+Você precisa investir por mês
+</div>
+
+<div id="investMes" class="valor roxo">
+R$ 0
+</div>
+
+</div>
+
+<div class="meta">
+
+<div class="barra" id="barra"></div>
+
+</div>
+
+<p
+id="textoMeta"
+style="
+margin-top:10px;
+color:#A0A0B8;
+">
+0%
+</p>
+
+</div>
+
+</div>
+
+<div class="menu">
+
+<button
+class="ativo"
+onclick="trocarTela('inicio',this)">
+Início
+</button>
+
+<button
+onclick="trocarTela('gastos',this)">
+Gastos
+</button>
+
+<button
+onclick="trocarTela('investimentos',this)">
+Investimentos
+</button>
+
+</div>
+
 <script>
 
 let gastos = [];
+
+function dinheiro(v){
+
+return v.toLocaleString(
+'pt-BR',
+{
+style:'currency',
+currency:'BRL'
+}
+);
+
+}
 
 function atualizar(){
 
 let salario =
 Number(
 document.getElementById('salario').value
+);
+
+let meta =
+Number(
+document.getElementById('meta').value
 );
 
 let total = 0;
@@ -133,14 +347,40 @@ total += g.valor;
 let saldo =
 salario - total;
 
-document.getElementById('saldo')
+document
+.getElementById('saldo')
 .innerHTML =
-'R$ ' + saldo.toFixed(2);
+dinheiro(saldo);
+
+let investMes =
+meta / 12;
+
+document
+.getElementById('investMes')
+.innerHTML =
+dinheiro(investMes);
+
+let progresso =
+Math.min(
+100,
+(saldo/meta)*100
+);
+
+document
+.getElementById('barra')
+.style.width =
+progresso + '%';
+
+document
+.getElementById('textoMeta')
+.innerHTML =
+progresso.toFixed(0)
++ '% da meta';
 
 let lista =
 document.getElementById('lista');
 
-lista.innerHTML = '';
+lista.innerHTML='';
 
 gastos.forEach((g,index)=>{
 
@@ -154,11 +394,15 @@ lista.innerHTML += `
 
 <br>
 
-R$ ${g.valor.toFixed(2)}
+<span style="color:#A0A0B8;">
+${dinheiro(g.valor)}
+</span>
 
 </div>
 
-<button onclick="remover(${index})">
+<button
+class="remover"
+onclick="remover(${index})">
 X
 </button>
 
@@ -168,19 +412,31 @@ X
 
 });
 
+localStorage.setItem(
+'gastos',
+JSON.stringify(gastos)
+);
+
 }
 
 function addGasto(){
 
 let nome =
-document.getElementById('nome').value;
+document
+.getElementById('nome')
+.value;
 
 let valor =
 Number(
-document.getElementById('valor').value
+document
+.getElementById('valor')
+.value
 );
 
-if(nome=='' || valor<=0){
+if(
+nome=='' ||
+valor<=0
+){
 
 return;
 
@@ -191,9 +447,13 @@ nome,
 valor
 });
 
-document.getElementById('nome').value='';
+document
+.getElementById('nome')
+.value='';
 
-document.getElementById('valor').value='';
+document
+.getElementById('valor')
+.value='';
 
 atualizar();
 
@@ -207,7 +467,51 @@ atualizar();
 
 }
 
-document.getElementById('salario')
+function trocarTela(id,btn){
+
+document
+.querySelectorAll('.tela')
+.forEach(t=>{
+
+t.classList.remove('ativa');
+
+});
+
+document
+.getElementById(id)
+.classList.add('ativa');
+
+document
+.querySelectorAll('.menu button')
+.forEach(b=>{
+
+b.classList.remove('ativo');
+
+});
+
+btn.classList.add('ativo');
+
+}
+
+let salvo =
+localStorage.getItem('gastos');
+
+if(salvo){
+
+gastos =
+JSON.parse(salvo);
+
+}
+
+document
+.getElementById('salario')
+.addEventListener(
+'input',
+atualizar
+);
+
+document
+.getElementById('meta')
 .addEventListener(
 'input',
 atualizar
