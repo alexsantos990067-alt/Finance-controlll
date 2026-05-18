@@ -1,191 +1,221 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Finance Control</title>
-  <meta name="theme-color" content="#0B0B10">
-  <link rel="manifest" href="manifest.webmanifest">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background: #0B0B10;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-      color: white;
-      padding: 20px;
-    }
-    .tabs {
-      display: flex;
-      justify-content: space-around;
-      margin-bottom: 20px;
-      border-bottom: 1px solid #333;
-    }
-    .tab {
-      flex: 1;
-      text-align: center;
-      padding: 15px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .tab.active {
-      background: #262636;
-      border-bottom: 3px solid #8A05BE;
-    }
-    .card {
-      background: #17171F;
-      border-radius: 28px;
-      padding: 22px;
-      margin-bottom: 18px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.4);
-    }
-    .label {
-      font-size: 14px;
-      color: #A0A0B8;
-      margin-bottom: 8px;
-    }
-    .valor {
-      font-size: 34px;
-      font-weight: bold;
-    }
-    .roxo {
-      color: #BB86FC;
-    }
-    .verde {
-      color: #00E676;
-    }
-    .card input {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 18px;
-      background: #222230;
-      color: white;
-      font-size: 16px;
-      margin-top: 12px;
-      box-sizing: border-box;
-    }
-    button {
-      width: 100%;
-      padding: 16px;
-      border: none;
-      border-radius: 20px;
-      background: #8A05BE;
-      color: white;
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 15px;
-      cursor: pointer;
-    }
-    .gasto {
-      background: #20202B;
-      padding: 18px;
-      border-radius: 20px;
-      margin-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .gasto-nome {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .gasto-cat {
-      font-size: 13px;
-      color: #A0A0B8;
-      margin-top: 5px;
-    }
-    .remover {
-      background: #FF5252;
-      padding: 10px 15px;
-      border-radius: 14px;
-      font-size: 14px;
-      width: auto;
-      cursor: pointer;
-      color: white;
-    }
-    .barra {
-      width: 100%;
-      height: 12px;
-      background: #262636;
-      border-radius: 20px;
-      margin-top: 15px;
-      overflow: hidden;
-    }
-    .progresso {
-      height: 100%;
-      background: #8A05BE;
-      width: 0%;
-      transition: 0.4s;
-    }
-    .meta-texto {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #A0A0B8;
-    }
-    @media(max-width:700px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      .valor {
-        font-size: 28px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Finance Control</title>
+
+<style>
+
+body{
+background:#0B0B10;
+font-family:Arial;
+color:white;
+padding:20px;
+}
+
+.card{
+background:#17171F;
+padding:20px;
+border-radius:20px;
+margin-top:20px;
+}
+
+input{
+width:100%;
+padding:15px;
+border:none;
+border-radius:15px;
+background:#222230;
+color:white;
+margin-top:10px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:15px;
+background:#8A05BE;
+color:white;
+font-size:18px;
+margin-top:15px;
+}
+
+h1 span{
+color:#BB86FC;
+}
+
+.gasto{
+background:#20202B;
+padding:15px;
+border-radius:15px;
+margin-top:10px;
+display:flex;
+justify-content:space-between;
+}
+
+</style>
 </head>
 
 <body>
 
-  <div class="tabs">
-    <div class="tab active" onclick="mostrarCategoria('todas')">Todas</div>
-    <div class="tab" onclick="mostrarCategoria('moradia')">Moradia</div>
-    <div class="tab" onclick="mostrarCategoria('mercado')">Mercado</div>
-    <div class="tab" onclick="mostrarCategoria('lazer')">Lazer</div>
-    <div class="tab" onclick="mostrarCategoria('transporte')">Transporte</div>
-    <div class="tab" onclick="mostrarCategoria('internet')">Internet</div>
-    <div class="tab" onclick="mostrarCategoria('saude')">Saúde</div>
-    <div class="tab" onclick="mostrarCategoria('investimento')">Investimento</div>
-  </div>
+<h1>
+Finance <span>Control</span>
+</h1>
 
-  <div class="topo">
-    <div class="logo">
-      Finance <span>Control</span>
-    </div>
-    <div class="avatar">
-      A
-    </div>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <div class="label">Saldo disponível</div>
-    <div id="restante" class="valor verde">R$ 0</div>
-    <div class="grid">
-      <div class="mini-card">
-        <h3>Total gasto</h3>
-        <p id="total">R$ 0</p>
-      </div>
-      <div class="mini-card">
-        <h3>Investimento ideal</h3>
-        <p id="investimento" class="roxo">R$ 0</p>
-      </div>
-      <div class="mini-card">
-        <h3>Gasto anual</h3>
-        <p id="anual">R$ 0</p>
-      </div>
-      <div class="mini-card">
-        <h3>Meta mensal</h3>
-        <p id="metaMes">R$ 0</p>
-      </div>
-    </div>
-  </div>
+<h3>Salário</h3>
 
-  <div class="card">
-    <div class="label">Seu salário mensal</div>
-    <input id="salario" type="number" value="1600">
-    <div class="label" style="margin-top:20px;">Sua meta financeira</div>
-    <input id="meta" type="number" value="5000">
-    <div class="barra">
-      <div class="progresso" id
+<input
+id="salario"
+type="number"
+value="1600"
+>
+
+<h3>
+Saldo disponível
+</h3>
+
+<h1 id="saldo">
+R$ 0
+</h1>
+
+</div>
+
+<div class="card">
+
+<h3>
+Adicionar gasto
+</h3>
+
+<input
+id="nome"
+placeholder="Nome"
+>
+
+<input
+id="valor"
+type="number"
+placeholder="Valor"
+>
+
+<button onclick="addGasto()">
+Adicionar
+</button>
+
+</div>
+
+<div id="lista"></div>
+
+<script>
+
+let gastos = [];
+
+function atualizar(){
+
+let salario =
+Number(
+document.getElementById('salario').value
+);
+
+let total = 0;
+
+gastos.forEach(g=>{
+
+total += g.valor;
+
+});
+
+let saldo =
+salario - total;
+
+document.getElementById('saldo')
+.innerHTML =
+'R$ ' + saldo.toFixed(2);
+
+let lista =
+document.getElementById('lista');
+
+lista.innerHTML = '';
+
+gastos.forEach((g,index)=>{
+
+lista.innerHTML += `
+
+<div class="gasto">
+
+<div>
+
+<b>${g.nome}</b>
+
+<br>
+
+R$ ${g.valor.toFixed(2)}
+
+</div>
+
+<button onclick="remover(${index})">
+X
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+function addGasto(){
+
+let nome =
+document.getElementById('nome').value;
+
+let valor =
+Number(
+document.getElementById('valor').value
+);
+
+if(nome=='' || valor<=0){
+
+return;
+
+}
+
+gastos.push({
+nome,
+valor
+});
+
+document.getElementById('nome').value='';
+
+document.getElementById('valor').value='';
+
+atualizar();
+
+}
+
+function remover(i){
+
+gastos.splice(i,1);
+
+atualizar();
+
+}
+
+document.getElementById('salario')
+.addEventListener(
+'input',
+atualizar
+);
+
+atualizar();
+
+</script>
+
+</body>
+</html>
