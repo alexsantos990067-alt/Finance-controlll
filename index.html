@@ -1,212 +1,446 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Finance Control</title>
+  <title>Finance Control</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-black text-white min-h-screen">
 
-<div class="max-w-md mx-auto p-5 space-y-5 pb-28">
+  <!-- APP -->
 
-<h1 class="text-3xl font-bold">
-Finance Control
-</h1>
+  <div class="max-w-md mx-auto p-5 pb-32">
 
-<p class="text-zinc-400">
-Controle hoje. Liberdade amanhã.
-</p>
+    <!-- TOPO -->
 
-<div class="bg-zinc-900 rounded-3xl p-5">
+    <div class="mb-6">
+      <h1 class="text-4xl font-bold">
+        Finance Control
+      </h1>
 
-<h2 class="text-xl font-bold mb-4">
-Dados Financeiros
-</h2>
+      <p class="text-zinc-400 mt-2">
+        Controle hoje. Liberdade amanhã.
+      </p>
+    </div>
 
-<input
-id="salario"
-type="number"
-placeholder="Salário"
-class="w-full bg-zinc-800 rounded-2xl p-3 mb-3 outline-none"
->
+    <!-- MENU -->
 
-<input
-id="divida"
-type="number"
-placeholder="Dívidas"
-class="w-full bg-zinc-800 rounded-2xl p-3 mb-3 outline-none"
->
+    <div class="grid grid-cols-4 gap-3 mb-6">
 
-<input
-id="investimento"
-type="number"
-placeholder="Investimentos"
-class="w-full bg-zinc-800 rounded-2xl p-3 outline-none"
->
+      <button onclick="mostrarTela('inicio')"
+        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
+        🏠
+      </button>
 
-</div>
+      <button onclick="mostrarTela('investimentos')"
+        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
+        📈
+      </button>
 
-<div class="grid grid-cols-2 gap-4">
+      <button onclick="mostrarTela('dividas')"
+        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
+        💳
+      </button>
 
-<div class="bg-zinc-900 rounded-3xl p-4">
-<p class="text-zinc-400 text-sm">
-Investimentos
-</p>
+      <button onclick="mostrarTela('config')"
+        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
+        ⚙️
+      </button>
 
-<h2
-id="investimentoTexto"
-class="text-2xl font-bold mt-2"
->
-R$ 0,00
-</h2>
-</div>
+    </div>
 
-<div class="bg-zinc-900 rounded-3xl p-4">
-<p class="text-zinc-400 text-sm">
-Livre no mês
-</p>
+    <!-- TELA INICIAL -->
 
-<h2
-id="livreTexto"
-class="text-2xl font-bold mt-2"
->
-R$ 0,00
-</h2>
-</div>
+    <div id="inicio">
 
-</div>
+      <!-- DADOS -->
 
-<div class="bg-zinc-900 rounded-3xl p-5">
+      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800 mb-5">
 
-<h2 class="text-xl font-bold mb-4">
-Resumo Inteligente
-</h2>
+        <h2 class="text-xl font-bold mb-4">
+          Dados Financeiros
+        </h2>
 
-<p id="resumo" class="text-zinc-300">
-Carregando...
-</p>
+        <div class="space-y-4">
 
-</div>
+          <div>
+            <label class="text-zinc-400 text-sm">
+              Salário
+            </label>
 
-</div>
+            <input id="salario" type="number"
+              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
+          </div>
 
-<div class="fixed bottom-0 left-0 right-0 bg-zinc-950 border-t border-zinc-800">
+          <div>
+            <label class="text-zinc-400 text-sm">
+              Dívidas
+            </label>
 
-<div class="max-w-md mx-auto grid grid-cols-4 gap-3 p-4">
+            <input id="divida" type="number"
+              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
+          </div>
 
-<button class="bg-zinc-900 rounded-2xl h-14 text-2xl">
-🏠
-</button>
+          <div>
+            <label class="text-zinc-400 text-sm">
+              Consórcio
+            </label>
 
-<button class="bg-zinc-900 rounded-2xl h-14 text-2xl">
-📈
-</button>
+            <input id="consorcio" type="number"
+              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
+          </div>
 
-<button class="bg-zinc-900 rounded-2xl h-14 text-2xl">
-💳
-</button>
+        </div>
 
-<button class="bg-zinc-900 rounded-2xl h-14 text-2xl">
-⚙️
-</button>
+      </div>
 
-</div>
+      <!-- CARDS -->
 
-</div>
+      <div class="grid grid-cols-2 gap-4 mb-5">
 
-<script>
+        <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
 
-const salario =
-document.getElementById('salario');
+          <p class="text-zinc-400 text-sm">
+            Livre no mês
+          </p>
 
-const divida =
-document.getElementById('divida');
+          <h2 id="livreTexto" class="text-2xl font-bold mt-2">
+            R$ 0,00
+          </h2>
 
-const investimento =
-document.getElementById('investimento');
+        </div>
 
-const investimentoTexto =
-document.getElementById('investimentoTexto');
+        <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
 
-const livreTexto =
-document.getElementById('livreTexto');
+          <p class="text-zinc-400 text-sm">
+            Investimentos
+          </p>
 
-const resumo =
-document.getElementById('resumo');
+          <h2 id="investimentoCard" class="text-2xl font-bold mt-2">
+            R$ 0,00
+          </h2>
 
-salario.value =
-localStorage.getItem('salario') || 1600;
+        </div>
 
-divida.value =
-localStorage.getItem('divida') || 0;
+      </div>
 
-investimento.value =
-localStorage.getItem('investimento') || 0;
+      <!-- RESUMO -->
 
-function atualizar() {
+      <div class="bg-green-500/10 border border-green-500/20 rounded-3xl p-5">
 
-const salarioValor =
-Number(salario.value);
+        <h2 class="text-xl font-bold mb-3">
+          Resumo Inteligente
+        </h2>
 
-const dividaValor =
-Number(divida.value);
+        <p id="resumo" class="text-zinc-300 leading-relaxed">
+          Carregando...
+        </p>
 
-const investimentoValor =
-Number(investimento.value);
+      </div>
 
-const livre =
-salarioValor - dividaValor;
+      <!-- METAS -->
 
-localStorage.setItem(
-'salario',
-salarioValor
-);
+      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800 mt-5">
 
-localStorage.setItem(
-'divida',
-dividaValor
-);
+        <div class="flex justify-between mb-5">
+          <h2 class="text-xl font-bold">
+            Metas
+          </h2>
 
-localStorage.setItem(
-'investimento',
-investimentoValor
-);
+          <span class="text-zinc-400">
+            2026
+          </span>
+        </div>
 
-investimentoTexto.innerText =
-'R$ ' + investimentoValor.toFixed(2);
+        <div class="space-y-5">
 
-livreTexto.innerText =
-'R$ ' + livre.toFixed(2);
+          <div>
 
-resumo.innerText =
-'Você possui R$ ' +
-livre.toFixed(2) +
-' livres no mês.';
+            <div class="flex justify-between mb-2">
+              <span>🎯 Lance Consórcio</span>
+              <span>70%</span>
+            </div>
 
-}
+            <div class="w-full bg-zinc-800 rounded-full h-3">
 
-salario.addEventListener(
-'input',
-atualizar
-);
+              <div class="bg-green-400 h-3 rounded-full"
+                style="width:70%">
+              </div>
 
-divida.addEventListener(
-'input',
-atualizar
-);
+            </div>
 
-investimento.addEventListener(
-'input',
-atualizar
-);
+          </div>
 
-atualizar();
+          <div>
 
-</script>
+            <div class="flex justify-between mb-2">
+              <span>💰 Reserva</span>
+              <span>35%</span>
+            </div>
+
+            <div class="w-full bg-zinc-800 rounded-full h-3">
+
+              <div class="bg-blue-400 h-3 rounded-full"
+                style="width:35%">
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- INVESTIMENTOS -->
+
+    <div id="investimentos" class="hidden">
+
+      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
+
+        <h2 class="text-2xl font-bold mb-5">
+          Área de Investimentos 📈
+        </h2>
+
+        <div class="space-y-4">
+
+          <div>
+            <label class="text-zinc-400 text-sm">
+              Valor Investido
+            </label>
+
+            <input id="investimento" type="number"
+              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
+          </div>
+
+          <div class="bg-zinc-800 rounded-2xl p-4">
+
+            <p class="text-zinc-400 text-sm">
+              Total Investido
+            </p>
+
+            <h2 id="investimentoTexto"
+              class="text-3xl font-bold mt-2">
+              R$ 0,00
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- DIVIDAS -->
+
+    <div id="dividas" class="hidden">
+
+      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
+
+        <h2 class="text-2xl font-bold mb-5">
+          Controle de Dívidas 💳
+        </h2>
+
+        <div class="space-y-4">
+
+          <div class="bg-zinc-800 rounded-2xl p-4">
+
+            <p class="text-zinc-400 text-sm">
+              Dívidas atuais
+            </p>
+
+            <h2 id="dividaTexto"
+              class="text-3xl font-bold mt-2">
+              R$ 0,00
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CONFIG -->
+
+    <div id="config" class="hidden">
+
+      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
+
+        <h2 class="text-2xl font-bold mb-5">
+          Configurações ⚙️
+        </h2>
+
+        <button onclick="limparDados()"
+          class="w-full bg-red-500 rounded-2xl p-4 font-bold">
+          Limpar Dados
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const salario =
+      document.getElementById('salario');
+
+    const divida =
+      document.getElementById('divida');
+
+    const consorcio =
+      document.getElementById('consorcio');
+
+    const investimento =
+      document.getElementById('investimento');
+
+    const livreTexto =
+      document.getElementById('livreTexto');
+
+    const resumo =
+      document.getElementById('resumo');
+
+    const investimentoTexto =
+      document.getElementById('investimentoTexto');
+
+    const investimentoCard =
+      document.getElementById('investimentoCard');
+
+    const dividaTexto =
+      document.getElementById('dividaTexto');
+
+    salario.value =
+      localStorage.getItem('salario') || 1600;
+
+    divida.value =
+      localStorage.getItem('divida') || 0;
+
+    consorcio.value =
+      localStorage.getItem('consorcio') || 481.96;
+
+    investimento.value =
+      localStorage.getItem('investimento') || 0;
+
+    function atualizar() {
+
+      const salarioValor =
+        Number(salario.value);
+
+      const dividaValor =
+        Number(divida.value);
+
+      const consorcioValor =
+        Number(consorcio.value);
+
+      const investimentoValor =
+        Number(investimento.value);
+
+      const livre =
+        salarioValor -
+        dividaValor -
+        consorcioValor;
+
+      localStorage.setItem(
+        'salario',
+        salarioValor
+      );
+
+      localStorage.setItem(
+        'divida',
+        dividaValor
+      );
+
+      localStorage.setItem(
+        'consorcio',
+        consorcioValor
+      );
+
+      localStorage.setItem(
+        'investimento',
+        investimentoValor
+      );
+
+      livreTexto.innerText =
+        'R$ ' + livre.toFixed(2);
+
+      investimentoTexto.innerText =
+        'R$ ' + investimentoValor.toFixed(2);
+
+      investimentoCard.innerText =
+        'R$ ' + investimentoValor.toFixed(2);
+
+      dividaTexto.innerText =
+        'R$ ' + dividaValor.toFixed(2);
+
+      resumo.innerText =
+        'Você possui aproximadamente R$ ' +
+        livre.toFixed(2) +
+        ' livres no mês após despesas e consórcio.';
+
+    }
+
+    function mostrarTela(tela) {
+
+      document.getElementById('inicio')
+        .classList.add('hidden');
+
+      document.getElementById('investimentos')
+        .classList.add('hidden');
+
+      document.getElementById('dividas')
+        .classList.add('hidden');
+
+      document.getElementById('config')
+        .classList.add('hidden');
+
+      document.getElementById(tela)
+        .classList.remove('hidden');
+
+    }
+
+    function limparDados() {
+
+      localStorage.clear();
+
+      location.reload();
+
+    }
+
+    salario.addEventListener(
+      'input',
+      atualizar
+    );
+
+    divida.addEventListener(
+      'input',
+      atualizar
+    );
+
+    consorcio.addEventListener(
+      'input',
+      atualizar
+    );
+
+    investimento.addEventListener(
+      'input',
+      atualizar
+    );
+
+    atualizar();
+
+  </script>
 
 </body>
+
 </html>
