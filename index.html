@@ -1,525 +1,128 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Finance Control</title>
+  <title>Finance Control</title>
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-background:#0B0B10;
-font-family:Arial;
-color:white;
-padding-bottom:100px;
-}
-
-.topo{
-padding:25px 20px;
-}
-
-.logo{
-font-size:34px;
-font-weight:bold;
-}
-
-.logo span{
-color:#BB86FC;
-}
-
-.tela{
-display:none;
-padding:20px;
-}
-
-.ativa{
-display:block;
-}
-
-.card{
-background:#17171F;
-padding:22px;
-border-radius:28px;
-margin-bottom:20px;
-}
-
-.label{
-color:#A0A0B8;
-margin-bottom:8px;
-}
-
-.valor{
-font-size:38px;
-font-weight:bold;
-}
-
-.roxo{
-color:#BB86FC;
-}
-
-.verde{
-color:#00E676;
-}
-
-input{
-width:100%;
-padding:16px;
-border:none;
-border-radius:18px;
-background:#222230;
-color:white;
-font-size:16px;
-margin-top:12px;
-}
-
-button{
-cursor:pointer;
-}
-
-.btn{
-width:100%;
-padding:16px;
-border:none;
-border-radius:20px;
-background:#8A05BE;
-color:white;
-font-size:18px;
-margin-top:15px;
-}
-
-.gasto{
-background:#20202B;
-padding:18px;
-border-radius:20px;
-margin-top:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.remover{
-background:red;
-border:none;
-padding:10px 15px;
-border-radius:12px;
-color:white;
-}
-
-.menu{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-background:#111118;
-display:flex;
-justify-content:space-around;
-padding:15px 10px;
-border-top:1px solid #222;
-}
-
-.menu button{
-background:none;
-border:none;
-color:#A0A0B8;
-font-size:15px;
-}
-
-.menu .ativo{
-color:#BB86FC;
-font-weight:bold;
-}
-
-.meta{
-height:14px;
-background:#262636;
-border-radius:20px;
-overflow:hidden;
-margin-top:18px;
-}
-
-.barra{
-height:100%;
-background:#8A05BE;
-width:20%;
-}
-
-.ia{
-background:linear-gradient(135deg,#7B1FA2,#9C27B0);
-padding:20px;
-border-radius:25px;
-margin-bottom:20px;
-}
-
-</style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="bg-black text-white">
 
-<div class="topo">
+  <div class="max-w-md mx-auto p-5 space-y-5">
 
-<div class="logo">
-Finance <span>Control</span>
-</div>
+    <div>
+      <h1 class="text-3xl font-bold">Finance Control</h1>
+      <p class="text-zinc-400">
+        Controle hoje. Liberdade amanhã.
+      </p>
+    </div>
 
-</div>
+    <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
+      <h2 class="text-xl font-semibold mb-4">
+        Dados Financeiros
+      </h2>
 
-<div id="inicio" class="tela ativa">
+      <div class="space-y-4">
 
-<div class="ia">
+        <div>
+          <label class="text-sm text-zinc-400">
+            Salário
+          </label>
 
-<h2>
-IA Financeira
-</h2>
+          <input
+            id="salario"
+            type="number"
+            class="w-full mt-1 bg-zinc-800 border border-zinc-700 rounded-2xl p-3 outline-none"
+          />
+        </div>
 
-<p style="margin-top:10px;">
-Você está controlando bem seus gastos este mês.
-</p>
+        <div>
+          <label class="text-sm text-zinc-400">
+            Dívidas
+          </label>
 
-</div>
+          <input
+            id="divida"
+            type="number"
+            class="w-full mt-1 bg-zinc-800 border border-zinc-700 rounded-2xl p-3 outline-none"
+          />
+        </div>
 
-<div class="card">
+      </div>
+    </div>
 
-<div class="label">
-Saldo disponível
-</div>
+    <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
+      <h2 class="text-xl font-semibold">
+        Resumo Inteligente
+      </h2>
 
-<div id="saldo" class="valor verde">
-R$ 0
-</div>
+      <div class="mt-4 space-y-2">
+        <p>💰 Salário: <span id="salarioTexto"></span></p>
+        <p>📄 Consórcio: R$ 481,96</p>
+        <p>⚠️ Dívidas: <span id="dividaTexto"></span></p>
 
-</div>
+        <hr class="border-zinc-700 my-3">
 
-<div class="card">
+        <p class="text-2xl font-bold">
+          Livre:
+          <span id="livre"></span>
+        </p>
+      </div>
+    </div>
 
-<div class="label">
-Seu salário
-</div>
+    <div class="bg-green-500/10 border border-green-500/20 rounded-3xl p-5">
+      <h2 class="text-xl font-bold">
+        Objetivo 🎯
+      </h2>
 
-<input
-id="salario"
-type="number"
-value="1600"
->
+      <p class="text-zinc-300 mt-3">
+        Continue firme no consórcio e evite novas dívidas.
+      </p>
+    </div>
 
-</div>
+  </div>
 
-</div>
+  <script>
 
-<div id="gastos" class="tela">
+    const salarioInput = document.getElementById('salario');
+    const dividaInput = document.getElementById('divida');
 
-<div class="card">
+    const salarioTexto = document.getElementById('salarioTexto');
+    const dividaTexto = document.getElementById('dividaTexto');
+    const livreTexto = document.getElementById('livre');
 
-<div class="label">
-Adicionar gasto
-</div>
+    salarioInput.value = localStorage.getItem('salario') || 1600;
+    dividaInput.value = localStorage.getItem('divida') || 0;
 
-<input
-id="nome"
-placeholder="Nome do gasto"
->
+    function atualizar() {
 
-<input
-id="valor"
-type="number"
-placeholder="Valor"
->
+      const salario = Number(salarioInput.value);
+      const divida = Number(dividaInput.value);
 
-<button
-class="btn"
-onclick="addGasto()">
-Adicionar gasto
-</button>
+      const livre = salario - 481.96 - divida;
 
-</div>
+      localStorage.setItem('salario', salario);
+      localStorage.setItem('divida', divida);
 
-<div id="lista"></div>
+      salarioTexto.innerText =
+        'R$ ' + salario.toFixed(2);
 
-</div>
+      dividaTexto.innerText =
+        'R$ ' + divida.toFixed(2);
 
-<div id="investimentos" class="tela">
+      livreTexto.innerText =
+        'R$ ' + livre.toFixed(2);
+    }
 
-<div class="card">
+    salarioInput.addEventListener('input', atualizar);
+    dividaInput.addEventListener('input', atualizar);
 
-<div class="label">
-Meta financeira
-</div>
+    atualizar();
 
-<input
-id="meta"
-type="number"
-value="5000"
->
-
-<div style="margin-top:20px;">
-
-<div class="label">
-Você precisa investir por mês
-</div>
-
-<div id="investMes" class="valor roxo">
-R$ 0
-</div>
-
-</div>
-
-<div class="meta">
-
-<div class="barra" id="barra"></div>
-
-</div>
-
-<p
-id="textoMeta"
-style="
-margin-top:10px;
-color:#A0A0B8;
-">
-0%
-</p>
-
-</div>
-
-</div>
-
-<div class="menu">
-
-<button
-class="ativo"
-onclick="trocarTela('inicio',this)">
-Início
-</button>
-
-<button
-onclick="trocarTela('gastos',this)">
-Gastos
-</button>
-
-<button
-onclick="trocarTela('investimentos',this)">
-Investimentos
-</button>
-
-</div>
-
-<script>
-
-let gastos = [];
-
-function dinheiro(v){
-
-return v.toLocaleString(
-'pt-BR',
-{
-style:'currency',
-currency:'BRL'
-}
-);
-
-}
-
-function atualizar(){
-
-let salario =
-Number(
-document.getElementById('salario').value
-);
-
-let meta =
-Number(
-document.getElementById('meta').value
-);
-
-let total = 0;
-
-gastos.forEach(g=>{
-
-total += g.valor;
-
-});
-
-let saldo =
-salario - total;
-
-document
-.getElementById('saldo')
-.innerHTML =
-dinheiro(saldo);
-
-let investMes =
-meta / 12;
-
-document
-.getElementById('investMes')
-.innerHTML =
-dinheiro(investMes);
-
-let progresso =
-Math.min(
-100,
-(saldo/meta)*100
-);
-
-document
-.getElementById('barra')
-.style.width =
-progresso + '%';
-
-document
-.getElementById('textoMeta')
-.innerHTML =
-progresso.toFixed(0)
-+ '% da meta';
-
-let lista =
-document.getElementById('lista');
-
-lista.innerHTML='';
-
-gastos.forEach((g,index)=>{
-
-lista.innerHTML += `
-
-<div class="gasto">
-
-<div>
-
-<b>${g.nome}</b>
-
-<br>
-
-<span style="color:#A0A0B8;">
-${dinheiro(g.valor)}
-</span>
-
-</div>
-
-<button
-class="remover"
-onclick="remover(${index})">
-X
-</button>
-
-</div>
-
-`;
-
-});
-
-localStorage.setItem(
-'gastos',
-JSON.stringify(gastos)
-);
-
-}
-
-function addGasto(){
-
-let nome =
-document
-.getElementById('nome')
-.value;
-
-let valor =
-Number(
-document
-.getElementById('valor')
-.value
-);
-
-if(
-nome=='' ||
-valor<=0
-){
-
-return;
-
-}
-
-gastos.push({
-nome,
-valor
-});
-
-document
-.getElementById('nome')
-.value='';
-
-document
-.getElementById('valor')
-.value='';
-
-atualizar();
-
-}
-
-function remover(i){
-
-gastos.splice(i,1);
-
-atualizar();
-
-}
-
-function trocarTela(id,btn){
-
-document
-.querySelectorAll('.tela')
-.forEach(t=>{
-
-t.classList.remove('ativa');
-
-});
-
-document
-.getElementById(id)
-.classList.add('ativa');
-
-document
-.querySelectorAll('.menu button')
-.forEach(b=>{
-
-b.classList.remove('ativo');
-
-});
-
-btn.classList.add('ativo');
-
-}
-
-let salvo =
-localStorage.getItem('gastos');
-
-if(salvo){
-
-gastos =
-JSON.parse(salvo);
-
-}
-
-document
-.getElementById('salario')
-.addEventListener(
-'input',
-atualizar
-);
-
-document
-.getElementById('meta')
-.addEventListener(
-'input',
-atualizar
-);
-
-atualizar();
-
-</script>
+  </script>
 
 </body>
 </html>
