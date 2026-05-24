@@ -1,446 +1,306 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Finance Control</title>
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#060b16;
+      color:white;
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    .background{
+      position:fixed;
+      width:100%;
+      height:100%;
+      top:0;
+      left:0;
+      background:
+      radial-gradient(circle at top left,#16335f 0%,transparent 30%),
+      radial-gradient(circle at bottom right,#0c1f3d 0%,transparent 30%);
+      z-index:-1;
+    }
+
+    header{
+      padding:25px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:28px;
+      font-weight:bold;
+      letter-spacing:1px;
+    }
+
+    .profile{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      background:rgba(255,255,255,0.1);
+      backdrop-filter:blur(10px);
+    }
+
+    .main-card{
+      width:90%;
+      margin:auto;
+      padding:30px;
+      border-radius:30px;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,0.1);
+      box-shadow:0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    .main-card h2{
+      color:#8ca8d8;
+      font-size:18px;
+      margin-bottom:10px;
+    }
+
+    .balance{
+      font-size:42px;
+      font-weight:bold;
+      margin-bottom:20px;
+    }
+
+    .actions{
+      display:flex;
+      gap:15px;
+      margin-top:20px;
+    }
+
+    .btn{
+      flex:1;
+      padding:14px;
+      border:none;
+      border-radius:15px;
+      background:#12305d;
+      color:white;
+      font-size:15px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .btn:hover{
+      transform:translateY(-3px);
+      background:#1c4d94;
+    }
+
+    .cards{
+      width:90%;
+      margin:30px auto;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:20px;
+    }
+
+    .card{
+      padding:25px;
+      border-radius:25px;
+      background:rgba(255,255,255,0.06);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,0.08);
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+    }
+
+    .card h3{
+      color:#8ca8d8;
+      margin-bottom:10px;
+      font-size:16px;
+    }
+
+    .value{
+      font-size:28px;
+      font-weight:bold;
+    }
+
+    .investment-box{
+      width:90%;
+      margin:20px auto;
+      padding:30px;
+      border-radius:30px;
+      background:linear-gradient(
+      135deg,
+      rgba(17,35,70,0.9),
+      rgba(8,18,36,0.9)
+      );
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .investment-box h2{
+      margin-bottom:15px;
+      color:#8ca8d8;
+    }
+
+    .investment-box input{
+      width:100%;
+      padding:15px;
+      border:none;
+      outline:none;
+      border-radius:15px;
+      background:rgba(255,255,255,0.08);
+      color:white;
+      margin-top:10px;
+    }
+
+    .investment-box button{
+      width:100%;
+      margin-top:20px;
+      padding:15px;
+      border:none;
+      border-radius:15px;
+      background:#2459a6;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+    }
+
+    .result{
+      margin-top:20px;
+      font-size:18px;
+      color:#9fc2ff;
+    }
+
+    nav{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      width:90%;
+      padding:18px;
+      border-radius:25px;
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(20px);
+      display:flex;
+      justify-content:space-around;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    nav a{
+      color:white;
+      text-decoration:none;
+      font-size:14px;
+      transition:0.3s;
+    }
+
+    nav a:hover{
+      color:#79a7ff;
+    }
+  </style>
 </head>
 
-<body class="bg-black text-white min-h-screen">
+<body>
 
-  <!-- APP -->
+<div class="background"></div>
 
-  <div class="max-w-md mx-auto p-5 pb-32">
+<header>
+  <div class="logo">Finance Control</div>
+  <div class="profile"></div>
+</header>
 
-    <!-- TOPO -->
+<section class="main-card">
+  <h2>Saldo Total</h2>
+  <div class="balance">R$ 12.450,00</div>
 
-    <div class="mb-6">
-      <h1 class="text-4xl font-bold">
-        Finance Control
-      </h1>
+  <div class="actions">
+    <button class="btn">Receber</button>
+    <button class="btn">Transferir</button>
+  </div>
+</section>
 
-      <p class="text-zinc-400 mt-2">
-        Controle hoje. Liberdade amanhã.
-      </p>
-    </div>
+<section class="cards">
 
-    <!-- MENU -->
-
-    <div class="grid grid-cols-4 gap-3 mb-6">
-
-      <button onclick="mostrarTela('inicio')"
-        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
-        🏠
-      </button>
-
-      <button onclick="mostrarTela('investimentos')"
-        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
-        📈
-      </button>
-
-      <button onclick="mostrarTela('dividas')"
-        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
-        💳
-      </button>
-
-      <button onclick="mostrarTela('config')"
-        class="bg-zinc-900 border border-zinc-800 rounded-2xl h-16 text-2xl">
-        ⚙️
-      </button>
-
-    </div>
-
-    <!-- TELA INICIAL -->
-
-    <div id="inicio">
-
-      <!-- DADOS -->
-
-      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800 mb-5">
-
-        <h2 class="text-xl font-bold mb-4">
-          Dados Financeiros
-        </h2>
-
-        <div class="space-y-4">
-
-          <div>
-            <label class="text-zinc-400 text-sm">
-              Salário
-            </label>
-
-            <input id="salario" type="number"
-              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
-          </div>
-
-          <div>
-            <label class="text-zinc-400 text-sm">
-              Dívidas
-            </label>
-
-            <input id="divida" type="number"
-              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
-          </div>
-
-          <div>
-            <label class="text-zinc-400 text-sm">
-              Consórcio
-            </label>
-
-            <input id="consorcio" type="number"
-              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
-          </div>
-
-        </div>
-
-      </div>
-
-      <!-- CARDS -->
-
-      <div class="grid grid-cols-2 gap-4 mb-5">
-
-        <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
-
-          <p class="text-zinc-400 text-sm">
-            Livre no mês
-          </p>
-
-          <h2 id="livreTexto" class="text-2xl font-bold mt-2">
-            R$ 0,00
-          </h2>
-
-        </div>
-
-        <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
-
-          <p class="text-zinc-400 text-sm">
-            Investimentos
-          </p>
-
-          <h2 id="investimentoCard" class="text-2xl font-bold mt-2">
-            R$ 0,00
-          </h2>
-
-        </div>
-
-      </div>
-
-      <!-- RESUMO -->
-
-      <div class="bg-green-500/10 border border-green-500/20 rounded-3xl p-5">
-
-        <h2 class="text-xl font-bold mb-3">
-          Resumo Inteligente
-        </h2>
-
-        <p id="resumo" class="text-zinc-300 leading-relaxed">
-          Carregando...
-        </p>
-
-      </div>
-
-      <!-- METAS -->
-
-      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800 mt-5">
-
-        <div class="flex justify-between mb-5">
-          <h2 class="text-xl font-bold">
-            Metas
-          </h2>
-
-          <span class="text-zinc-400">
-            2026
-          </span>
-        </div>
-
-        <div class="space-y-5">
-
-          <div>
-
-            <div class="flex justify-between mb-2">
-              <span>🎯 Lance Consórcio</span>
-              <span>70%</span>
-            </div>
-
-            <div class="w-full bg-zinc-800 rounded-full h-3">
-
-              <div class="bg-green-400 h-3 rounded-full"
-                style="width:70%">
-              </div>
-
-            </div>
-
-          </div>
-
-          <div>
-
-            <div class="flex justify-between mb-2">
-              <span>💰 Reserva</span>
-              <span>35%</span>
-            </div>
-
-            <div class="w-full bg-zinc-800 rounded-full h-3">
-
-              <div class="bg-blue-400 h-3 rounded-full"
-                style="width:35%">
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- INVESTIMENTOS -->
-
-    <div id="investimentos" class="hidden">
-
-      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
-
-        <h2 class="text-2xl font-bold mb-5">
-          Área de Investimentos 📈
-        </h2>
-
-        <div class="space-y-4">
-
-          <div>
-            <label class="text-zinc-400 text-sm">
-              Valor Investido
-            </label>
-
-            <input id="investimento" type="number"
-              class="w-full mt-1 bg-zinc-800 rounded-2xl p-3 outline-none">
-          </div>
-
-          <div class="bg-zinc-800 rounded-2xl p-4">
-
-            <p class="text-zinc-400 text-sm">
-              Total Investido
-            </p>
-
-            <h2 id="investimentoTexto"
-              class="text-3xl font-bold mt-2">
-              R$ 0,00
-            </h2>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- DIVIDAS -->
-
-    <div id="dividas" class="hidden">
-
-      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
-
-        <h2 class="text-2xl font-bold mb-5">
-          Controle de Dívidas 💳
-        </h2>
-
-        <div class="space-y-4">
-
-          <div class="bg-zinc-800 rounded-2xl p-4">
-
-            <p class="text-zinc-400 text-sm">
-              Dívidas atuais
-            </p>
-
-            <h2 id="dividaTexto"
-              class="text-3xl font-bold mt-2">
-              R$ 0,00
-            </h2>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- CONFIG -->
-
-    <div id="config" class="hidden">
-
-      <div class="bg-zinc-900 rounded-3xl p-5 border border-zinc-800">
-
-        <h2 class="text-2xl font-bold mb-5">
-          Configurações ⚙️
-        </h2>
-
-        <button onclick="limparDados()"
-          class="w-full bg-red-500 rounded-2xl p-4 font-bold">
-          Limpar Dados
-        </button>
-
-      </div>
-
-    </div>
-
+  <div class="card">
+    <h3>Entradas</h3>
+    <div class="value">R$ 8.200</div>
   </div>
 
-  <script>
+  <div class="card">
+    <h3>Gastos</h3>
+    <div class="value">R$ 3.120</div>
+  </div>
 
-    const salario =
-      document.getElementById('salario');
+  <div class="card">
+    <h3>Investimentos</h3>
+    <div class="value">R$ 1.980</div>
+  </div>
 
-    const divida =
-      document.getElementById('divida');
+  <div class="card">
+    <h3>Economia</h3>
+    <div class="value">R$ 2.540</div>
+  </div>
 
-    const consorcio =
-      document.getElementById('consorcio');
+</section>
 
-    const investimento =
-      document.getElementById('investimento');
+<section class="investment-box">
 
-    const livreTexto =
-      document.getElementById('livreTexto');
+  <h2>Planejamento de Investimentos</h2>
 
-    const resumo =
-      document.getElementById('resumo');
+  <input type="number" id="meta" placeholder="Meta desejada">
 
-    const investimentoTexto =
-      document.getElementById('investimentoTexto');
+  <input type="number" id="meses" placeholder="Quantidade de meses">
 
-    const investimentoCard =
-      document.getElementById('investimentoCard');
+  <button onclick="calcular()">
+    Calcular investimento mensal
+  </button>
 
-    const dividaTexto =
-      document.getElementById('dividaTexto');
+  <div class="result" id="resultado"></div>
 
-    salario.value =
-      localStorage.getItem('salario') || 1600;
+</section>
 
-    divida.value =
-      localStorage.getItem('divida') || 0;
+<nav>
+  <a href="#">Home</a>
+  <a href="#">Carteira</a>
+  <a href="#">Investimentos</a>
+  <a href="#">Relatórios</a>
+  <a href="#">Perfil</a>
+</nav>
 
-    consorcio.value =
-      localStorage.getItem('consorcio') || 481.96;
+<script>
 
-    investimento.value =
-      localStorage.getItem('investimento') || 0;
+function calcular(){
 
-    function atualizar() {
+  let meta =
+  document.getElementById('meta').value;
 
-      const salarioValor =
-        Number(salario.value);
+  let meses =
+  document.getElementById('meses').value;
 
-      const dividaValor =
-        Number(divida.value);
+  let resultado =
+  document.getElementById('resultado');
 
-      const consorcioValor =
-        Number(consorcio.value);
+  if(meta === "" || meses === ""){
+    resultado.innerHTML =
+    "Preencha todos os campos.";
+    return;
+  }
 
-      const investimentoValor =
-        Number(investimento.value);
+  let valor = meta / meses;
 
-      const livre =
-        salarioValor -
-        dividaValor -
-        consorcioValor;
+  resultado.innerHTML =
+  "Você precisa investir aproximadamente <br><br><strong>R$ "
+  + valor.toFixed(2)
+  + "</strong> por mês.";
+}
 
-      localStorage.setItem(
-        'salario',
-        salarioValor
-      );
-
-      localStorage.setItem(
-        'divida',
-        dividaValor
-      );
-
-      localStorage.setItem(
-        'consorcio',
-        consorcioValor
-      );
-
-      localStorage.setItem(
-        'investimento',
-        investimentoValor
-      );
-
-      livreTexto.innerText =
-        'R$ ' + livre.toFixed(2);
-
-      investimentoTexto.innerText =
-        'R$ ' + investimentoValor.toFixed(2);
-
-      investimentoCard.innerText =
-        'R$ ' + investimentoValor.toFixed(2);
-
-      dividaTexto.innerText =
-        'R$ ' + dividaValor.toFixed(2);
-
-      resumo.innerText =
-        'Você possui aproximadamente R$ ' +
-        livre.toFixed(2) +
-        ' livres no mês após despesas e consórcio.';
-
-    }
-
-    function mostrarTela(tela) {
-
-      document.getElementById('inicio')
-        .classList.add('hidden');
-
-      document.getElementById('investimentos')
-        .classList.add('hidden');
-
-      document.getElementById('dividas')
-        .classList.add('hidden');
-
-      document.getElementById('config')
-        .classList.add('hidden');
-
-      document.getElementById(tela)
-        .classList.remove('hidden');
-
-    }
-
-    function limparDados() {
-
-      localStorage.clear();
-
-      location.reload();
-
-    }
-
-    salario.addEventListener(
-      'input',
-      atualizar
-    );
-
-    divida.addEventListener(
-      'input',
-      atualizar
-    );
-
-    consorcio.addEventListener(
-      'input',
-      atualizar
-    );
-
-    investimento.addEventListener(
-      'input',
-      atualizar
-    );
-
-    atualizar();
-
-  </script>
+</script>
 
 </body>
-
 </html>
