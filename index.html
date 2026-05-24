@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finance Control</title>
+<title>Finance Control AI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,41 +19,42 @@ padding-bottom:120px;
 }
 
 .background{
-position:fixed;width:100%;height:100%;z-index:-1;
+position:fixed;
+width:100%;
+height:100%;
+z-index:-1;
 background:
 radial-gradient(circle at top left,#12305d 0%,transparent 35%),
 radial-gradient(circle at bottom right,#081220 0%,transparent 35%),
 #050816;
 }
 
-header{padding:20px;display:flex;justify-content:space-between;}
+.page{display:none;}
+.active{display:block;}
+
+header{
+padding:20px;
+display:flex;
+justify-content:space-between;
+}
 
 .logo{font-size:26px;font-weight:700;}
 .logo span{color:#67a4ff;}
-
-.page{display:none;}
-.active{display:block;}
 
 .main-card,.card,.section,nav{
 background:rgba(255,255,255,0.04);
 backdrop-filter:blur(20px);
 border:1px solid rgba(255,255,255,0.08);
-border-radius:20px;
+border-radius:18px;
 }
 
-.main-card{width:92%;margin:auto;padding:25px;}
+.main-card{width:92%;margin:auto;padding:25px;margin-top:15px;}
 
 .balance{font-size:40px;font-weight:700;}
 
-.actions{display:flex;gap:10px;flex-wrap:wrap;}
-
-.btn{
-flex:1;padding:12px;border:none;border-radius:12px;
-background:#12305d;color:white;
-}
-
 .cards{
-width:92%;margin:20px auto;
+width:92%;
+margin:20px auto;
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
 gap:12px;
@@ -63,7 +64,7 @@ gap:12px;
 
 .value{font-size:26px;font-weight:700;}
 
-.section{width:92%;margin:20px auto;padding:20px;}
+.section{width:92%;margin:15px auto;padding:20px;}
 
 input,select{
 width:100%;
@@ -85,14 +86,14 @@ background:#2459a6;
 color:white;
 }
 
-/* PROGRESS BAR */
+/* PROGRESS */
 .progress-container{
 width:100%;
 height:18px;
 background:rgba(255,255,255,0.08);
 border-radius:20px;
 overflow:hidden;
-margin-top:12px;
+margin-top:10px;
 }
 
 .progress{
@@ -118,6 +119,7 @@ nav a{
 color:white;
 font-size:13px;
 opacity:0.7;
+cursor:pointer;
 }
 
 nav a.active-tab{
@@ -132,7 +134,7 @@ opacity:1;
 <div class="background"></div>
 
 <header>
-<div class="logo">Finance <span>Control</span></div>
+<div class="logo">Finance <span>AI</span></div>
 </header>
 
 <!-- HOME -->
@@ -156,36 +158,15 @@ opacity:1;
 
 </div>
 
-<!-- CARTEIRA -->
-<div id="carteira" class="page">
-
-<section class="section">
-<h2>Receita</h2>
-<input id="receitaValor">
-<button class="save-btn" onclick="addReceita()">Adicionar</button>
-</section>
-
-<section class="section">
-<h2>Gasto</h2>
-<input id="gastoValor">
-<select id="categoria">
-<option>Mercado</option>
-<option>Contas</option>
-<option>Lazer</option>
-<option>Outros</option>
-</select>
-<button class="save-btn" onclick="addGasto()">Adicionar</button>
-</section>
-
-</div>
-
-<!-- INVEST -->
+<!-- META -->
 <div id="investimentos" class="page">
 
 <section class="section">
-<h2>Meta</h2>
-<input id="meta">
-<input id="meses">
+<h2>Meta Inteligente</h2>
+
+<input id="meta" placeholder="Meta (ex: 5000)">
+<input id="meses" placeholder="Meses">
+
 <button class="save-btn" onclick="calcMeta()">Calcular</button>
 
 <div class="progress-container">
@@ -193,6 +174,8 @@ opacity:1;
 </div>
 
 <div id="resultado"></div>
+
+<div id="advisor"></div>
 </section>
 
 </div>
@@ -201,8 +184,11 @@ opacity:1;
 <div id="perfil" class="page">
 
 <section class="section">
-<h2>Perfil</h2>
-<button class="save-btn" onclick="limpar()">Limpar Dados</button>
+<h2>Consultor Financeiro</h2>
+
+<div id="alerta"></div>
+
+<button class="save-btn" onclick="limpar()">Limpar</button>
 </section>
 
 </div>
@@ -210,19 +196,20 @@ opacity:1;
 <!-- MENU -->
 <nav>
 <a onclick="show('home')">Home</a>
-<a onclick="show('carteira')">Carteira</a>
-<a onclick="show('investimentos')">Invest</a>
-<a onclick="show('perfil')">Perfil</a>
+<a onclick="show('investimentos')">Meta</a>
+<a onclick="show('perfil')">AI</a>
 </nav>
 
 <script>
 
 let saldo=0,entradas=0,gastos=0,investimentos=0;
 
-let labels=["Seg","Ter","Qua","Qui","Sex","Sab","Dom"];
-let data=[0,0,0,0,0,0,0];
+let metaAtual=0;
+let mesesAtual=1;
 
 let chart;
+
+let data=[0,0,0,0,0,0,0];
 
 function initChart(){
 const ctx=document.getElementById("grafico");
@@ -230,19 +217,25 @@ const ctx=document.getElementById("grafico");
 chart=new Chart(ctx,{
 type:"line",
 data:{
-labels,
-datasets:[{
+labels:["1","2","3","4","5","6","7"],
+datasets:[
+{
 label:"Fluxo",
-data,
-borderWidth:2,
-tension:0.4
-}]
+data:data,
+borderWidth:2
+},
+{
+label:"Meta",
+data:[0,0,0,0,0,0,0],
+borderWidth:2
+}
+]
 }
 });
 }
 
-function updateChart(value){
-data.push(value);
+function updateChart(v){
+data.push(v);
 data.shift();
 chart.update();
 }
@@ -252,58 +245,78 @@ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById(id).classList.add("active");
 }
 
-function addReceita(){
-let v=parseFloat(document.getElementById("receitaValor").value);
-if(isNaN(v))return;
+function add(v){
 saldo+=v;
-entradas+=v;
 updateChart(v);
 update();
 }
 
-function addGasto(){
-let v=parseFloat(document.getElementById("gastoValor").value);
-if(isNaN(v))return;
-let cat=document.getElementById("categoria").value;
-
-saldo-=v;
-gastos+=v;
-
-updateChart(-v);
-update();
-}
-
 function update(){
-document.getElementById("saldo").innerText="R$ "+saldo;
+
+document.getElementById("saldo").innerText=saldo;
 document.getElementById("entradas").innerText=entradas;
 document.getElementById("gastos").innerText=gastos;
 document.getElementById("investimentosValor").innerText=investimentos;
 document.getElementById("economia").innerText=saldo-gastos;
 
+checkAdvisor();
 updateProgress();
 }
 
 function calcMeta(){
-let meta=parseFloat(document.getElementById("meta").value);
-let meses=parseFloat(document.getElementById("meses").value);
 
-let perc=(investimentos/meta)*100;
-document.getElementById("progress").style.width=perc+"%";
+metaAtual=parseFloat(document.getElementById("meta").value);
+mesesAtual=parseFloat(document.getElementById("meses").value);
 
-document.getElementById("resultado").innerText=
-"R$ "+(meta/meses).toFixed(2)+"/mês";
+let mensal=metaAtual/mesesAtual;
+
+document.getElementById("resultado").innerHTML=
+"Você precisa investir R$ "+mensal.toFixed(2);
+
+simulate(mensal);
 }
 
 function updateProgress(){
-let meta=parseFloat(document.getElementById("meta").value)||1;
-let perc=(investimentos/meta)*100;
+
+if(metaAtual<=0) return;
+
+let perc=(investimentos/metaAtual)*100;
+
 document.getElementById("progress").style.width=Math.min(perc,100)+"%";
+
+if(perc>=80){
+document.getElementById("alerta").innerHTML="⚠️ Você está perto da meta!";
+}
+
+if(perc>=100){
+document.getElementById("alerta").innerHTML="🎉 Meta atingida!";
+}
+}
+
+function simulate(m){
+
+let tempo=(metaAtual-(investimentos))/m;
+
+document.getElementById("advisor").innerHTML=
+"Se aumentar R$100, termina mais rápido.";
+}
+
+function checkAdvisor(){
+
+let disponivel=saldo-gastos;
+
+if(disponivel>500){
+
+document.getElementById("alerta").innerHTML=
+"💡 Você pode investir mais hoje!";
+}
 }
 
 function limpar(){
 saldo=entradas=gastos=investimentos=0;
+metaAtual=0;
+document.getElementById("alerta").innerHTML="";
 update();
-alert("Limpo!");
 }
 
 initChart();
