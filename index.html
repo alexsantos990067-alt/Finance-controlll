@@ -1,209 +1,271 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Finance Control</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, sans-serif;
-    }
+<title>Finance Control</title>
 
-    body{
-      background:#060b16;
-      color:white;
-      min-height:100vh;
-      overflow-x:hidden;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    .background{
-      position:fixed;
-      width:100%;
-      height:100%;
-      top:0;
-      left:0;
-      background:
-      radial-gradient(circle at top left,#16335f 0%,transparent 30%),
-      radial-gradient(circle at bottom right,#0c1f3d 0%,transparent 30%);
-      z-index:-1;
-    }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    header{
-      padding:25px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
+<style>
 
-    .logo{
-      font-size:28px;
-      font-weight:bold;
-      letter-spacing:1px;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-    .profile{
-      width:45px;
-      height:45px;
-      border-radius:50%;
-      background:rgba(255,255,255,0.1);
-      backdrop-filter:blur(10px);
-    }
+body{
+background:#050816;
+color:white;
+min-height:100vh;
+overflow-x:hidden;
+padding-bottom:120px;
+}
 
-    .main-card{
-      width:90%;
-      margin:auto;
-      padding:30px;
-      border-radius:30px;
-      background:rgba(255,255,255,0.08);
-      backdrop-filter:blur(20px);
-      border:1px solid rgba(255,255,255,0.1);
-      box-shadow:0 10px 40px rgba(0,0,0,0.4);
-    }
+.background{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+background:
+radial-gradient(circle at top left,#12305d 0%,transparent 35%),
+radial-gradient(circle at bottom right,#081220 0%,transparent 35%),
+#050816;
+}
 
-    .main-card h2{
-      color:#8ca8d8;
-      font-size:18px;
-      margin-bottom:10px;
-    }
+header{
+padding:25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
 
-    .balance{
-      font-size:42px;
-      font-weight:bold;
-      margin-bottom:20px;
-    }
+.logo{
+font-size:28px;
+font-weight:700;
+}
 
-    .actions{
-      display:flex;
-      gap:15px;
-      margin-top:20px;
-    }
+.logo span{
+color:#5ba2ff;
+}
 
-    .btn{
-      flex:1;
-      padding:14px;
-      border:none;
-      border-radius:15px;
-      background:#12305d;
-      color:white;
-      font-size:15px;
-      cursor:pointer;
-      transition:0.3s;
-    }
+.profile{
+width:50px;
+height:50px;
+border-radius:50%;
+background:rgba(255,255,255,0.1);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,0.1);
+}
 
-    .btn:hover{
-      transform:translateY(-3px);
-      background:#1c4d94;
-    }
+.main-card{
+width:92%;
+margin:auto;
+padding:30px;
+border-radius:30px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.1);
+box-shadow:0 10px 40px rgba(0,0,0,0.4);
+}
 
-    .cards{
-      width:90%;
-      margin:30px auto;
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-      gap:20px;
-    }
+.main-card h2{
+font-size:16px;
+font-weight:400;
+color:#8ca8d8;
+margin-bottom:10px;
+}
 
-    .card{
-      padding:25px;
-      border-radius:25px;
-      background:rgba(255,255,255,0.06);
-      backdrop-filter:blur(20px);
-      border:1px solid rgba(255,255,255,0.08);
-      transition:0.3s;
-    }
+.balance{
+font-size:42px;
+font-weight:700;
+margin-bottom:25px;
+}
 
-    .card:hover{
-      transform:translateY(-5px);
-    }
+.actions{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
 
-    .card h3{
-      color:#8ca8d8;
-      margin-bottom:10px;
-      font-size:16px;
-    }
+.btn{
+flex:1;
+padding:15px;
+border:none;
+border-radius:18px;
+background:#12305d;
+color:white;
+font-size:15px;
+cursor:pointer;
+transition:0.3s;
+min-width:120px;
+}
 
-    .value{
-      font-size:28px;
-      font-weight:bold;
-    }
+.btn:hover{
+transform:translateY(-3px);
+background:#1f4d91;
+}
 
-    .investment-box{
-      width:90%;
-      margin:20px auto;
-      padding:30px;
-      border-radius:30px;
-      background:linear-gradient(
-      135deg,
-      rgba(17,35,70,0.9),
-      rgba(8,18,36,0.9)
-      );
-      border:1px solid rgba(255,255,255,0.1);
-    }
+.cards{
+width:92%;
+margin:25px auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:18px;
+}
 
-    .investment-box h2{
-      margin-bottom:15px;
-      color:#8ca8d8;
-    }
+.card{
+padding:25px;
+border-radius:25px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.08);
+transition:0.3s;
+}
 
-    .investment-box input{
-      width:100%;
-      padding:15px;
-      border:none;
-      outline:none;
-      border-radius:15px;
-      background:rgba(255,255,255,0.08);
-      color:white;
-      margin-top:10px;
-    }
+.card:hover{
+transform:translateY(-5px);
+}
 
-    .investment-box button{
-      width:100%;
-      margin-top:20px;
-      padding:15px;
-      border:none;
-      border-radius:15px;
-      background:#2459a6;
-      color:white;
-      font-size:16px;
-      cursor:pointer;
-    }
+.card h3{
+font-size:15px;
+font-weight:400;
+margin-bottom:12px;
+color:#8ca8d8;
+}
 
-    .result{
-      margin-top:20px;
-      font-size:18px;
-      color:#9fc2ff;
-    }
+.value{
+font-size:30px;
+font-weight:700;
+}
 
-    nav{
-      position:fixed;
-      bottom:20px;
-      left:50%;
-      transform:translateX(-50%);
-      width:90%;
-      padding:18px;
-      border-radius:25px;
-      background:rgba(255,255,255,0.08);
-      backdrop-filter:blur(20px);
-      display:flex;
-      justify-content:space-around;
-      border:1px solid rgba(255,255,255,0.1);
-    }
+.section{
+width:92%;
+margin:25px auto;
+padding:30px;
+border-radius:30px;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.08);
+}
 
-    nav a{
-      color:white;
-      text-decoration:none;
-      font-size:14px;
-      transition:0.3s;
-    }
+.section h2{
+margin-bottom:20px;
+font-size:22px;
+}
 
-    nav a:hover{
-      color:#79a7ff;
-    }
-  </style>
+.input-group{
+margin-bottom:15px;
+}
+
+.input-group input{
+width:100%;
+padding:16px;
+border:none;
+outline:none;
+border-radius:18px;
+background:rgba(255,255,255,0.08);
+color:white;
+font-size:15px;
+}
+
+.input-group input::placeholder{
+color:#8ca8d8;
+}
+
+.save-btn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:#2459a6;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.save-btn:hover{
+background:#2e6ac5;
+}
+
+.result{
+margin-top:20px;
+font-size:18px;
+color:#9fc2ff;
+}
+
+.goal-box{
+margin-top:20px;
+}
+
+.progress-bar{
+width:100%;
+height:20px;
+background:rgba(255,255,255,0.08);
+border-radius:30px;
+overflow:hidden;
+margin-top:15px;
+}
+
+.progress{
+height:100%;
+width:65%;
+background:linear-gradient(to right,#2459a6,#67a4ff);
+border-radius:30px;
+}
+
+canvas{
+margin-top:20px;
+}
+
+nav{
+position:fixed;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+width:92%;
+padding:18px;
+border-radius:30px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+display:flex;
+justify-content:space-around;
+border:1px solid rgba(255,255,255,0.1);
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-size:13px;
+transition:0.3s;
+}
+
+nav a:hover{
+color:#79a7ff;
+}
+
+@media(max-width:768px){
+
+.balance{
+font-size:34px;
+}
+
+.cards{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+</style>
 </head>
 
 <body>
@@ -211,94 +273,312 @@
 <div class="background"></div>
 
 <header>
-  <div class="logo">Finance Control</div>
-  <div class="profile"></div>
+
+<div class="logo">
+Finance <span>Control</span>
+</div>
+
+<div class="profile"></div>
+
 </header>
 
 <section class="main-card">
-  <h2>Saldo Total</h2>
-  <div class="balance">R$ 12.450,00</div>
 
-  <div class="actions">
-    <button class="btn">Receber</button>
-    <button class="btn">Transferir</button>
-  </div>
+<h2>Saldo Total</h2>
+
+<div class="balance" id="saldo">
+R$ 12.450,00
+</div>
+
+<div class="actions">
+
+<button class="btn">
+Receber
+</button>
+
+<button class="btn">
+Transferir
+</button>
+
+<button class="btn">
+Investir
+</button>
+
+</div>
+
 </section>
 
 <section class="cards">
 
-  <div class="card">
-    <h3>Entradas</h3>
-    <div class="value">R$ 8.200</div>
-  </div>
+<div class="card">
+<h3>Entradas</h3>
+<div class="value" id="entradas">
+R$ 8.200
+</div>
+</div>
 
-  <div class="card">
-    <h3>Gastos</h3>
-    <div class="value">R$ 3.120</div>
-  </div>
+<div class="card">
+<h3>Gastos</h3>
+<div class="value" id="gastos">
+R$ 3.120
+</div>
+</div>
 
-  <div class="card">
-    <h3>Investimentos</h3>
-    <div class="value">R$ 1.980</div>
-  </div>
+<div class="card">
+<h3>Investimentos</h3>
+<div class="value" id="investimentos">
+R$ 1.980
+</div>
+</div>
 
-  <div class="card">
-    <h3>Economia</h3>
-    <div class="value">R$ 2.540</div>
-  </div>
+<div class="card">
+<h3>Economia</h3>
+<div class="value" id="economia">
+R$ 2.540
+</div>
+</div>
 
 </section>
 
-<section class="investment-box">
+<section class="section">
 
-  <h2>Planejamento de Investimentos</h2>
+<h2>Adicionar Receita</h2>
 
-  <input type="number" id="meta" placeholder="Meta desejada">
+<div class="input-group">
+<input type="number" id="receitaValor" placeholder="Valor recebido">
+</div>
 
-  <input type="number" id="meses" placeholder="Quantidade de meses">
+<button class="save-btn" onclick="adicionarReceita()">
+Salvar Receita
+</button>
 
-  <button onclick="calcular()">
-    Calcular investimento mensal
-  </button>
+</section>
 
-  <div class="result" id="resultado"></div>
+<section class="section">
+
+<h2>Adicionar Gasto</h2>
+
+<div class="input-group">
+<input type="number" id="gastoValor" placeholder="Valor gasto">
+</div>
+
+<button class="save-btn" onclick="adicionarGasto()">
+Salvar Gasto
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Planejamento de Investimentos</h2>
+
+<div class="input-group">
+<input type="number" id="meta" placeholder="Meta desejada">
+</div>
+
+<div class="input-group">
+<input type="number" id="meses" placeholder="Quantidade de meses">
+</div>
+
+<button class="save-btn" onclick="calcularInvestimento()">
+Calcular
+</button>
+
+<div class="result" id="resultado"></div>
+
+</section>
+
+<section class="section">
+
+<h2>Meta Financeira</h2>
+
+<div class="goal-box">
+
+<p>
+Você já completou 65% da sua meta financeira.
+</p>
+
+<div class="progress-bar">
+<div class="progress"></div>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Relatório Financeiro</h2>
+
+<canvas id="grafico"></canvas>
 
 </section>
 
 <nav>
-  <a href="#">Home</a>
-  <a href="#">Carteira</a>
-  <a href="#">Investimentos</a>
-  <a href="#">Relatórios</a>
-  <a href="#">Perfil</a>
+
+<a href="#">
+Home
+</a>
+
+<a href="#">
+Carteira
+</a>
+
+<a href="#">
+Investimentos
+</a>
+
+<a href="#">
+Relatórios
+</a>
+
+<a href="#">
+Perfil
+</a>
+
 </nav>
 
 <script>
 
-function calcular(){
+let saldo = 12450;
+let entradas = 8200;
+let gastos = 3120;
+let investimentos = 1980;
 
-  let meta =
-  document.getElementById('meta').value;
+function atualizarTela(){
 
-  let meses =
-  document.getElementById('meses').value;
+document.getElementById('saldo')
+.innerHTML =
+"R$ " + saldo.toFixed(2);
 
-  let resultado =
-  document.getElementById('resultado');
+document.getElementById('entradas')
+.innerHTML =
+"R$ " + entradas.toFixed(2);
 
-  if(meta === "" || meses === ""){
-    resultado.innerHTML =
-    "Preencha todos os campos.";
-    return;
-  }
+document.getElementById('gastos')
+.innerHTML =
+"R$ " + gastos.toFixed(2);
 
-  let valor = meta / meses;
+document.getElementById('investimentos')
+.innerHTML =
+"R$ " + investimentos.toFixed(2);
 
-  resultado.innerHTML =
-  "Você precisa investir aproximadamente <br><br><strong>R$ "
-  + valor.toFixed(2)
-  + "</strong> por mês.";
+document.getElementById('economia')
+.innerHTML =
+"R$ " + (saldo - gastos).toFixed(2);
+
 }
+
+function adicionarReceita(){
+
+let valor =
+parseFloat(
+document.getElementById('receitaValor').value
+);
+
+if(isNaN(valor)) return;
+
+saldo += valor;
+entradas += valor;
+
+atualizarTela();
+
+document.getElementById('receitaValor').value = "";
+
+}
+
+function adicionarGasto(){
+
+let valor =
+parseFloat(
+document.getElementById('gastoValor').value
+);
+
+if(isNaN(valor)) return;
+
+saldo -= valor;
+gastos += valor;
+
+atualizarTela();
+
+document.getElementById('gastoValor').value = "";
+
+}
+
+function calcularInvestimento(){
+
+let meta =
+document.getElementById('meta').value;
+
+let meses =
+document.getElementById('meses').value;
+
+let resultado =
+document.getElementById('resultado');
+
+if(meta == "" || meses == ""){
+
+resultado.innerHTML =
+"Preencha todos os campos.";
+
+return;
+
+}
+
+let valor = meta / meses;
+
+resultado.innerHTML =
+"Você precisa investir aproximadamente <br><br><strong>R$ "
++ valor.toFixed(2)
++ "</strong> por mês.";
+
+}
+
+const ctx =
+document.getElementById('grafico');
+
+new Chart(ctx, {
+
+type:'line',
+
+data:{
+
+labels:[
+'Jan',
+'Fev',
+'Mar',
+'Abr',
+'Mai',
+'Jun'
+],
+
+datasets:[{
+
+label:'Crescimento Financeiro',
+
+data:[
+2000,
+3500,
+4200,
+5200,
+7600,
+9800
+],
+
+borderWidth:3,
+tension:0.4
+
+}]
+
+},
+
+options:{
+responsive:true
+}
+
+});
+
+atualizarTela();
 
 </script>
 
