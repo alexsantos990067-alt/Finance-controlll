@@ -85,7 +85,6 @@ color:white;
 cursor:pointer;
 }
 
-/* NAV */
 nav{
 position:fixed;
 bottom:15px;
@@ -109,7 +108,6 @@ color:#79a7ff;
 opacity:1;
 }
 
-/* progress */
 .progress{
 height:16px;
 background:linear-gradient(90deg,#2459a6,#67a4ff);
@@ -168,6 +166,9 @@ border-radius:20px;
 
 <button class="save-btn" onclick="calcularMeta()">Calcular</button>
 
+<button class="save-btn" onclick="definirFatura()">Definir Fatura</button>
+<button class="save-btn" onclick="pagarMesFatura()">Pagar Parcela da Fatura</button>
+
 <div class="progress" id="bar"></div>
 <div id="investBox"></div>
 </section>
@@ -209,6 +210,12 @@ border-radius:20px;
 let saldo=0,entradas=0,gastos=0,investimentos=0;
 let meta=0;
 
+// 💳 FATURA
+let faturaTotal = 0;
+let mesesFatura = 0;
+let valorLiberadoFatura = 0;
+let faturaAtiva = false;
+
 function openTab(id){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById(id).classList.add("active");
@@ -228,9 +235,7 @@ update();
 }
 
 function update(){
-
 document.getElementById("saldo").innerText="R$ "+saldo;
-
 analise();
 }
 
@@ -257,7 +262,11 @@ function calcularMeta(){
 meta=parseFloat(document.getElementById("meta").value);
 let meses=parseFloat(document.getElementById("meses").value);
 
-let mensal=meta/meses;
+if(isNaN(meta) || isNaN(meses)) return;
+
+let bonus = valorLiberadoFatura;
+let mensal = (meta/meses) - (bonus/meses);
+if(mensal < 0) mensal = 0;
 
 document.getElementById("investBox").innerHTML=
 `
@@ -266,11 +275,61 @@ Mensal: ${mensal.toFixed(2)}
 `;
 
 let perc=(saldo/meta)*100;
-
 document.getElementById("bar").style.width=Math.min(perc,100)+"%";
 
 if(perc>80) alert("⚠ Quase na meta!");
 if(perc>=100) alert("🎉 Meta atingida!");
+}
+
+function definirFatura(){
+let valor = parseFloat(prompt("Valor total da fatura:"));
+let meses = parseFloat(prompt("Em quantos meses vai pagar?"));
+
+if(isNaN(valor) || isNaN(meses) || meses<=0) return;
+
+faturaTotal = valor;
+mesesFatura = meses;
+faturaAtiva = true;
+
+atualizarFatura();
+}
+
+function atualizarFatura(){
+
+if(!faturaAtiva) return;
+
+let mensal = faturaTotal / mesesFatura;
+
+document.getElementById("analiseBox").innerHTML +=
+`
+<br><br>💳 Fatura: R$ ${faturaTotal.toFixed(2)}
+<br>📆 Meses: ${mesesFatura}
+<br>💰 Parcela: R$ ${mensal.toFixed(2)}
+`;
+
+if(mesesFatura === 1){
+alert("⚠ Último mês da fatura!");
+}
+}
+
+function pagarMesFatura(){
+
+if(!faturaAtiva) return;
+
+if(mesesFatura > 0){
+mesesFatura--;
+}
+
+if(mesesFatura === 0){
+faturaAtiva = false;
+valorLiberadoFatura = faturaTotal;
+
+investimentos += valorLiberadoFatura;
+
+alert("🎉 Fatura quitada! R$ " + faturaTotal + " liberado para investimento");
+
+update();
+}
 }
 
 function limpar(){
