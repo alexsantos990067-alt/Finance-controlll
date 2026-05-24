@@ -5,95 +5,155 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Finance Control</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
 body{
 background:#050816;
 color:white;
-overflow-x:hidden;
 min-height:100vh;
 padding-bottom:120px;
 }
 
 .background{
-position:fixed;width:100%;height:100%;top:0;left:0;z-index:-1;
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
 background:
 radial-gradient(circle at top left,#12305d 0%,transparent 35%),
 radial-gradient(circle at bottom right,#081220 0%,transparent 35%),
 #050816;
 }
 
-header{padding:25px;display:flex;justify-content:space-between;align-items:center;}
-.logo{font-size:28px;font-weight:700;}
-.logo span{color:#67a4ff;}
-.profile{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);}
-
-.page{display:none;width:100%;animation:fade 0.4s ease;}
-.active{display:block;}
-
-@keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0px);}}
-
-.main-card{
-width:92%;margin:auto;padding:30px;border-radius:30px;
-background:rgba(255,255,255,0.08);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,0.1);
+header{
+padding:25px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.balance{font-size:42px;font-weight:700;margin-bottom:25px;}
+.logo{font-size:28px;font-weight:700;}
+.logo span{color:#67a4ff;}
 
-.actions{display:flex;gap:15px;flex-wrap:wrap;}
+.page{display:none;}
+.active{display:block;}
+
+.main-card,.card,.section,nav{
+backdrop-filter:blur(22px);
+-webkit-backdrop-filter:blur(22px);
+border:1px solid rgba(255,255,255,0.08);
+background:rgba(255,255,255,0.04);
+border-radius:25px;
+}
+
+.main-card{
+width:92%;
+margin:auto;
+padding:30px;
+margin-top:20px;
+}
+
+.balance{
+font-size:42px;
+font-weight:700;
+}
+
+.actions{display:flex;gap:10px;flex-wrap:wrap;}
 
 .btn{
-flex:1;padding:15px;border:none;border-radius:18px;
-background:#12305d;color:white;font-size:15px;cursor:pointer;
-min-width:120px;
+flex:1;
+padding:14px;
+border:none;
+border-radius:14px;
+background:#12305d;
+color:white;
+cursor:pointer;
 }
 
 .btn:hover{background:#1f4d91;}
 
 .cards{
-width:92%;margin:25px auto;
-display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-gap:18px;
+width:92%;
+margin:20px auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
 }
 
-.card{
-padding:25px;border-radius:25px;
-background:rgba(255,255,255,0.06);
-}
+.card{padding:20px;}
 
-.value{font-size:30px;font-weight:700;}
+.value{font-size:28px;font-weight:700;}
 
 .section{
-width:92%;margin:25px auto;padding:30px;border-radius:30px;
-background:rgba(255,255,255,0.06);
+width:92%;
+margin:20px auto;
+padding:25px;
 }
 
-.input-group input{
-width:100%;padding:16px;border-radius:18px;border:none;
-background:rgba(255,255,255,0.08);color:white;
+input{
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,0.08);
+color:white;
 }
 
 .save-btn{
-width:100%;padding:16px;border:none;border-radius:18px;
-background:#2459a6;color:white;cursor:pointer;
+width:100%;
+padding:14px;
+margin-top:10px;
+border:none;
+border-radius:14px;
+background:#2459a6;
+color:white;
+cursor:pointer;
 }
 
 nav{
-position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-width:92%;padding:18px;border-radius:30px;
-background:rgba(255,255,255,0.08);
-display:flex;justify-content:space-around;
+position:fixed;
+bottom:15px;
+left:50%;
+transform:translateX(-50%);
+width:92%;
+padding:14px;
+display:flex;
+justify-content:space-around;
 }
 
-nav a{color:white;cursor:pointer;}
+nav a{
+color:white;
+font-size:13px;
+cursor:pointer;
+opacity:0.7;
+transition:0.3s;
+}
 
+nav a.active-tab{
+color:#79a7ff;
+opacity:1;
+}
+
+.list-item{
+padding:14px;
+margin-top:10px;
+background:rgba(255,255,255,0.05);
+border-radius:12px;
+display:flex;
+justify-content:space-between;
+}
 </style>
 </head>
 
@@ -103,7 +163,7 @@ nav a{color:white;cursor:pointer;}
 
 <header>
 <div class="logo">Finance <span>Control</span></div>
-<div class="profile"></div>
+<div></div>
 </header>
 
 <!-- HOME -->
@@ -114,11 +174,9 @@ nav a{color:white;cursor:pointer;}
 <div class="balance" id="saldo">R$ 0,00</div>
 
 <div class="actions">
-
 <button class="btn" onclick="abrirPagina('carteira')">Carteira</button>
 <button class="btn" onclick="abrirPagina('investimentos')">Investir</button>
-<button class="btn" onclick="limparTudo()">Limpar Dados</button>
-
+<button class="btn" onclick="limparTudo()">Limpar</button>
 </div>
 </section>
 
@@ -135,20 +193,15 @@ nav a{color:white;cursor:pointer;}
 <div id="carteira" class="page">
 
 <section class="section">
-<h2>Adicionar Receita</h2>
-<input type="number" id="receitaValor">
+<h2>Receita</h2>
+<input id="receitaValor">
 <button class="save-btn" onclick="adicionarReceita()">Salvar</button>
 </section>
 
 <section class="section">
-<h2>Adicionar Gasto</h2>
-<input type="number" id="gastoValor">
+<h2>Gasto</h2>
+<input id="gastoValor">
 <button class="save-btn" onclick="adicionarGasto()">Salvar</button>
-</section>
-
-<section class="section">
-<h2>Compras Parceladas</h2>
-<div id="parcelas"></div>
 </section>
 
 </div>
@@ -158,10 +211,27 @@ nav a{color:white;cursor:pointer;}
 
 <section class="section">
 <h2>Meta</h2>
-<input type="number" id="meta">
-<input type="number" id="meses">
+<input id="meta">
+<input id="meses">
 <button class="save-btn" onclick="calcularInvestimento()">Calcular</button>
 <div id="resultado"></div>
+</section>
+
+</div>
+
+<!-- PERFIL -->
+<div id="perfil" class="page">
+
+<section class="section">
+<h2>Perfil</h2>
+
+<div class="list-item">
+<span>App</span>
+<span>Finance Control</span>
+</div>
+
+<button class="save-btn" onclick="limparTudo()">Limpar Todos os Dados</button>
+
 </section>
 
 </div>
@@ -171,121 +241,62 @@ nav a{color:white;cursor:pointer;}
 <a onclick="abrirPagina('home')">Home</a>
 <a onclick="abrirPagina('carteira')">Carteira</a>
 <a onclick="abrirPagina('investimentos')">Invest</a>
+<a onclick="abrirPagina('perfil')">Perfil</a>
 </nav>
 
 <script>
 
-let saldo = 0;
-let entradas = 0;
-let gastos = 0;
-let investimentos = 0;
-
-let metaInvestimentoAtual = 0;
-
-let comprasParceladas = JSON.parse(localStorage.getItem("parcelas")) || [];
-
-function salvar(){
-localStorage.setItem("saldo",saldo);
-localStorage.setItem("entradas",entradas);
-localStorage.setItem("gastos",gastos);
-localStorage.setItem("investimentos",investimentos);
-localStorage.setItem("parcelas",JSON.stringify(comprasParceladas));
-}
+let saldo=0,entradas=0,gastos=0,investimentos=0;
+let metaInvestimentoAtual=0;
+let comprasParceladas=[];
 
 function abrirPagina(id){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
 document.getElementById(id).classList.add('active');
+setActiveTab();
+}
+
+function setActiveTab(){
+document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active-tab'));
+event.target.classList.add('active-tab');
 }
 
 function atualizarTela(){
 
-document.getElementById("saldo").innerText = "R$ "+saldo.toFixed(2);
-document.getElementById("entradas").innerText = entradas.toFixed(2);
-document.getElementById("gastos").innerText = gastos.toFixed(2);
-document.getElementById("investimentosValor").innerText = investimentos.toFixed(2);
-document.getElementById("economia").innerText = (saldo-gastos).toFixed(2);
-
-atualizarParcelas();
-salvar();
-verificarMeta();
+document.getElementById("saldo").innerText="R$ "+saldo.toFixed(2);
+document.getElementById("entradas").innerText=entradas.toFixed(2);
+document.getElementById("gastos").innerText=gastos.toFixed(2);
+document.getElementById("investimentosValor").innerText=investimentos.toFixed(2);
+document.getElementById("economia").innerText=(saldo-gastos).toFixed(2);
 }
 
 function adicionarReceita(){
-let v = parseFloat(document.getElementById("receitaValor").value);
-if(isNaN(v)) return;
-saldo += v;
-entradas += v;
+let v=parseFloat(document.getElementById("receitaValor").value);
+if(isNaN(v))return;
+saldo+=v;entradas+=v;
 atualizarTela();
 }
 
 function adicionarGasto(){
-let v = parseFloat(document.getElementById("gastoValor").value);
-if(isNaN(v)) return;
-saldo -= v;
-gastos += v;
+let v=parseFloat(document.getElementById("gastoValor").value);
+if(isNaN(v))return;
+saldo-=v;gastos+=v;
 atualizarTela();
 }
 
 function calcularInvestimento(){
-let meta = parseFloat(document.getElementById("meta").value);
-let meses = parseFloat(document.getElementById("meses").value);
-if(isNaN(meta)||isNaN(meses)) return;
-
-metaInvestimentoAtual = meta;
-
-document.getElementById("resultado").innerHTML =
-"R$ "+(meta/meses).toFixed(2)+" por mês";
-}
-
-function verificarMeta(){
-if(metaInvestimentoAtual>0 && investimentos>=metaInvestimentoAtual){
-alert("Meta atingida!");
-investimentos=0;
-metaInvestimentoAtual=0;
-atualizarTela();
-}
+let meta=parseFloat(document.getElementById("meta").value);
+let meses=parseFloat(document.getElementById("meses").value);
+metaInvestimentoAtual=meta;
+document.getElementById("resultado").innerHTML="R$ "+(meta/meses).toFixed(2);
 }
 
 function limparTudo(){
 saldo=0;entradas=0;gastos=0;investimentos=0;
 metaInvestimentoAtual=0;
 comprasParceladas=[];
-localStorage.clear();
 atualizarTela();
 alert("Tudo limpo!");
-}
-
-/* PARCELAS */
-
-function adicionarParcela(nome,valor,parcelas){
-comprasParceladas.push({
-nome,valor,parcelas,pago:0
-});
-atualizarTela();
-}
-
-function pagarParcela(i,valor){
-comprasParceladas[i].pago += valor;
-if(comprasParceladas[i].pago >= comprasParceladas[i].valor){
-comprasParceladas.splice(i,1);
-alert("Compra quitada!");
-}
-atualizarTela();
-}
-
-function atualizarParcelas(){
-let div=document.getElementById("parcelas");
-div.innerHTML="";
-
-comprasParceladas.forEach((p,i)=>{
-div.innerHTML+=`
-<div class="card">
-<b>${p.nome}</b><br>
-${p.pago.toFixed(2)} / ${p.valor.toFixed(2)}<br>
-<button onclick="pagarParcela(${i},50)">Pagar R$50</button>
-</div>
-`;
-});
 }
 
 atualizarTela();
