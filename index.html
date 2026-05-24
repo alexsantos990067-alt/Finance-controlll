@@ -3,341 +3,408 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finance Control AI Pro</title>
+<title>Finance Bank AI 3.0</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins;}
-
 body{
+margin:0;
+font-family:Poppins;
 background:#050816;
 color:white;
-min-height:100vh;
 padding-bottom:120px;
 }
 
-.background{
-position:fixed;
-inset:0;
-z-index:-1;
-background:
-radial-gradient(circle at top left,#12305d,transparent 40%),
-radial-gradient(circle at bottom right,#081220,transparent 40%);
-}
-
-.page{display:none;}
+.page{display:none;padding:20px;}
 .active{display:block;}
 
 header{
-display:flex;
-justify-content:space-between;
 padding:20px;
+font-size:20px;
+font-weight:700;
 }
 
-.logo{font-size:26px;font-weight:700;}
-.logo span{color:#67a4ff;}
-
-.main-card,.card,.section,nav{
-background:rgba(255,255,255,0.04);
-backdrop-filter:blur(20px);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:18px;
+.card{
+background:rgba(255,255,255,0.06);
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+backdrop-filter:blur(10px);
 }
 
-.main-card{width:92%;margin:auto;padding:25px;margin-top:15px;}
-
-.balance{font-size:40px;font-weight:700;}
-
-.cards{
-width:92%;
-margin:20px auto;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-gap:12px;
-}
-
-.card{padding:18px;}
-
-.value{font-size:26px;font-weight:700;}
-
-.section{width:92%;margin:15px auto;padding:20px;}
-
-input,select{
-width:100%;
-padding:12px;
-margin-top:8px;
-border:none;
-border-radius:12px;
-background:rgba(255,255,255,0.08);
-color:white;
-}
-
-.save-btn{
+button{
 width:100%;
 padding:12px;
 margin-top:10px;
 border:none;
 border-radius:12px;
-background:#2459a6;
+background:#2b6fff;
 color:white;
 cursor:pointer;
+transition:.25s;
+}
+
+button:active{
+transform:scale(0.94);
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:8px;
+border-radius:10px;
+border:none;
+background:#111a33;
+color:white;
 }
 
 nav{
 position:fixed;
-bottom:15px;
-left:50%;
-transform:translateX(-50%);
-width:92%;
+bottom:0;
+left:0;
+right:0;
 display:flex;
 justify-content:space-around;
-padding:12px;
+background:#0b1224;
+padding:10px;
 }
 
-nav a{
-color:white;
-font-size:13px;
-opacity:0.7;
-cursor:pointer;
+nav button{
+width:auto;
+background:none;
+font-size:12px;
 }
-
-nav a.active-tab{
-color:#79a7ff;
-opacity:1;
-}
-
-.progress{
-height:16px;
-background:linear-gradient(90deg,#2459a6,#67a4ff);
-width:0%;
-transition:.5s;
-border-radius:20px;
+canvas{
+background:#0b1224;
+border-radius:12px;
+padding:10px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="background"></div>
-
-<header>
-<div class="logo">Finance <span>AI Pro</span></div>
-</header>
+<header>Finance Bank AI 3.0</header>
 
 <!-- HOME -->
 <div id="home" class="page active">
-
-<section class="main-card">
-<h2>Visão Inteligente</h2>
-<div class="balance" id="saldo">0</div>
-<button class="save-btn" onclick="analise()">Análise Financeira</button>
-<div id="analiseBox"></div>
-</section>
-
+<div class="card">
+<h3>Resumo Financeiro</h3>
+<div id="resumo"></div>
 </div>
 
-<!-- CARTEIRA -->
-<div id="carteira" class="page">
+<div class="card">
+<h3>IA Sugestão</h3>
+<div id="iaBox"></div>
+</div>
+</div>
 
-<section class="section">
-<h2>Movimentação</h2>
+<!-- FATURAS -->
+<div id="fatura" class="page">
 
-<input id="valor">
-<select id="tipo">
-<option value="entrada">Entrada</option>
-<option value="saida">Saída</option>
-</select>
+<div class="card">
+<h3>💳 Nova Fatura / Consórcio</h3>
 
-<button class="save-btn" onclick="movimento()">Executar</button>
-</section>
+<button onclick="criarFatura()">Criar Nova Fatura</button>
+
+<div id="faturasBox"></div>
+</div>
+
+<div class="card">
+<canvas id="graficoFatura"></canvas>
+</div>
+
+<div class="card">
+<h3>📅 Histórico Global</h3>
+<div id="historicoGlobal"></div>
+</div>
 
 </div>
 
 <!-- INVEST -->
-<div id="investimentos" class="page">
+<div id="invest" class="page">
 
-<section class="section">
-<h2>Meta Inteligente</h2>
+<div class="card">
+<h3>💰 Investimento</h3>
 
-<input id="meta">
-<input id="meses">
+<input id="meta" placeholder="Meta">
+<input id="meses" placeholder="Meses">
 
-<button class="save-btn" onclick="calcularMeta()">Calcular</button>
+<button onclick="calcInvest()">Calcular</button>
 
-<button class="save-btn" onclick="definirFatura()">Definir Fatura</button>
-<button class="save-btn" onclick="pagarMesFatura()">Pagar Parcela da Fatura</button>
+<div id="investInfo"></div>
+</div>
 
-<div class="progress" id="bar"></div>
-<div id="investBox"></div>
-</section>
+<div class="card">
+<canvas id="graficoInvest"></canvas>
+</div>
+
+<div class="card">
+<h3>📊 Previsão 6 meses</h3>
+<div id="previsao"></div>
+</div>
 
 </div>
 
-<!-- RELATORIO -->
-<div id="relatorios" class="page">
-
-<section class="section">
-<h2>Relatório Automático</h2>
-<div id="relatorio"></div>
-</section>
-
-</div>
-
-<!-- PERFIL -->
-<div id="perfil" class="page">
-
-<section class="section">
-<h2>Controle do Sistema</h2>
-
-<button class="save-btn" onclick="limpar()">Reset Total</button>
-</section>
-
-</div>
-
-<!-- MENU -->
+<!-- NAV -->
 <nav>
-<a onclick="openTab('home')">Home</a>
-<a onclick="openTab('carteira')">Carteira</a>
-<a onclick="openTab('investimentos')">Invest</a>
-<a onclick="openTab('relatorios')">Relatório</a>
-<a onclick="openTab('perfil')">Perfil</a>
+<button onclick="openTab('home')">Home</button>
+<button onclick="openTab('fatura')">Faturas</button>
+<button onclick="openTab('invest')">Invest</button>
 </nav>
 
 <script>
 
-let saldo=0,entradas=0,gastos=0,investimentos=0;
-let meta=0;
+// =======================
+// STORAGE
+// =======================
+let faturas = JSON.parse(localStorage.getItem("faturas")) || [];
+let investData = JSON.parse(localStorage.getItem("invest")) || {meta:0,meses:0};
 
-// 💳 FATURA
-let faturaTotal = 0;
-let mesesFatura = 0;
-let valorLiberadoFatura = 0;
-let faturaAtiva = false;
+// =======================
+// NOTIFICAÇÕES
+// =======================
+async function ativarNotificacoes(){
+if(Notification.permission !== "granted"){
+await Notification.requestPermission();
+}
+}
 
+function push(msg){
+if(Notification.permission === "granted"){
+new Notification("Finance Bank AI", {body:msg});
+}
+}
+
+// =======================
+// NAV
+// =======================
 function openTab(id){
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 document.getElementById(id).classList.add("active");
+
+if(id==="fatura") renderFaturas();
+if(id==="invest") renderInvest();
+if(id==="home") home();
 }
 
-function movimento(){
+// =======================
+// FATURAS MULTI
+// =======================
+function criarFatura(){
 
-let v=parseFloat(document.getElementById("valor").value);
-let t=document.getElementById("tipo").value;
+let total=parseFloat(prompt("Valor total da fatura (ex: 28000)"));
+let meses=parseInt(prompt("Meses (ex: 60)"));
 
-if(isNaN(v)) return;
+if(isNaN(total)||isNaN(meses)) return;
 
-if(t=="entrada"){saldo+=v;entradas+=v;}
-else{saldo-=v;gastos+=v;}
+faturas.push({
+id:Date.now(),
+total,
+meses,
+restante:meses,
+parcela:total/meses,
+historico:[]
+});
 
-update();
+save();
+renderFaturas();
 }
 
-function update(){
-document.getElementById("saldo").innerText="R$ "+saldo;
-analise();
+// swipe simulado
+function pagarParcela(id){
+
+let f = faturas.find(x=>x.id===id);
+if(!f || f.restante<=0) return;
+
+// animação swipe
+document.body.style.transform="scale(0.98)";
+setTimeout(()=>document.body.style.transform="scale(1)",150);
+
+f.restante--;
+
+f.historico.push({
+data:new Date().toLocaleDateString(),
+valor:f.parcela
+});
+
+// IA ALERTA
+if(f.restante <= 2){
+push("⚠ Fatura quase acabando!");
+sugestaoIA();
 }
 
-function analise(){
+if(f.restante === 0){
+push("🎉 Fatura quitada!");
+}
 
-let sugestao=saldo*0.2;
+save();
+renderFaturas();
+}
 
-document.getElementById("analiseBox").innerHTML=
-`
-💡 Você pode investir: R$ ${sugestao.toFixed(2)}<br>
-⚠ Gastos: ${gastos}
+// render faturas
+function renderFaturas(){
+
+document.getElementById("faturasBox").innerHTML =
+faturas.map(f=>`
+
+<div class="card">
+💳 Total: R$ ${f.total}<br>
+📆 Restante: ${f.restante} meses<br>
+💰 Parcela: R$ ${f.parcela.toFixed(2)}
+
+<button onclick="pagarParcela(${f.id})">💸 Pagar Parcela (Swipe)</button>
+</div>
+
+`).join("");
+
+historicoGlobal();
+chartFatura();
+resumo();
+}
+
+// =======================
+// INVESTIMENTO
+// =======================
+function calcInvest(){
+
+investData.meta=parseFloat(document.getElementById("meta").value);
+investData.meses=parseFloat(document.getElementById("meses").value);
+
+if(isNaN(investData.meta)||isNaN(investData.meses)) return;
+
+let base=investData.meta/investData.meses;
+
+// impacto da fatura
+let impacto = faturas.reduce((a,f)=>a+(f.restante>0?f.parcela:0),0)*0.05;
+
+let sugestao = base - impacto;
+
+document.getElementById("investInfo").innerHTML=`
+Meta: R$ ${investData.meta}<br>
+Sugestão mensal: R$ ${Math.max(sugestao,0).toFixed(2)}
 `;
 
-document.getElementById("relatorio").innerHTML=
-`
-Entradas: ${entradas}<br>
-Gastos: ${gastos}<br>
-Saldo: ${saldo}
+chartInvest();
+previsao6m();
+}
+
+// =======================
+// IA FINANCEIRA
+// =======================
+function sugestaoIA(){
+
+let msg="";
+
+faturas.forEach(f=>{
+if(f.restante>0){
+msg+=`💳 Fatura ${f.id}<br>
+👉 Pague R$ ${(f.parcela*1.3).toFixed(2)} para quitar mais rápido<br><br>`;
+}
+});
+
+document.getElementById("iaBox").innerHTML=msg;
+}
+
+// =======================
+// PREVISÃO 6 MESES
+// =======================
+function previsao6m(){
+
+let saldo=1000;
+let html="";
+
+for(let i=1;i<=6;i++){
+saldo += 150;
+html+=`M${i}: R$ ${saldo.toFixed(2)}<br>`;
+}
+
+document.getElementById("previsao").innerHTML=html;
+}
+
+// =======================
+// RESUMO
+// =======================
+function resumo(){
+
+let totalFaturas = faturas.reduce((a,f)=>a+f.restante,0);
+
+document.getElementById("resumo").innerHTML=`
+💳 Faturas ativas: ${totalFaturas}<br>
+⚡ IA: ${totalFaturas<=5 ? "Você pode investir mais!" : "Foque nas dívidas"}
 `;
 }
 
-function calcularMeta(){
+// =======================
+// HISTÓRICO
+// =======================
+function historicoGlobal(){
 
-meta=parseFloat(document.getElementById("meta").value);
-let meses=parseFloat(document.getElementById("meses").value);
+let all=[];
 
-if(isNaN(meta) || isNaN(meses)) return;
+faturas.forEach(f=>{
+f.historico.forEach(h=>{
+all.push(`📅 ${h.data} - R$ ${h.valor}`);
+});
+});
 
-let bonus = valorLiberadoFatura;
-let mensal = (meta/meses) - (bonus/meses);
-if(mensal < 0) mensal = 0;
-
-document.getElementById("investBox").innerHTML=
-`
-Meta: ${meta}<br>
-Mensal: ${mensal.toFixed(2)}
-`;
-
-let perc=(saldo/meta)*100;
-document.getElementById("bar").style.width=Math.min(perc,100)+"%";
-
-if(perc>80) alert("⚠ Quase na meta!");
-if(perc>=100) alert("🎉 Meta atingida!");
+document.getElementById("historicoGlobal").innerHTML=all.join("<br>");
 }
 
-function definirFatura(){
-let valor = parseFloat(prompt("Valor total da fatura:"));
-let meses = parseFloat(prompt("Em quantos meses vai pagar?"));
+// =======================
+// CHARTS
+// =======================
+let chartF,chartI;
 
-if(isNaN(valor) || isNaN(meses) || meses<=0) return;
+function chartFatura(){
 
-faturaTotal = valor;
-mesesFatura = meses;
-faturaAtiva = true;
+let ctx=document.getElementById("graficoFatura");
 
-atualizarFatura();
+if(chartF) chartF.destroy();
+
+let pago=faturas.reduce((a,f)=>a+(f.meses-f.restante),0);
+let resto=faturas.reduce((a,f)=>a+f.restante,0);
+
+chartF=new Chart(ctx,{
+type:"doughnut",
+data:{
+labels:["Pago","Restante"],
+datasets:[{data:[pago,resto]}]
+}
+});
 }
 
-function atualizarFatura(){
+function chartInvest(){
 
-if(!faturaAtiva) return;
+let ctx=document.getElementById("graficoInvest");
 
-let mensal = faturaTotal / mesesFatura;
+if(chartI) chartI.destroy();
 
-document.getElementById("analiseBox").innerHTML +=
-`
-<br><br>💳 Fatura: R$ ${faturaTotal.toFixed(2)}
-<br>📆 Meses: ${mesesFatura}
-<br>💰 Parcela: R$ ${mensal.toFixed(2)}
-`;
-
-if(mesesFatura === 1){
-alert("⚠ Último mês da fatura!");
+chartI=new Chart(ctx,{
+type:"bar",
+data:{
+labels:["Meta","Base"],
+datasets:[{data:[investData.meta,investData.meta/investData.meses]}]
 }
+});
 }
 
-function pagarMesFatura(){
-
-if(!faturaAtiva) return;
-
-if(mesesFatura > 0){
-mesesFatura--;
+// =======================
+function save(){
+localStorage.setItem("faturas",JSON.stringify(faturas));
+localStorage.setItem("invest",JSON.stringify(investData));
 }
 
-if(mesesFatura === 0){
-faturaAtiva = false;
-valorLiberadoFatura = faturaTotal;
-
-investimentos += valorLiberadoFatura;
-
-alert("🎉 Fatura quitada! R$ " + faturaTotal + " liberado para investimento");
-
-update();
-}
+// init
+function home(){
+resumo();
+sugestaoIA();
+previsao6m();
 }
 
-function limpar(){
-saldo=0;entradas=0;gastos=0;investimentos=0;
-update();
-}
-
-update();
+home();
 
 </script>
 
