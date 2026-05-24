@@ -1,27 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Finance Control</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
 background:#050816;
@@ -32,303 +21,80 @@ padding-bottom:120px;
 }
 
 .background{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-z-index:-1;
-
+position:fixed;width:100%;height:100%;top:0;left:0;z-index:-1;
 background:
 radial-gradient(circle at top left,#12305d 0%,transparent 35%),
 radial-gradient(circle at bottom right,#081220 0%,transparent 35%),
 #050816;
 }
 
-header{
-padding:25px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+header{padding:25px;display:flex;justify-content:space-between;align-items:center;}
+.logo{font-size:28px;font-weight:700;}
+.logo span{color:#67a4ff;}
+.profile{width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);}
 
-.logo{
-font-size:28px;
-font-weight:700;
-}
+.page{display:none;width:100%;animation:fade 0.4s ease;}
+.active{display:block;}
 
-.logo span{
-color:#67a4ff;
-}
-
-.profile{
-width:50px;
-height:50px;
-border-radius:50%;
-background:rgba(255,255,255,0.1);
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,0.1);
-}
-
-.page{
-display:none;
-width:100%;
-animation:fade 0.4s ease;
-}
-
-.active{
-display:block;
-}
-
-@keyframes fade{
-from{
-opacity:0;
-transform:translateY(10px);
-}
-to{
-opacity:1;
-transform:translateY(0px);
-}
-}
+@keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0px);}}
 
 .main-card{
-width:92%;
-margin:auto;
-padding:30px;
-border-radius:30px;
-
+width:92%;margin:auto;padding:30px;border-radius:30px;
 background:rgba(255,255,255,0.08);
-
 backdrop-filter:blur(20px);
-
 border:1px solid rgba(255,255,255,0.1);
-
-box-shadow:0 10px 40px rgba(0,0,0,0.4);
 }
 
-.main-card h2{
-font-size:16px;
-font-weight:400;
-color:#8ca8d8;
-margin-bottom:10px;
-}
+.balance{font-size:42px;font-weight:700;margin-bottom:25px;}
 
-.balance{
-font-size:42px;
-font-weight:700;
-margin-bottom:25px;
-}
-
-.actions{
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-}
+.actions{display:flex;gap:15px;flex-wrap:wrap;}
 
 .btn{
-flex:1;
-padding:15px;
-border:none;
-border-radius:18px;
-background:#12305d;
-color:white;
-font-size:15px;
-cursor:pointer;
-transition:0.3s;
+flex:1;padding:15px;border:none;border-radius:18px;
+background:#12305d;color:white;font-size:15px;cursor:pointer;
 min-width:120px;
 }
 
-.btn:hover{
-transform:translateY(-4px);
-background:#1f4d91;
-}
+.btn:hover{background:#1f4d91;}
 
 .cards{
-width:92%;
-margin:25px auto;
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fit,minmax(180px,1fr));
-
+width:92%;margin:25px auto;
+display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:18px;
 }
 
 .card{
-padding:25px;
-border-radius:25px;
-
+padding:25px;border-radius:25px;
 background:rgba(255,255,255,0.06);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,0.08);
-
-transition:0.3s;
 }
 
-.card:hover{
-transform:translateY(-5px);
-}
-
-.card h3{
-font-size:15px;
-font-weight:400;
-margin-bottom:12px;
-color:#8ca8d8;
-}
-
-.value{
-font-size:30px;
-font-weight:700;
-}
+.value{font-size:30px;font-weight:700;}
 
 .section{
-width:92%;
-margin:25px auto;
-padding:30px;
-border-radius:30px;
-
+width:92%;margin:25px auto;padding:30px;border-radius:30px;
 background:rgba(255,255,255,0.06);
-
-backdrop-filter:blur(20px);
-
-border:1px solid rgba(255,255,255,0.08);
-}
-
-.section h2{
-margin-bottom:20px;
-font-size:22px;
-}
-
-.input-group{
-margin-bottom:15px;
 }
 
 .input-group input{
-width:100%;
-padding:16px;
-border:none;
-outline:none;
-border-radius:18px;
-
-background:rgba(255,255,255,0.08);
-
-color:white;
-font-size:15px;
-}
-
-.input-group input::placeholder{
-color:#8ca8d8;
+width:100%;padding:16px;border-radius:18px;border:none;
+background:rgba(255,255,255,0.08);color:white;
 }
 
 .save-btn{
-width:100%;
-padding:16px;
-border:none;
-border-radius:18px;
-background:#2459a6;
-color:white;
-font-size:16px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.save-btn:hover{
-background:#2e6ac5;
-}
-
-.result{
-margin-top:20px;
-font-size:18px;
-color:#9fc2ff;
-}
-
-.progress-bar{
-width:100%;
-height:20px;
-
-background:rgba(255,255,255,0.08);
-
-border-radius:30px;
-overflow:hidden;
-margin-top:15px;
-}
-
-.progress{
-height:100%;
-width:70%;
-
-background:
-linear-gradient(to right,#2459a6,#67a4ff);
-
-border-radius:30px;
-}
-
-canvas{
-margin-top:20px;
-}
-
-.list-item{
-padding:18px;
-margin-top:12px;
-border-radius:18px;
-
-background:rgba(255,255,255,0.05);
-
-display:flex;
-justify-content:space-between;
-align-items:center;
+width:100%;padding:16px;border:none;border-radius:18px;
+background:#2459a6;color:white;cursor:pointer;
 }
 
 nav{
-position:fixed;
-bottom:20px;
-left:50%;
-transform:translateX(-50%);
-
-width:92%;
-padding:18px;
-
-border-radius:30px;
-
+position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+width:92%;padding:18px;border-radius:30px;
 background:rgba(255,255,255,0.08);
-
-backdrop-filter:blur(20px);
-
-display:flex;
-justify-content:space-around;
-
-border:1px solid rgba(255,255,255,0.1);
+display:flex;justify-content:space-around;
 }
 
-nav a{
-color:white;
-text-decoration:none;
-font-size:13px;
-cursor:pointer;
-transition:0.3s;
-}
-
-nav a:hover{
-color:#79a7ff;
-}
-
-@media(max-width:768px){
-
-.balance{
-font-size:34px;
-}
-
-.cards{
-grid-template-columns:1fr 1fr;
-}
-
-}
+nav a{color:white;cursor:pointer;}
 
 </style>
-
 </head>
 
 <body>
@@ -336,394 +102,191 @@ grid-template-columns:1fr 1fr;
 <div class="background"></div>
 
 <header>
-
-<div class="logo">
-Finance <span>Control</span>
-</div>
-
+<div class="logo">Finance <span>Control</span></div>
 <div class="profile"></div>
-
 </header>
 
 <!-- HOME -->
-
 <div id="home" class="page active">
 
 <section class="main-card">
-
 <h2>Saldo Total</h2>
-
-<div class="balance" id="saldo">
-R$ 12.450,00
-</div>
+<div class="balance" id="saldo">R$ 0,00</div>
 
 <div class="actions">
 
-<button class="btn" onclick="abrirPagina('carteira')">
-Carteira
-</button>
-
-<button class="btn" onclick="abrirPagina('investimentos')">
-Investir
-</button>
-
-<button class="btn" onclick="abrirPagina('relatorios')">
-Relatórios
-</button>
+<button class="btn" onclick="abrirPagina('carteira')">Carteira</button>
+<button class="btn" onclick="abrirPagina('investimentos')">Investir</button>
+<button class="btn" onclick="limparTudo()">Limpar Dados</button>
 
 </div>
-
 </section>
 
 <section class="cards">
-
-<div class="card">
-<h3>Entradas</h3>
-<div class="value" id="entradas">
-R$ 8.200
-</div>
-</div>
-
-<div class="card">
-<h3>Gastos</h3>
-<div class="value" id="gastos">
-R$ 3.120
-</div>
-</div>
-
-<div class="card">
-<h3>Investimentos</h3>
-<div class="value" id="investimentosValor">
-R$ 1.980
-</div>
-</div>
-
-<div class="card">
-<h3>Economia</h3>
-<div class="value" id="economia">
-R$ 2.540
-</div>
-</div>
-
+<div class="card"><h3>Entradas</h3><div class="value" id="entradas">0</div></div>
+<div class="card"><h3>Gastos</h3><div class="value" id="gastos">0</div></div>
+<div class="card"><h3>Investimentos</h3><div class="value" id="investimentosValor">0</div></div>
+<div class="card"><h3>Economia</h3><div class="value" id="economia">0</div></div>
 </section>
 
 </div>
 
 <!-- CARTEIRA -->
-
 <div id="carteira" class="page">
 
 <section class="section">
-
 <h2>Adicionar Receita</h2>
-
-<div class="input-group">
-<input type="number" id="receitaValor" placeholder="Valor recebido">
-</div>
-
-<button class="save-btn" onclick="adicionarReceita()">
-Salvar Receita
-</button>
-
+<input type="number" id="receitaValor">
+<button class="save-btn" onclick="adicionarReceita()">Salvar</button>
 </section>
 
 <section class="section">
-
 <h2>Adicionar Gasto</h2>
-
-<div class="input-group">
-<input type="number" id="gastoValor" placeholder="Valor gasto">
-</div>
-
-<button class="save-btn" onclick="adicionarGasto()">
-Salvar Gasto
-</button>
-
+<input type="number" id="gastoValor">
+<button class="save-btn" onclick="adicionarGasto()">Salvar</button>
 </section>
 
 <section class="section">
-
-<h2>Histórico Financeiro</h2>
-
-<div class="list-item">
-<span>Salário</span>
-<span>+ R$ 5.000</span>
-</div>
-
-<div class="list-item">
-<span>Mercado</span>
-<span>- R$ 320</span>
-</div>
-
-<div class="list-item">
-<span>Internet</span>
-<span>- R$ 120</span>
-</div>
-
+<h2>Compras Parceladas</h2>
+<div id="parcelas"></div>
 </section>
 
 </div>
 
 <!-- INVESTIMENTOS -->
-
 <div id="investimentos" class="page">
 
 <section class="section">
-
-<h2>Planejamento de Investimentos</h2>
-
-<div class="input-group">
-<input type="number" id="meta" placeholder="Meta desejada">
-</div>
-
-<div class="input-group">
-<input type="number" id="meses" placeholder="Quantidade de meses">
-</div>
-
-<button class="save-btn" onclick="calcularInvestimento()">
-Calcular
-</button>
-
-<div class="result" id="resultado"></div>
-
-</section>
-
-<section class="section">
-
-<h2>Meta Financeira</h2>
-
-<p>
-Você já completou 70% da sua meta.
-</p>
-
-<div class="progress-bar">
-<div class="progress"></div>
-</div>
-
-</section>
-
-</div>
-
-<!-- RELATÓRIOS -->
-
-<div id="relatorios" class="page">
-
-<section class="section">
-
-<h2>Relatório Financeiro</h2>
-
-<canvas id="grafico"></canvas>
-
-</section>
-
-</div>
-
-<!-- PERFIL -->
-
-<div id="perfil" class="page">
-
-<section class="section">
-
-<h2>Perfil Premium</h2>
-
-<div class="list-item">
-<span>Usuário</span>
-<span>Finance Control</span>
-</div>
-
-<div class="list-item">
-<span>Plano</span>
-<span>Premium</span>
-</div>
-
-<div class="list-item">
-<span>Status</span>
-<span>Ativo</span>
-</div>
-
+<h2>Meta</h2>
+<input type="number" id="meta">
+<input type="number" id="meses">
+<button class="save-btn" onclick="calcularInvestimento()">Calcular</button>
+<div id="resultado"></div>
 </section>
 
 </div>
 
 <!-- MENU -->
-
 <nav>
-
-<a onclick="abrirPagina('home')">
-Home
-</a>
-
-<a onclick="abrirPagina('carteira')">
-Carteira
-</a>
-
-<a onclick="abrirPagina('investimentos')">
-Investimentos
-</a>
-
-<a onclick="abrirPagina('relatorios')">
-Relatórios
-</a>
-
-<a onclick="abrirPagina('perfil')">
-Perfil
-</a>
-
+<a onclick="abrirPagina('home')">Home</a>
+<a onclick="abrirPagina('carteira')">Carteira</a>
+<a onclick="abrirPagina('investimentos')">Invest</a>
 </nav>
 
 <script>
 
-let saldo = 12450;
-let entradas = 8200;
-let gastos = 3120;
-let investimentos = 1980;
+let saldo = 0;
+let entradas = 0;
+let gastos = 0;
+let investimentos = 0;
+
+let metaInvestimentoAtual = 0;
+
+let comprasParceladas = JSON.parse(localStorage.getItem("parcelas")) || [];
+
+function salvar(){
+localStorage.setItem("saldo",saldo);
+localStorage.setItem("entradas",entradas);
+localStorage.setItem("gastos",gastos);
+localStorage.setItem("investimentos",investimentos);
+localStorage.setItem("parcelas",JSON.stringify(comprasParceladas));
+}
 
 function abrirPagina(id){
-
-let paginas =
-document.querySelectorAll('.page');
-
-paginas.forEach(pagina=>{
-pagina.classList.remove('active');
-});
-
-document.getElementById(id)
-.classList.add('active');
-
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById(id).classList.add('active');
 }
 
 function atualizarTela(){
 
-document.getElementById('saldo')
-.innerHTML =
-"R$ " + saldo.toFixed(2);
+document.getElementById("saldo").innerText = "R$ "+saldo.toFixed(2);
+document.getElementById("entradas").innerText = entradas.toFixed(2);
+document.getElementById("gastos").innerText = gastos.toFixed(2);
+document.getElementById("investimentosValor").innerText = investimentos.toFixed(2);
+document.getElementById("economia").innerText = (saldo-gastos).toFixed(2);
 
-document.getElementById('entradas')
-.innerHTML =
-"R$ " + entradas.toFixed(2);
-
-document.getElementById('gastos')
-.innerHTML =
-"R$ " + gastos.toFixed(2);
-
-document.getElementById('investimentosValor')
-.innerHTML =
-"R$ " + investimentos.toFixed(2);
-
-document.getElementById('economia')
-.innerHTML =
-"R$ " + (saldo - gastos).toFixed(2);
-
+atualizarParcelas();
+salvar();
+verificarMeta();
 }
 
 function adicionarReceita(){
-
-let valor =
-parseFloat(
-document.getElementById('receitaValor').value
-);
-
-if(isNaN(valor)) return;
-
-saldo += valor;
-entradas += valor;
-
+let v = parseFloat(document.getElementById("receitaValor").value);
+if(isNaN(v)) return;
+saldo += v;
+entradas += v;
 atualizarTela();
-
-document.getElementById('receitaValor').value = "";
-
 }
 
 function adicionarGasto(){
-
-let valor =
-parseFloat(
-document.getElementById('gastoValor').value
-);
-
-if(isNaN(valor)) return;
-
-saldo -= valor;
-gastos += valor;
-
+let v = parseFloat(document.getElementById("gastoValor").value);
+if(isNaN(v)) return;
+saldo -= v;
+gastos += v;
 atualizarTela();
-
-document.getElementById('gastoValor').value = "";
-
 }
 
 function calcularInvestimento(){
+let meta = parseFloat(document.getElementById("meta").value);
+let meses = parseFloat(document.getElementById("meses").value);
+if(isNaN(meta)||isNaN(meses)) return;
 
-let meta =
-document.getElementById('meta').value;
+metaInvestimentoAtual = meta;
 
-let meses =
-document.getElementById('meses').value;
-
-let resultado =
-document.getElementById('resultado');
-
-if(meta == "" || meses == ""){
-
-resultado.innerHTML =
-"Preencha todos os campos.";
-
-return;
-
+document.getElementById("resultado").innerHTML =
+"R$ "+(meta/meses).toFixed(2)+" por mês";
 }
 
-let valor = meta / meses;
-
-resultado.innerHTML =
-"Você precisa investir aproximadamente <br><br><strong>R$ "
-+ valor.toFixed(2)
-+ "</strong> por mês.";
-
+function verificarMeta(){
+if(metaInvestimentoAtual>0 && investimentos>=metaInvestimentoAtual){
+alert("Meta atingida!");
+investimentos=0;
+metaInvestimentoAtual=0;
+atualizarTela();
+}
 }
 
-const ctx =
-document.getElementById('grafico');
-
-new Chart(ctx, {
-
-type:'line',
-
-data:{
-
-labels:[
-'Jan',
-'Fev',
-'Mar',
-'Abr',
-'Mai',
-'Jun'
-],
-
-datasets:[{
-
-label:'Crescimento Financeiro',
-
-data:[
-2000,
-3500,
-4200,
-5200,
-7600,
-9800
-],
-
-borderWidth:3,
-tension:0.4
-
-}]
-
-},
-
-options:{
-responsive:true
+function limparTudo(){
+saldo=0;entradas=0;gastos=0;investimentos=0;
+metaInvestimentoAtual=0;
+comprasParceladas=[];
+localStorage.clear();
+atualizarTela();
+alert("Tudo limpo!");
 }
 
+/* PARCELAS */
+
+function adicionarParcela(nome,valor,parcelas){
+comprasParceladas.push({
+nome,valor,parcelas,pago:0
 });
+atualizarTela();
+}
+
+function pagarParcela(i,valor){
+comprasParceladas[i].pago += valor;
+if(comprasParceladas[i].pago >= comprasParceladas[i].valor){
+comprasParceladas.splice(i,1);
+alert("Compra quitada!");
+}
+atualizarTela();
+}
+
+function atualizarParcelas(){
+let div=document.getElementById("parcelas");
+div.innerHTML="";
+
+comprasParceladas.forEach((p,i)=>{
+div.innerHTML+=`
+<div class="card">
+<b>${p.nome}</b><br>
+${p.pago.toFixed(2)} / ${p.valor.toFixed(2)}<br>
+<button onclick="pagarParcela(${i},50)">Pagar R$50</button>
+</div>
+`;
+});
+}
 
 atualizarTela();
 
