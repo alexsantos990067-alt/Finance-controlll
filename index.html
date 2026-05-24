@@ -9,12 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
 background:#050816;
@@ -24,135 +19,110 @@ padding-bottom:120px;
 }
 
 .background{
-position:fixed;
-width:100%;
-height:100%;
-top:0;
-left:0;
-z-index:-1;
+position:fixed;width:100%;height:100%;z-index:-1;
 background:
 radial-gradient(circle at top left,#12305d 0%,transparent 35%),
 radial-gradient(circle at bottom right,#081220 0%,transparent 35%),
 #050816;
 }
 
-header{
-padding:25px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
+header{padding:20px;display:flex;justify-content:space-between;}
 
-.logo{font-size:28px;font-weight:700;}
+.logo{font-size:26px;font-weight:700;}
 .logo span{color:#67a4ff;}
 
 .page{display:none;}
 .active{display:block;}
 
 .main-card,.card,.section,nav{
-backdrop-filter:blur(22px);
--webkit-backdrop-filter:blur(22px);
-border:1px solid rgba(255,255,255,0.08);
 background:rgba(255,255,255,0.04);
-border-radius:25px;
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:20px;
 }
 
-.main-card{
-width:92%;
-margin:auto;
-padding:30px;
-margin-top:20px;
-}
+.main-card{width:92%;margin:auto;padding:25px;}
 
-.balance{
-font-size:42px;
-font-weight:700;
-}
+.balance{font-size:40px;font-weight:700;}
 
 .actions{display:flex;gap:10px;flex-wrap:wrap;}
 
 .btn{
-flex:1;
-padding:14px;
-border:none;
-border-radius:14px;
-background:#12305d;
-color:white;
-cursor:pointer;
+flex:1;padding:12px;border:none;border-radius:12px;
+background:#12305d;color:white;
 }
-
-.btn:hover{background:#1f4d91;}
 
 .cards{
-width:92%;
-margin:20px auto;
+width:92%;margin:20px auto;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-gap:15px;
+grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+gap:12px;
 }
 
-.card{padding:20px;}
+.card{padding:18px;}
 
-.value{font-size:28px;font-weight:700;}
+.value{font-size:26px;font-weight:700;}
 
-.section{
-width:92%;
-margin:20px auto;
-padding:25px;
-}
+.section{width:92%;margin:20px auto;padding:20px;}
 
-input{
+input,select{
 width:100%;
-padding:14px;
-margin-top:10px;
+padding:12px;
+margin-top:8px;
 border:none;
-border-radius:14px;
+border-radius:12px;
 background:rgba(255,255,255,0.08);
 color:white;
 }
 
 .save-btn{
 width:100%;
-padding:14px;
+padding:12px;
 margin-top:10px;
 border:none;
-border-radius:14px;
+border-radius:12px;
 background:#2459a6;
 color:white;
-cursor:pointer;
 }
 
+/* PROGRESS BAR */
+.progress-container{
+width:100%;
+height:18px;
+background:rgba(255,255,255,0.08);
+border-radius:20px;
+overflow:hidden;
+margin-top:12px;
+}
+
+.progress{
+height:100%;
+width:0%;
+background:linear-gradient(90deg,#2459a6,#67a4ff);
+transition:0.6s;
+}
+
+/* NAV */
 nav{
 position:fixed;
 bottom:15px;
 left:50%;
 transform:translateX(-50%);
 width:92%;
-padding:14px;
 display:flex;
 justify-content:space-around;
+padding:12px;
 }
 
 nav a{
 color:white;
 font-size:13px;
-cursor:pointer;
 opacity:0.7;
-transition:0.3s;
 }
 
 nav a.active-tab{
 color:#79a7ff;
 opacity:1;
-}
-
-.list-item{
-padding:14px;
-margin-top:10px;
-background:rgba(255,255,255,0.05);
-border-radius:12px;
-display:flex;
-justify-content:space-between;
 }
 </style>
 </head>
@@ -163,28 +133,25 @@ justify-content:space-between;
 
 <header>
 <div class="logo">Finance <span>Control</span></div>
-<div></div>
 </header>
 
 <!-- HOME -->
 <div id="home" class="page active">
 
 <section class="main-card">
-<h2>Saldo Total</h2>
-<div class="balance" id="saldo">R$ 0,00</div>
-
-<div class="actions">
-<button class="btn" onclick="abrirPagina('carteira')">Carteira</button>
-<button class="btn" onclick="abrirPagina('investimentos')">Investir</button>
-<button class="btn" onclick="limparTudo()">Limpar</button>
-</div>
+<h2>Saldo</h2>
+<div class="balance" id="saldo">0</div>
 </section>
 
 <section class="cards">
 <div class="card"><h3>Entradas</h3><div class="value" id="entradas">0</div></div>
 <div class="card"><h3>Gastos</h3><div class="value" id="gastos">0</div></div>
-<div class="card"><h3>Investimentos</h3><div class="value" id="investimentosValor">0</div></div>
+<div class="card"><h3>Invest</h3><div class="value" id="investimentosValor">0</div></div>
 <div class="card"><h3>Economia</h3><div class="value" id="economia">0</div></div>
+</section>
+
+<section class="section">
+<canvas id="grafico"></canvas>
 </section>
 
 </div>
@@ -195,25 +162,36 @@ justify-content:space-between;
 <section class="section">
 <h2>Receita</h2>
 <input id="receitaValor">
-<button class="save-btn" onclick="adicionarReceita()">Salvar</button>
+<button class="save-btn" onclick="addReceita()">Adicionar</button>
 </section>
 
 <section class="section">
 <h2>Gasto</h2>
 <input id="gastoValor">
-<button class="save-btn" onclick="adicionarGasto()">Salvar</button>
+<select id="categoria">
+<option>Mercado</option>
+<option>Contas</option>
+<option>Lazer</option>
+<option>Outros</option>
+</select>
+<button class="save-btn" onclick="addGasto()">Adicionar</button>
 </section>
 
 </div>
 
-<!-- INVESTIMENTOS -->
+<!-- INVEST -->
 <div id="investimentos" class="page">
 
 <section class="section">
 <h2>Meta</h2>
 <input id="meta">
 <input id="meses">
-<button class="save-btn" onclick="calcularInvestimento()">Calcular</button>
+<button class="save-btn" onclick="calcMeta()">Calcular</button>
+
+<div class="progress-container">
+<div class="progress" id="progress"></div>
+</div>
+
 <div id="resultado"></div>
 </section>
 
@@ -224,82 +202,112 @@ justify-content:space-between;
 
 <section class="section">
 <h2>Perfil</h2>
-
-<div class="list-item">
-<span>App</span>
-<span>Finance Control</span>
-</div>
-
-<button class="save-btn" onclick="limparTudo()">Limpar Todos os Dados</button>
-
+<button class="save-btn" onclick="limpar()">Limpar Dados</button>
 </section>
 
 </div>
 
 <!-- MENU -->
 <nav>
-<a onclick="abrirPagina('home')">Home</a>
-<a onclick="abrirPagina('carteira')">Carteira</a>
-<a onclick="abrirPagina('investimentos')">Invest</a>
-<a onclick="abrirPagina('perfil')">Perfil</a>
+<a onclick="show('home')">Home</a>
+<a onclick="show('carteira')">Carteira</a>
+<a onclick="show('investimentos')">Invest</a>
+<a onclick="show('perfil')">Perfil</a>
 </nav>
 
 <script>
 
 let saldo=0,entradas=0,gastos=0,investimentos=0;
-let metaInvestimentoAtual=0;
-let comprasParceladas=[];
 
-function abrirPagina(id){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-setActiveTab();
+let labels=["Seg","Ter","Qua","Qui","Sex","Sab","Dom"];
+let data=[0,0,0,0,0,0,0];
+
+let chart;
+
+function initChart(){
+const ctx=document.getElementById("grafico");
+
+chart=new Chart(ctx,{
+type:"line",
+data:{
+labels,
+datasets:[{
+label:"Fluxo",
+data,
+borderWidth:2,
+tension:0.4
+}]
+}
+});
 }
 
-function setActiveTab(){
-document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active-tab'));
-event.target.classList.add('active-tab');
+function updateChart(value){
+data.push(value);
+data.shift();
+chart.update();
 }
 
-function atualizarTela(){
-
-document.getElementById("saldo").innerText="R$ "+saldo.toFixed(2);
-document.getElementById("entradas").innerText=entradas.toFixed(2);
-document.getElementById("gastos").innerText=gastos.toFixed(2);
-document.getElementById("investimentosValor").innerText=investimentos.toFixed(2);
-document.getElementById("economia").innerText=(saldo-gastos).toFixed(2);
+function show(id){
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+document.getElementById(id).classList.add("active");
 }
 
-function adicionarReceita(){
+function addReceita(){
 let v=parseFloat(document.getElementById("receitaValor").value);
 if(isNaN(v))return;
-saldo+=v;entradas+=v;
-atualizarTela();
+saldo+=v;
+entradas+=v;
+updateChart(v);
+update();
 }
 
-function adicionarGasto(){
+function addGasto(){
 let v=parseFloat(document.getElementById("gastoValor").value);
 if(isNaN(v))return;
-saldo-=v;gastos+=v;
-atualizarTela();
+let cat=document.getElementById("categoria").value;
+
+saldo-=v;
+gastos+=v;
+
+updateChart(-v);
+update();
 }
 
-function calcularInvestimento(){
+function update(){
+document.getElementById("saldo").innerText="R$ "+saldo;
+document.getElementById("entradas").innerText=entradas;
+document.getElementById("gastos").innerText=gastos;
+document.getElementById("investimentosValor").innerText=investimentos;
+document.getElementById("economia").innerText=saldo-gastos;
+
+updateProgress();
+}
+
+function calcMeta(){
 let meta=parseFloat(document.getElementById("meta").value);
 let meses=parseFloat(document.getElementById("meses").value);
-metaInvestimentoAtual=meta;
-document.getElementById("resultado").innerHTML="R$ "+(meta/meses).toFixed(2);
+
+let perc=(investimentos/meta)*100;
+document.getElementById("progress").style.width=perc+"%";
+
+document.getElementById("resultado").innerText=
+"R$ "+(meta/meses).toFixed(2)+"/mês";
 }
 
-function limparTudo(){
-saldo=0;entradas=0;gastos=0;investimentos=0;
-metaInvestimentoAtual=0;
-comprasParceladas=[];
-atualizarTela();
-alert("Tudo limpo!");
+function updateProgress(){
+let meta=parseFloat(document.getElementById("meta").value)||1;
+let perc=(investimentos/meta)*100;
+document.getElementById("progress").style.width=Math.min(perc,100)+"%";
 }
 
-atualizarTela();
+function limpar(){
+saldo=entradas=gastos=investimentos=0;
+update();
+alert("Limpo!");
+}
+
+initChart();
+update();
 
 </script>
 
