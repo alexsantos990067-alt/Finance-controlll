@@ -1381,42 +1381,36 @@ window.addEventListener(
 ()=>{
 
 
-<section id="inicio" class="">
+let inicio =
+document.getElementById("inicio");
+
+
+if(inicio){
+
+inicio.style.display="block";
+
+}
+
 
 
 mostrarGastos();
 
-
 mostrarInvestimentos();
 
-
 mostrarMetas();
-
 
 mostrarFaturas();
 
 
 setTimeout(()=>{
 
-
 atualizarDashboard();
-
 
 },500);
 
 
 
-}
-
-);
-
-
-
-
-
-
-
-
+});
 // ===============================
 // PWA
 // ===============================
