@@ -1,32 +1,328 @@
-<nav class="menu">
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<button onclick="abrirTela('inicio')">
-🏠<br>
-Início
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Finance Control AI PRO</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header class="top">
+
+<h1>Finance Control AI PRO</h1>
+
+<p>
+Seu assistente financeiro inteligente
+</p>
+
+</header>
+
+
+
+
+<main>
+
+
+
+<section id="inicio" class="tela">
+
+
+<div class="card welcome">
+
+
+<h2>
+Olá, Alex 👋
+</h2>
+
+
+<p>
+Aqui está seu controle financeiro.
+</p>
+
+
+
+<div class="money">
+
+<span id="saldo">
+R$ 1.600
+</span>
+
+
+<small>
+Saldo disponível
+</small>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="dashboard">
+
+
+
+<div class="card">
+
+<h3>
+💸 Gastos
+</h3>
+
+
+<strong id="totalGastos">
+R$ 0
+</strong>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+📈 Investimentos
+</h3>
+
+
+<strong id="totalInvestimentos">
+R$ 0
+</strong>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+💰 Salário
+</h3>
+
+
+<strong>
+R$ 1.600
+</strong>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h3>
+🤖 IA Financeira
+</h3>
+
+
+<p id="mensagemIA">
+Analisando...
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<section id="gastos" class="tela card">
+
+
+<h2>
+💸 Controle de Gastos
+</h2>
+
+
+
+<input 
+id="nomeGasto"
+placeholder="Nome do gasto">
+
+
+
+<input 
+id="valorGasto"
+type="number"
+placeholder="Valor">
+
+
+
+<button onclick="adicionarGasto()">
+
+Adicionar gasto
+
 </button>
 
 
-<button onclick="abrirTela('gastos')">
-💳<br>
-Gastos
-</button>
+
+<div id="listaGastos">
+
+</div>
 
 
-<button onclick="abrirTela('investimentos')">
-📈<br>
+
+</section>
+
+
+
+
+
+
+
+
+<section id="investimentos" class="tela card">
+
+
+<h2>
+📈 Investimentos
+</h2>
+
+
+
+
+<input 
+id="valorInvestimento"
+type="number"
+placeholder="Valor para investir">
+
+
+
+<button onclick="adicionarInvestimento()">
+
 Investir
+
 </button>
 
 
-<button onclick="abrirTela('metas')">
-🎯<br>
-Metas
+
+
+<div id="listaInvestimentos">
+
+</div>
+
+
+
+
+<hr>
+
+
+
+
+<h3>
+Meta de investimento
+</h3>
+
+
+
+<input 
+id="metaInvestimento"
+type="number"
+placeholder="Valor da meta">
+
+
+
+<input 
+id="mesesInvestimento"
+type="number"
+placeholder="Quantidade de meses">
+
+
+
+<button onclick="calcularInvestimento()">
+
+Calcular
+
 </button>
 
 
-<button onclick="abrirTela('perfil')">
-👤<br>
-Perfil
+
+<p id="resultadoInvestimento">
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<section id="metas" class="tela card">
+
+
+<h2>
+🎯 Metas financeiras
+</h2>
+
+
+
+
+<input 
+id="nomeMeta"
+placeholder="Nome da meta">
+
+
+
+<input 
+id="valorMeta"
+type="number"
+placeholder="Valor objetivo">
+
+
+
+<button onclick="criarMeta()">
+
+Criar meta
+
 </button>
 
-</nav>
+
+
+
+<div id="listaMetas">
+
+</div>
+
+
+
+
+</section>
