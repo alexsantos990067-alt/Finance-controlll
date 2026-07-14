@@ -1,412 +1,326 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finance Bank AI 3.0</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>Finance Control AI PRO</title>
 
-<style>
-body{
-margin:0;
-font-family:Poppins;
-background:#050816;
-color:white;
-padding-bottom:120px;
-}
+<link rel="stylesheet" href="style.css">
 
-.page{display:none;padding:20px;}
-.active{display:block;}
-
-header{
-padding:20px;
-font-size:20px;
-font-weight:700;
-}
-
-.card{
-background:rgba(255,255,255,0.06);
-padding:15px;
-border-radius:15px;
-margin-bottom:15px;
-backdrop-filter:blur(10px);
-}
-
-button{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-border-radius:12px;
-background:#2b6fff;
-color:white;
-cursor:pointer;
-transition:.25s;
-}
-
-button:active{
-transform:scale(0.94);
-}
-
-input{
-width:100%;
-padding:10px;
-margin-top:8px;
-border-radius:10px;
-border:none;
-background:#111a33;
-color:white;
-}
-
-nav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-display:flex;
-justify-content:space-around;
-background:#0b1224;
-padding:10px;
-}
-
-nav button{
-width:auto;
-background:none;
-font-size:12px;
-}
-canvas{
-background:#0b1224;
-border-radius:12px;
-padding:10px;
-}
-</style>
 </head>
+
 
 <body>
 
-<header>Finance Bank AI 3.0</header>
 
-<!-- HOME -->
-<div id="home" class="page active">
-<div class="card">
-<h3>Resumo Financeiro</h3>
-<div id="resumo"></div>
+<header class="top">
+
+<div>
+<h1>Finance Control AI PRO</h1>
+<p>Seu assistente financeiro inteligente</p>
 </div>
 
-<div class="card">
-<h3>IA Sugestão</h3>
-<div id="iaBox"></div>
-</div>
-</div>
+</header>
 
-<!-- FATURAS -->
-<div id="fatura" class="page">
 
-<div class="card">
-<h3>💳 Nova Fatura / Consórcio</h3>
 
-<button onclick="criarFatura()">Criar Nova Fatura</button>
+<main>
 
-<div id="faturasBox"></div>
-</div>
 
-<div class="card">
-<canvas id="graficoFatura"></canvas>
-</div>
+<section class="welcome card">
 
-<div class="card">
-<h3>📅 Histórico Global</h3>
-<div id="historicoGlobal"></div>
-</div>
+<h2>Olá, Alex 👋</h2>
+
+<p>
+Aqui está sua situação financeira atual.
+</p>
+
+
+<div class="money">
+
+R$ 1.600,00
+
+<span>
+Salário mensal
+</span>
 
 </div>
 
-<!-- INVEST -->
-<div id="invest" class="page">
 
-<div class="card">
-<h3>💰 Investimento</h3>
+</section>
 
-<input id="meta" placeholder="Meta">
-<input id="meses" placeholder="Meses">
 
-<button onclick="calcInvest()">Calcular</button>
 
-<div id="investInfo"></div>
-</div>
+
+<section class="dashboard">
+
 
 <div class="card">
-<canvas id="graficoInvest"></canvas>
+
+<h3>💳 Compromissos</h3>
+
+<strong id="compromissos">
+R$ 0
+</strong>
+
+<p>
+Consórcio + Parcelas
+</p>
+
 </div>
+
+
+
 
 <div class="card">
-<h3>📊 Previsão 6 meses</h3>
-<div id="previsao"></div>
-</div>
+
+<h3>💰 Livre no mês</h3>
+
+<strong id="livre">
+R$ 0
+</strong>
+
+<p>
+Após pagamentos
+</p>
 
 </div>
 
-<!-- NAV -->
-<nav>
-<button onclick="openTab('home')">Home</button>
-<button onclick="openTab('fatura')">Faturas</button>
-<button onclick="openTab('invest')">Invest</button>
+
+
+
+
+<div class="card">
+
+<h3>🏍 Meta atual</h3>
+
+<strong>
+Honda CB300F
+</strong>
+
+<div class="progress">
+
+<div id="barraMeta"></div>
+
+</div>
+
+
+<p id="metaTexto">
+0%
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card ia">
+
+<h3>
+🤖 IA Financeira
+</h3>
+
+
+<p id="mensagemIA">
+
+Analisando sua vida financeira...
+
+</p>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+📅 Planejamento de parcelas
+</h2>
+
+
+
+<div class="parcelas">
+
+
+<div>
+
+<h3>🏦 Consórcio</h3>
+
+<p>
+R$ 481,38/mês
+</p>
+
+<span>
+60 meses
+</span>
+
+</div>
+
+
+
+<div>
+
+<h3>💻 PC</h3>
+
+<p>
+R$ 178,55/mês
+</p>
+
+<span>
+9 parcelas
+</span>
+
+</div>
+
+
+
+
+
+<div>
+
+<h3>💾 SSD</h3>
+
+<p>
+R$ 298,67/mês
+</p>
+
+<span>
+4 parcelas
+</span>
+
+</div>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+🎯 Objetivos
+</h2>
+
+
+
+<div class="objetivos">
+
+
+<button>
+🏍 Comprar CB300F
+</button>
+
+
+<button>
+💰 Criar Reserva
+</button>
+
+
+<button>
+📈 Investir
+</button>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+📊 Resumo da IA
+</h2>
+
+
+<div id="analise">
+
+Carregando análise...
+
+</div>
+
+
+
+</section>
+
+
+
+</main>
+
+
+
+
+<nav class="menu">
+
+
+<button>
+🏠
+<br>
+Início
+</button>
+
+
+
+<button>
+💳
+<br>
+Gastos
+</button>
+
+
+
+<button>
+🎯
+<br>
+Metas
+</button>
+
+
+
+<button>
+👤
+<br>
+Perfil
+</button>
+
+
+
 </nav>
 
-<script>
 
-// =======================
-// STORAGE
-// =======================
-let faturas = JSON.parse(localStorage.getItem("faturas")) || [];
-let investData = JSON.parse(localStorage.getItem("invest")) || {meta:0,meses:0};
 
-// =======================
-// NOTIFICAÇÕES
-// =======================
-async function ativarNotificacoes(){
-if(Notification.permission !== "granted"){
-await Notification.requestPermission();
-}
-}
 
-function push(msg){
-if(Notification.permission === "granted"){
-new Notification("Finance Bank AI", {body:msg});
-}
-}
 
-// =======================
-// NAV
-// =======================
-function openTab(id){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-document.getElementById(id).classList.add("active");
+<script src="app.js"></script>
 
-if(id==="fatura") renderFaturas();
-if(id==="invest") renderInvest();
-if(id==="home") home();
-}
-
-// =======================
-// FATURAS MULTI
-// =======================
-function criarFatura(){
-
-let total=parseFloat(prompt("Valor total da fatura (ex: 28000)"));
-let meses=parseInt(prompt("Meses (ex: 60)"));
-
-if(isNaN(total)||isNaN(meses)) return;
-
-faturas.push({
-id:Date.now(),
-total,
-meses,
-restante:meses,
-parcela:total/meses,
-historico:[]
-});
-
-save();
-renderFaturas();
-}
-
-// swipe simulado
-function pagarParcela(id){
-
-let f = faturas.find(x=>x.id===id);
-if(!f || f.restante<=0) return;
-
-// animação swipe
-document.body.style.transform="scale(0.98)";
-setTimeout(()=>document.body.style.transform="scale(1)",150);
-
-f.restante--;
-
-f.historico.push({
-data:new Date().toLocaleDateString(),
-valor:f.parcela
-});
-
-// IA ALERTA
-if(f.restante <= 2){
-push("⚠ Fatura quase acabando!");
-sugestaoIA();
-}
-
-if(f.restante === 0){
-push("🎉 Fatura quitada!");
-}
-
-save();
-renderFaturas();
-}
-
-// render faturas
-function renderFaturas(){
-
-document.getElementById("faturasBox").innerHTML =
-faturas.map(f=>`
-
-<div class="card">
-💳 Total: R$ ${f.total}<br>
-📆 Restante: ${f.restante} meses<br>
-💰 Parcela: R$ ${f.parcela.toFixed(2)}
-
-<button onclick="pagarParcela(${f.id})">💸 Pagar Parcela (Swipe)</button>
-</div>
-
-`).join("");
-
-historicoGlobal();
-chartFatura();
-resumo();
-}
-
-// =======================
-// INVESTIMENTO
-// =======================
-function calcInvest(){
-
-investData.meta=parseFloat(document.getElementById("meta").value);
-investData.meses=parseFloat(document.getElementById("meses").value);
-
-if(isNaN(investData.meta)||isNaN(investData.meses)) return;
-
-let base=investData.meta/investData.meses;
-
-// impacto da fatura
-let impacto = faturas.reduce((a,f)=>a+(f.restante>0?f.parcela:0),0)*0.05;
-
-let sugestao = base - impacto;
-
-document.getElementById("investInfo").innerHTML=`
-Meta: R$ ${investData.meta}<br>
-Sugestão mensal: R$ ${Math.max(sugestao,0).toFixed(2)}
-`;
-
-chartInvest();
-previsao6m();
-}
-
-// =======================
-// IA FINANCEIRA
-// =======================
-function sugestaoIA(){
-
-let msg="";
-
-faturas.forEach(f=>{
-if(f.restante>0){
-msg+=`💳 Fatura ${f.id}<br>
-👉 Pague R$ ${(f.parcela*1.3).toFixed(2)} para quitar mais rápido<br><br>`;
-}
-});
-
-document.getElementById("iaBox").innerHTML=msg;
-}
-
-// =======================
-// PREVISÃO 6 MESES
-// =======================
-function previsao6m(){
-
-let saldo=1000;
-let html="";
-
-for(let i=1;i<=6;i++){
-saldo += 150;
-html+=`M${i}: R$ ${saldo.toFixed(2)}<br>`;
-}
-
-document.getElementById("previsao").innerHTML=html;
-}
-
-// =======================
-// RESUMO
-// =======================
-function resumo(){
-
-let totalFaturas = faturas.reduce((a,f)=>a+f.restante,0);
-
-document.getElementById("resumo").innerHTML=`
-💳 Faturas ativas: ${totalFaturas}<br>
-⚡ IA: ${totalFaturas<=5 ? "Você pode investir mais!" : "Foque nas dívidas"}
-`;
-}
-
-// =======================
-// HISTÓRICO
-// =======================
-function historicoGlobal(){
-
-let all=[];
-
-faturas.forEach(f=>{
-f.historico.forEach(h=>{
-all.push(`📅 ${h.data} - R$ ${h.valor}`);
-});
-});
-
-document.getElementById("historicoGlobal").innerHTML=all.join("<br>");
-}
-
-// =======================
-// CHARTS
-// =======================
-let chartF,chartI;
-
-function chartFatura(){
-
-let ctx=document.getElementById("graficoFatura");
-
-if(chartF) chartF.destroy();
-
-let pago=faturas.reduce((a,f)=>a+(f.meses-f.restante),0);
-let resto=faturas.reduce((a,f)=>a+f.restante,0);
-
-chartF=new Chart(ctx,{
-type:"doughnut",
-data:{
-labels:["Pago","Restante"],
-datasets:[{data:[pago,resto]}]
-}
-});
-}
-
-function chartInvest(){
-
-let ctx=document.getElementById("graficoInvest");
-
-if(chartI) chartI.destroy();
-
-chartI=new Chart(ctx,{
-type:"bar",
-data:{
-labels:["Meta","Base"],
-datasets:[{data:[investData.meta,investData.meta/investData.meses]}]
-}
-});
-}
-
-// =======================
-function save(){
-localStorage.setItem("faturas",JSON.stringify(faturas));
-localStorage.setItem("invest",JSON.stringify(investData));
-}
-
-// init
-function home(){
-resumo();
-sugestaoIA();
-previsao6m();
-}
-
-home();
-
-</script>
 
 </body>
+
 </html>
