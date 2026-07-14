@@ -1360,99 +1360,61 @@ console.log("Gráfico evolução criado");
 // ======================================
 // GRÁFICO 6 MESES
 // ======================================
-
-
 function criarGraficoEvolucao(){
 
+let canvas = document.getElementById("graficoEvolucao");
 
-
-let canvas =
-document.getElementById(
-"graficoEvolucao"
-);
-
-
-
-if(!canvas)return;
-
+if(!canvas){
+return;
+}
 
 
 if(graficoEvolucao){
-
 graficoEvolucao.destroy();
-
 }
 
 
 
-let valores=[];
-
-
-
-let atual =
-saldoAtual();
-
-
-
-for(let i=0;i<6;i++){
-
-
-valores.push(
-
-atual +
-
-(totalInvestimentos()*i)
-
-);
-
-
-}
-
-
-
-
-
-graficoEvolucao =
-
-new Chart(
-
-canvas,
-
-{
-
+graficoEvolucao = new Chart(canvas, {
 
 type:"line",
 
-
 data:{
 
-
 labels:[
-
 "Agora",
-
 "1 mês",
-
 "2 meses",
-
 "3 meses",
-
 "4 meses",
-
+"5 meses",
 "6 meses"
-
 ],
-
 
 
 datasets:[{
 
+label:"Patrimônio",
 
-label:"Patrimônio previsto",
+data:[
 
+saldoAtual(),
 
-data:valores
+saldoAtual()+100,
 
+saldoAtual()+200,
+
+saldoAtual()+300,
+
+saldoAtual()+400,
+
+saldoAtual()+500,
+
+saldoAtual()+600
+
+],
+
+tension:0.4
 
 }]
 
@@ -1460,32 +1422,17 @@ data:valores
 },
 
 
-
 options:{
-
 
 responsive:true
 
-
 }
 
 
-}
-
-);
-
+});
 
 
 }
-
-
-
-
-
-
-
-
-
 // ======================================
 // META E PREVISÃO
 // ======================================
