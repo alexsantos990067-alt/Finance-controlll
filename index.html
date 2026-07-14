@@ -325,4 +325,224 @@ Criar meta
 
 
 
+
+<section id="fatura" class="tela card">
+
+
+<h2>
+💳 Fatura do Cartão
+</h2>
+
+
+
+<input
+id="nomeFatura"
+placeholder="Nome da compra">
+
+
+
+<input
+id="valorFatura"
+type="number"
+placeholder="Valor total">
+
+
+
+<input
+id="parcelasFatura"
+type="number"
+placeholder="Quantidade de parcelas">
+
+
+
+<button onclick="adicionarFatura()">
+
+Adicionar compra
+
+</button>
+
+
+
+<div id="listaFaturas">
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<section id="consorcio" class="tela card">
+
+
+<h2>
+🏦 Consórcio
+</h2>
+
+
+
+<input
+id="valorConsorcio"
+type="number"
+placeholder="Valor da carta">
+
+
+
+<input
+id="parcelasConsorcio"
+type="number"
+placeholder="Quantidade de meses">
+
+
+
+<button onclick="calcularConsorcio()">
+
+Calcular parcela
+
+</button>
+
+
+
+<p id="resultadoConsorcio">
+
+</p>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+<section id="perfil" class="tela card">
+
+
+<h2>
+👤 Perfil
+</h2>
+
+
+
+<div class="card">
+
+<p>
+Nome: Alex
+</p>
+
+
+<p>
+Salário: R$ 1.600
+</p>
+
+
+</div>
+
+
+
+<button onclick="limparDados()">
+
+🗑 Apagar todos os dados
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+</main>
+
+
+
+
+
+
+
+<nav class="menu">
+
+
+<button onclick="abrirTela('inicio')">
+
+🏠
+<br>
+Início
+
+</button>
+
+
+
+
+<button onclick="abrirTela('gastos')">
+
+💸
+<br>
+Gastos
+
+</button>
+
+
+
+
+<button onclick="abrirTela('investimentos')">
+
+📈
+<br>
+Investir
+
+</button>
+
+
+
+
+<button onclick="abrirTela('metas')">
+
+🎯
+<br>
+Metas
+
+</button>
+
+
+
+
+<button onclick="abrirTela('perfil')">
+
+👤
+<br>
+Perfil
+
+</button>
+
+
+
+
+</nav>
+
+
+
+
+
+<script src="script.js"></script>
+
+
+</body>
+
+</html>
+
+
+
 </section>
