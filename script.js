@@ -1,66 +1,94 @@
-
-// ==========================================
+// =====================================
 // FINANCE CONTROL AI PRO
 // SCRIPT PRINCIPAL
-// ==========================================
+// =====================================
 
-// Banco de dados local
+
 let dados = JSON.parse(localStorage.getItem("financeAI")) || {
-    salario: 1600,
-    gastos: [],
-    investimentos: [],
-    metas: [],
-    faturas: [],
-    consorcio: {
-        valor: 0,
-        parcelas: 0,
-        pago: 0
+
+    salario:1600,
+
+    gastos:[],
+
+    investimentos:[],
+
+    metas:[],
+
+    faturas:[],
+
+    consorcio:{
+        valor:0,
+        parcelas:0
     }
+
 };
 
 
-// Salvar dados
+
+
+
 function salvarDados(){
-    localStorage.setItem("financeAI", JSON.stringify(dados));
+
+    localStorage.setItem(
+        "financeAI",
+        JSON.stringify(dados)
+    );
+
 }
 
 
-// Formatação de dinheiro
+
+
+
+
 function dinheiro(valor){
-    return Number(valor).toLocaleString("pt-BR",{
-        style:"currency",
-        currency:"BRL"
-    });
+
+    return Number(valor).toLocaleString(
+        "pt-BR",
+        {
+            style:"currency",
+            currency:"BRL"
+        }
+    );
+
 }
 
 
-// Calcular total de gastos
+
+
+
+
 function totalGastos(){
 
-    let total = 0;
+    return dados.gastos.reduce(
+        (total,item)=>
+        total + Number(item.valor),
+        0
+    );
 
-    dados.gastos.forEach(gasto=>{
-        total += Number(gasto.valor);
-    });
-
-    return total;
 }
 
 
-// Calcular investimentos
+
+
+
+
 function totalInvestimentos(){
 
-    let total = 0;
+    return dados.investimentos.reduce(
+        (total,item)=>
+        total + Number(item.valor),
+        0
+    );
 
-    dados.investimentos.forEach(inv=>{
-        total += Number(inv.valor);
-    });
-
-    return total;
 }
 
 
-// Saldo disponível
+
+
+
+
+
 function saldoAtual(){
 
     return dados.salario - totalGastos();
@@ -68,331 +96,535 @@ function saldoAtual(){
 }
 
 
-// Atualizar painel principal
+
+
+
+
+
+
+// =====================================
+// DASHBOARD
+// =====================================
+
+
 function atualizarDashboard(){
 
-    let saldo = document.getElementById("saldo");
-
-    if(saldo){
-        saldo.innerHTML = dinheiro(saldoAtual());
-    }
 
 
-    let gastos = document.getElementById("totalGastos");
-
-    if(gastos){
-        gastos.innerHTML = dinheiro(totalGastos());
-    }
+let saldo=document.getElementById("saldo");
 
 
-    let investimentos = document.getElementById("totalInvestimentos");
+if(saldo){
 
-    if(investimentos){
-        investimentos.innerHTML = dinheiro(totalInvestimentos());
-    }
-
-
-    mostrarGastos();
-    mostrarInvestimentos();
-    mostrarMetas();
+saldo.innerHTML=dinheiro(saldoAtual());
 
 }
 
 
 
-// Adicionar gasto
+
+let gastos=document.getElementById("totalGastos");
+
+
+if(gastos){
+
+gastos.innerHTML=dinheiro(totalGastos());
+
+}
+
+
+
+
+let investimentos=document.getElementById("totalInvestimentos");
+
+
+if(investimentos){
+
+investimentos.innerHTML=dinheiro(totalInvestimentos());
+
+}
+
+
+
+
+atualizarIA();
+
+
+}
+
+
+
+
+
+
+
+// =====================================
+// SISTEMA DE TELAS
+// =====================================
+
+
+function abrirTela(nome){
+
+
+let telas=document.querySelectorAll(".tela");
+
+
+telas.forEach(t=>{
+
+t.style.display="none";
+
+});
+
+
+
+let tela=document.getElementById(nome);
+
+
+
+if(tela){
+
+tela.style.display="block";
+
+}
+
+
+
+if(nome==="gastos"){
+
+mostrarGastos();
+
+}
+
+
+if(nome==="investimentos"){
+
+mostrarInvestimentos();
+
+}
+
+
+if(nome==="metas"){
+
+mostrarMetas();
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+// =====================================
+// GASTOS
+// =====================================
+
+
 function adicionarGasto(){
 
-    let nome = document.getElementById("nomeGasto").value;
-
-    let valor = document.getElementById("valorGasto").value;
 
 
-    if(nome==="" || valor===""){
-        alert("Preencha os dados");
-        return;
-    }
+let nome=document.getElementById("nomeGasto").value;
 
 
-    dados.gastos.push({
-
-        nome:nome,
-        valor:Number(valor),
-        data:new Date().toLocaleDateString()
-
-    });
+let valor=document.getElementById("valorGasto").value;
 
 
-    salvarDados();
 
-    atualizarDashboard();
+if(nome==="" || valor===""){
 
+alert("Preencha os dados");
 
-    document.getElementById("nomeGasto").value="";
-    document.getElementById("valorGasto").value="";
+return;
 
 }
 
 
 
-// Mostrar gastos
+
+dados.gastos.push({
+
+nome:nome,
+
+valor:Number(valor),
+
+data:new Date().toLocaleDateString()
+
+});
+
+
+
+
+salvarDados();
+
+
+mostrarGastos();
+
+
+atualizarDashboard();
+
+
+
+
+
+document.getElementById("nomeGasto").value="";
+
+document.getElementById("valorGasto").value="";
+
+
+
+}
+
+
+
+
+
+
+
 function mostrarGastos(){
 
-    let lista=document.getElementById("listaGastos");
 
 
-    if(!lista)return;
+let lista=document.getElementById("listaGastos");
 
 
-    lista.innerHTML="";
+if(!lista)return;
 
 
-    dados.gastos.forEach((gasto,index)=>{
 
 
-        lista.innerHTML += `
-
-        <div class="card-item">
-
-        <span>
-        ${gasto.nome}
-        </span>
-
-        <strong>
-        ${dinheiro(gasto.valor)}
-        </strong>
+lista.innerHTML="";
 
 
-        <button onclick="removerGasto(${index})">
-        ✕
-        </button>
+
+dados.gastos.forEach((gasto,index)=>{
 
 
-        </div>
-
-        `;
+lista.innerHTML+=`
 
 
-    });
+<div class="card-item">
+
+
+<span>
+${gasto.nome}
+</span>
+
+
+
+<strong>
+${dinheiro(gasto.valor)}
+</strong>
+
+
+
+<button onclick="removerGasto(${index})">
+
+X
+
+</button>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
 
 
 }
 
 
 
-// Remover gasto
+
+
+
+
 function removerGasto(index){
 
-    dados.gastos.splice(index,1);
 
-    salvarDados();
+dados.gastos.splice(index,1);
 
-    atualizarDashboard();
+
+salvarDados();
+
+
+mostrarGastos();
+
+
+atualizarDashboard();
+
 
 }
 
 
 
-// Adicionar investimento
+
+
+
+
+// =====================================
+// INVESTIMENTOS
+// =====================================
+
+
 function adicionarInvestimento(){
 
-    let valor=document.getElementById("valorInvestimento").value;
+
+let valor=document.getElementById("valorInvestimento").value;
 
 
-    if(valor===""){
-        alert("Digite um valor");
-        return;
-    }
+
+if(valor===""){
+
+alert("Digite o valor");
+
+return;
+
+}
 
 
-    dados.investimentos.push({
 
-        valor:Number(valor),
-        data:new Date().toLocaleDateString()
+dados.investimentos.push({
 
-    });
+valor:Number(valor),
+
+data:new Date().toLocaleDateString()
+
+});
 
 
-    salvarDados();
 
-    atualizarDashboard();
+salvarDados();
+
+
+mostrarInvestimentos();
+
+
+atualizarDashboard();
+
 
 
 }
-// ==========================================
-// INVESTIMENTOS
-// ==========================================
+
+
+
+
+
 
 
 function mostrarInvestimentos(){
 
-    let lista = document.getElementById("listaInvestimentos");
 
-    if(!lista)return;
-
-
-    lista.innerHTML="";
+let lista=document.getElementById("listaInvestimentos");
 
 
-    dados.investimentos.forEach((inv,index)=>{
+if(!lista)return;
 
 
-        lista.innerHTML += `
 
-        <div class="card-item">
-
-        <span>
-        Investimento
-        </span>
+lista.innerHTML="";
 
 
-        <strong>
-        ${dinheiro(inv.valor)}
-        </strong>
+
+dados.investimentos.forEach((item,index)=>{
 
 
-        <button onclick="removerInvestimento(${index})">
-        ✕
-        </button>
+lista.innerHTML+=`
 
 
-        </div>
-
-        `;
+<div class="card-item">
 
 
-    });
+<span>
+Investimento
+</span>
+
+
+
+<strong>
+${dinheiro(item.valor)}
+</strong>
+
+
+<button onclick="removerInvestimento(${index})">
+
+X
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
 
 }
+
+
 
 
 
 function removerInvestimento(index){
 
-    dados.investimentos.splice(index,1);
 
-    salvarDados();
+dados.investimentos.splice(index,1);
 
-    atualizarDashboard();
+
+salvarDados();
+
+
+mostrarInvestimentos();
+
+
+atualizarDashboard();
+
 
 }
-
-
-
-// ==========================================
-// METAS FINANCEIRAS
-// ==========================================
+// =====================================
+// METAS
+// =====================================
 
 
 function criarMeta(){
 
 
-    let nome=document.getElementById("nomeMeta").value;
+let nome=document.getElementById("nomeMeta").value;
 
-    let valor=document.getElementById("valorMeta").value;
-
-
-
-    if(nome==="" || valor===""){
-
-        alert("Preencha a meta");
-
-        return;
-
-    }
+let valor=document.getElementById("valorMeta").value;
 
 
 
-    dados.metas.push({
+if(nome==="" || valor===""){
 
-        nome:nome,
+alert("Preencha a meta");
 
-        valor:Number(valor),
-
-        atual:0
-
-    });
-
-
-
-    salvarDados();
-
-    atualizarDashboard();
-
-
+return;
 
 }
 
+
+
+
+dados.metas.push({
+
+nome:nome,
+
+valor:Number(valor),
+
+atual:0
+
+});
+
+
+
+salvarDados();
+
+
+mostrarMetas();
+
+
+}
 
 
 
 function mostrarMetas(){
 
 
-    let area=document.getElementById("listaMetas");
+
+let lista=document.getElementById("listaMetas");
 
 
-    if(!area)return;
-
-
-
-    area.innerHTML="";
+if(!lista)return;
 
 
 
-    dados.metas.forEach((meta,index)=>{
-
-
-        let porcentagem=(meta.atual/meta.valor)*100;
-
-
-        if(porcentagem>100){
-            porcentagem=100;
-        }
+lista.innerHTML="";
 
 
 
-        area.innerHTML += `
-
-
-        <div class="meta-card">
-
-
-        <h3>
-        ${meta.nome}
-        </h3>
-
-
-        <p>
-        ${dinheiro(meta.atual)}
-        de ${dinheiro(meta.valor)}
-        </p>
-
-
-        <div class="barra">
-
-            <div class="progresso"
-            style="width:${porcentagem}%">
-            </div>
-
-        </div>
+dados.metas.forEach((meta,index)=>{
 
 
 
-        <button onclick="adicionarNaMeta(${index})">
-
-        Adicionar valor
-
-        </button>
+let porcentagem=
+(meta.atual/meta.valor)*100;
 
 
-        </div>
+
+if(porcentagem>100){
+
+porcentagem=100;
+
+}
 
 
-        `;
 
 
-    });
+
+lista.innerHTML+=`
+
+
+<div class="meta-card">
+
+
+<h3>
+${meta.nome}
+</h3>
+
+
+<p>
+
+${dinheiro(meta.atual)}
+de
+${dinheiro(meta.valor)}
+
+</p>
+
+
+
+<div class="barra">
+
+<div class="progresso"
+style="width:${porcentagem}%">
+
+</div>
+
+</div>
+
+
+
+<button onclick="adicionarMeta(${index})">
+
+Adicionar valor
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
 
 
 
@@ -401,76 +633,87 @@ function mostrarMetas(){
 
 
 
-function adicionarNaMeta(index){
+function adicionarMeta(index){
 
 
-    let valor=prompt("Quanto adicionar?");
+let valor=prompt(
+"Valor para adicionar:"
+);
 
 
-    if(valor){
+
+if(valor){
 
 
-        dados.metas[index].atual += Number(valor);
+dados.metas[index].atual += Number(valor);
 
 
-        salvarDados();
-
-        atualizarDashboard();
+salvarDados();
 
 
-    }
+mostrarMetas();
+
+
+}
 
 
 }
 
 
 
-// ==========================================
-// FATURA DO CARTÃO
-// ==========================================
+
+
+
+
+// =====================================
+// FATURA CARTÃO
+// =====================================
 
 
 function adicionarFatura(){
 
 
-    let nome=document.getElementById("nomeFatura").value;
 
-    let valor=document.getElementById("valorFatura").value;
-
-    let parcelas=document.getElementById("parcelasFatura").value;
+let nome=document.getElementById("nomeFatura").value;
 
 
+let valor=document.getElementById("valorFatura").value;
 
-    if(!valor || !parcelas){
 
-        alert("Preencha a fatura");
-
-        return;
-
-    }
+let parcelas=document.getElementById("parcelasFatura").value;
 
 
 
-    dados.faturas.push({
 
+if(!valor || !parcelas){
 
-        nome:nome,
+alert("Preencha a fatura");
 
-        valor:Number(valor),
+return;
 
-        parcelas:Number(parcelas),
-
-        pago:0
-
-
-    });
+}
 
 
 
-    salvarDados();
 
-    atualizarFaturas();
+dados.faturas.push({
 
+nome:nome,
+
+valor:Number(valor),
+
+parcelas:Number(parcelas),
+
+pago:0
+
+});
+
+
+
+salvarDados();
+
+
+mostrarFaturas();
 
 
 }
@@ -478,75 +721,79 @@ function adicionarFatura(){
 
 
 
-function atualizarFaturas(){
-
-
-    let lista=document.getElementById("listaFaturas");
-
-
-    if(!lista)return;
 
 
 
-    lista.innerHTML="";
+function mostrarFaturas(){
+
+
+let lista=document.getElementById("listaFaturas");
+
+
+if(!lista)return;
 
 
 
-    dados.faturas.forEach((fat,index)=>{
-
-
-        let parcela=fat.valor/fat.parcelas;
+lista.innerHTML="";
 
 
 
-        lista.innerHTML += `
-
-
-        <div class="card-item">
-
-
-        <span>
-
-        ${fat.nome}
-
-        <br>
-
-        ${fat.pago}/${fat.parcelas} parcelas
-
-        </span>
+dados.faturas.forEach((fat,index)=>{
 
 
 
-        <strong>
-
-        ${dinheiro(parcela)}
-
-        /mês
-
-        </strong>
+let mensal=
+fat.valor/fat.parcelas;
 
 
 
-        <button onclick="pagarParcela(${index})">
-
-        Pagar
-
-        </button>
+lista.innerHTML+=`
 
 
-
-        </div>
-
-
-        `;
+<div class="card-item">
 
 
+<span>
 
-    });
+${fat.nome}
+
+<br>
+
+${fat.pago}/${fat.parcelas}
+
+</span>
+
+
+
+<strong>
+
+${dinheiro(mensal)}
+
+</strong>
+
+
+
+<button onclick="pagarParcela(${index})">
+
+Pagar
+
+</button>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
 
 
 
 }
+
 
 
 
@@ -554,125 +801,241 @@ function atualizarFaturas(){
 function pagarParcela(index){
 
 
-    dados.faturas[index].pago++;
+
+dados.faturas[index].pago++;
 
 
 
-    if(dados.faturas[index].pago >= dados.faturas[index].parcelas){
+if(
+dados.faturas[index].pago >=
+dados.faturas[index].parcelas
+){
 
 
-        alert("🎉 Fatura finalizada! Valor liberado para investir.");
+alert(
+"🎉 Parcela finalizada! Valor liberado."
+);
 
 
-    }
+}
 
 
 
-    salvarDados();
+salvarDados();
 
-    atualizarFaturas();
+
+mostrarFaturas();
 
 
 
 }
-// ==========================================
+
+
+
+
+
+
+
+// =====================================
 // CONSÓRCIO
-// ==========================================
+// =====================================
 
 
 function calcularConsorcio(){
 
-    let valor = document.getElementById("valorConsorcio").value;
-    let parcelas = document.getElementById("parcelasConsorcio").value;
 
 
-    if(!valor || !parcelas){
-
-        alert("Preencha os dados do consórcio");
-
-        return;
-
-    }
+let valor=document.getElementById("valorConsorcio").value;
 
 
-    dados.consorcio.valor = Number(valor);
-    dados.consorcio.parcelas = Number(parcelas);
+let parcelas=document.getElementById("parcelasConsorcio").value;
 
 
-    let mensal = Number(valor) / Number(parcelas);
 
+if(!valor || !parcelas){
 
-    let resultado = document.getElementById("resultadoConsorcio");
+alert("Preencha os dados");
 
-
-    if(resultado){
-
-        resultado.innerHTML =
-        "Parcela estimada: " + dinheiro(mensal);
-
-    }
-
-
-    salvarDados();
+return;
 
 }
 
 
 
-// ==========================================
-// LIMPAR TODOS OS DADOS
-// ==========================================
+
+let mensal =
+Number(valor)/Number(parcelas);
+
+
+
+document.getElementById(
+"resultadoConsorcio"
+).innerHTML =
+
+"Parcela aproximada: "
++
+dinheiro(mensal);
+
+
+
+
+
+dados.consorcio.valor=
+Number(valor);
+
+
+dados.consorcio.parcelas=
+Number(parcelas);
+
+
+
+salvarDados();
+
+
+
+}
+
+
+
+
+
+
+
+// =====================================
+// CALCULADORA INVESTIMENTO
+// =====================================
+
+
+function calcularInvestimento(){
+
+
+
+let meta=
+document.getElementById(
+"metaInvestimento"
+).value;
+
+
+
+let meses=
+document.getElementById(
+"mesesInvestimento"
+).value;
+
+
+
+
+if(!meta || !meses){
+
+alert("Preencha os dados");
+
+return;
+
+}
+
+
+
+
+let mensal=
+Number(meta)/Number(meses);
+
+
+
+
+document.getElementById(
+"resultadoInvestimento"
+).innerHTML=
+
+"Você precisa investir "
++
+dinheiro(mensal)
++
+" por mês.";
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+// =====================================
+// IA FINANCEIRA
+// =====================================
+
+
+function atualizarIA(){
+
+
+let campo=
+document.getElementById(
+"mensagemIA"
+);
+
+
+
+if(!campo)return;
+
+
+
+
+if(totalGastos()>dados.salario){
+
+
+campo.innerHTML=
+"⚠️ Atenção: seus gastos ultrapassam seu salário.";
+
+
+}
+
+else{
+
+
+campo.innerHTML=
+"✅ Sua situação financeira está saudável.";
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+// =====================================
+// LIMPAR DADOS
+// =====================================
 
 
 function limparDados(){
 
 
-    let confirmar = confirm(
-        "Deseja apagar todos os dados do aplicativo?"
-    );
+
+if(confirm(
+"Deseja apagar todos os dados?"
+)){
 
 
-    if(confirmar){
+localStorage.removeItem(
+"financeAI"
+);
 
 
-        localStorage.removeItem("financeAI");
-
-
-        location.reload();
-
-
-    }
+location.reload();
 
 
 }
-
-
-
-// ==========================================
-// PREVISÃO FINANCEIRA
-// ==========================================
-
-
-function previsao6Meses(){
-
-
-    let saldo = saldoAtual();
-
-
-    let previsao = saldo * 6;
-
-
-
-    let area=document.getElementById("previsao");
-
-
-    if(area){
-
-        area.innerHTML =
-        "Previsão de saldo em 6 meses: "
-        + dinheiro(previsao);
-
-    }
 
 
 
@@ -680,117 +1043,64 @@ function previsao6Meses(){
 
 
 
-// ==========================================
-// CARREGAR APLICATIVO
-// ==========================================
+
+
+
+
+// =====================================
+// INICIAR APP
+// =====================================
 
 
 window.onload=function(){
 
 
-    atualizarDashboard();
+
+abrirTela("inicio");
 
 
-    atualizarFaturas();
+atualizarDashboard();
 
 
-    previsao6Meses();
+mostrarFaturas();
+
+
+mostrarMetas();
+
 
 
 };
 
 
 
-// ==========================================
-// SERVICE WORKER PWA
-// ==========================================
+
+
+
+// PWA OFFLINE
 
 
 if("serviceWorker" in navigator){
 
 
-    navigator.serviceWorker.register("sw.js")
+navigator.serviceWorker.register(
+"sw.js"
+)
 
-    .then(()=>{
+.then(()=>{
 
-        console.log(
-        "Aplicativo funcionando offline"
-        );
+console.log(
+"App offline ativo"
+);
 
-    })
+})
 
-    .catch(()=>{
+.catch(()=>{
 
-        console.log(
-        "Erro no Service Worker"
-        );
-
-    });
-
-
-}
-// ==========================================
-// CALCULADORA DE INVESTIMENTO
-// ==========================================
-
-function calcularInvestimento(){
-
-    let meta = document.getElementById("metaInvestimento").value;
-    let meses = document.getElementById("mesesInvestimento").value;
-
-    if(!meta || !meses){
-        alert("Preencha a meta e os meses");
-        return;
-    }
-
-
-    let valor = Number(meta) / Number(meses);
-
-
-    document.getElementById("resultadoInvestimento").innerHTML =
-    "Você precisa investir aproximadamente " 
-    + dinheiro(valor) 
-    + " por mês.";
-
-}
-
-
-
-// ==========================================
-// IA FINANCEIRA
-// ==========================================
-
-function atualizarIA(){
-
-    let mensagem = document.getElementById("mensagemIA");
-
-
-    if(mensagem){
-
-        if(totalGastos() > dados.salario){
-
-            mensagem.innerHTML =
-            "⚠️ Seus gastos estão acima do salário.";
-
-        }else{
-
-            mensagem.innerHTML =
-            "✅ Sua saúde financeira está controlada.";
-
-        }
-
-    }
-
-}
-
-
-
-// atualizar ao abrir
-
-window.addEventListener("load",()=>{
-
-    atualizarDashboard();
-
-    atualizarIA();
+console.log(
+"Erro no offline"
+);
 
 });
+
+
+}
