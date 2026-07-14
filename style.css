@@ -1,44 +1,72 @@
+/* =====================================
+   FINANCE CONTROL AI PRO
+   DESIGN PREMIUM
+===================================== */
+
+
 *{
+
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
 }
+
 
 
 body{
 
-    background:#08080c;
+    background:#08090d;
+
     color:white;
+
     padding-bottom:90px;
 
 }
 
 
 
+
+
+/* TOPO */
+
 .top{
 
-    background:#111118;
+    background:#11131a;
+
     padding:25px 15px;
+
     text-align:center;
-    border-bottom:1px solid #292933;
+
+    border-bottom:
+    1px solid #252733;
 
 }
+
 
 
 .top h1{
 
-    font-size:24px;
+    font-size:25px;
+
+    font-weight:700;
 
 }
+
 
 
 .top p{
 
-    color:#999;
     margin-top:8px;
 
+    color:#9da0aa;
+
 }
+
 
 
 
@@ -53,59 +81,73 @@ main{
 
 
 
+
+/* TELAS */
+
+
 .tela{
 
     display:none;
 
-    animation:entrada .3s ease;
+    animation:
+    aparecer .3s ease;
 
 }
 
 
 
+@keyframes aparecer{
 
-@keyframes entrada{
 
 from{
 
-    opacity:0;
-    transform:translateY(15px);
+opacity:0;
+
+transform:
+translateY(15px);
 
 }
+
 
 
 to{
 
-    opacity:1;
-    transform:translateY(0);
+opacity:1;
+
+transform:
+translateY(0);
 
 }
 
+
 }
 
 
 
 
 
+
+/* CARDS */
 
 
 .card{
 
 
-    background:#15151d;
+    background:#151820;
 
-    border-radius:20px;
+    border-radius:22px;
 
     padding:20px;
 
     margin-bottom:15px;
 
+
     box-shadow:
-    0 10px 30px rgba(0,0,0,.3);
+    0 10px 35px
+    rgba(0,0,0,.35);
 
 
 }
-
 
 
 
@@ -113,12 +155,58 @@ to{
 
 .welcome{
 
-    background:
-    linear-gradient(
-    135deg,
-    #171722,
-    #282844
-    );
+
+background:
+linear-gradient(
+135deg,
+#151820,
+#25294a
+);
+
+
+}
+
+
+
+
+
+
+/* SALDO */
+
+
+.saldo-box{
+
+
+margin-top:20px;
+
+
+}
+
+
+
+.saldo-box span{
+
+
+display:block;
+
+font-size:35px;
+
+font-weight:bold;
+
+
+}
+
+
+
+.saldo-box small{
+
+
+color:#a5a7b0;
+
+margin-top:5px;
+
+display:block;
+
 
 }
 
@@ -126,46 +214,20 @@ to{
 
 
 
-.money{
 
 
-    margin-top:20px;
-
-    font-size:34px;
-
-    font-weight:bold;
-
-
-}
-
-
-
-.money small{
-
-
-    display:block;
-
-    font-size:14px;
-
-    color:#aaa;
-
-    margin-top:5px;
-
-
-}
-
-
-
+/* DASHBOARD */
 
 
 .dashboard{
 
 
-    display:grid;
+display:grid;
 
-    grid-template-columns:1fr 1fr;
+grid-template-columns:
+1fr 1fr;
 
-    gap:15px;
+gap:15px;
 
 
 }
@@ -176,7 +238,8 @@ to{
 .dashboard .card{
 
 
-    margin:0;
+margin:0;
+
 
 }
 
@@ -186,7 +249,7 @@ to{
 
 .card h2{
 
-    margin-bottom:15px;
+margin-bottom:15px;
 
 }
 
@@ -194,9 +257,9 @@ to{
 
 .card h3{
 
-    color:#aaa;
+font-size:15px;
 
-    font-size:15px;
+color:#a5a7b0;
 
 }
 
@@ -207,45 +270,57 @@ to{
 .card strong{
 
 
-    display:block;
+display:block;
 
-    font-size:24px;
+font-size:24px;
 
-    margin-top:10px;
+margin-top:10px;
+
+
+}
+
+
+
+
+
+
+
+/* INPUTS */
+
+
+input,
+select{
+
+
+width:100%;
+
+
+padding:15px;
+
+
+border-radius:15px;
+
+
+border:none;
+
+
+outline:none;
+
+
+background:#222633;
+
+
+color:white;
+
+
+font-size:16px;
+
+
+margin-bottom:12px;
 
 
 }
 
-
-
-
-
-input{
-
-
-    width:100%;
-
-    padding:15px;
-
-    border-radius:14px;
-
-    border:none;
-
-    outline:none;
-
-
-    background:#22222d;
-
-    color:white;
-
-
-    font-size:16px;
-
-
-    margin-bottom:12px;
-
-
-}
 
 
 
@@ -256,41 +331,58 @@ input{
 button{
 
 
-    width:100%;
-
-    padding:14px;
+width:100%;
 
 
-    border:none;
+padding:15px;
 
 
-    border-radius:15px;
+border:none;
 
 
-    background:#7c3cff;
+border-radius:15px;
 
 
-    color:white;
+background:#7c3cff;
 
 
-    font-size:16px;
+color:white;
 
 
-    cursor:pointer;
+font-size:16px;
 
 
-    margin-top:8px;
+cursor:pointer;
+
+
+margin-top:8px;
+
+
+transition:.2s;
 
 
 }
 
+
+
+
+
+button:hover{
+
+
+transform:
+scale(1.02);
+
+
+}
 
 
 
 button:active{
 
 
-    transform:scale(.97);
+transform:
+scale(.96);
 
 
 }
@@ -298,6 +390,24 @@ button:active{
 
 
 
+
+
+hr{
+
+
+border:none;
+
+border-top:
+1px solid #333;
+
+margin:
+20px 0;
+
+
+}
+/* =====================================
+   LISTAS
+===================================== */
 
 
 #listaGastos,
@@ -305,12 +415,9 @@ button:active{
 #listaMetas,
 #listaFaturas{
 
-
     margin-top:15px;
 
-
 }
-
 
 
 
@@ -318,13 +425,13 @@ button:active{
 .card-item{
 
 
-    background:#20202b;
+    background:#202431;
 
 
     padding:15px;
 
 
-    border-radius:15px;
+    border-radius:16px;
 
 
     margin-bottom:10px;
@@ -344,20 +451,10 @@ button:active{
 
 
 
-
-.card-item button{
-
-
-    width:auto;
+.card-item span{
 
 
-    padding:8px 12px;
-
-
-    background:#ff3b30;
-
-
-    margin:0;
+color:#ddd;
 
 
 }
@@ -365,23 +462,62 @@ button:active{
 
 
 
+.card-item strong{
+
+
+font-size:18px;
+
+
+}
+
+
+
+
+.card-item button{
+
+
+width:auto;
+
+
+padding:8px 12px;
+
+
+background:#ff3b30;
+
+
+margin:0;
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================
+   METAS
+===================================== */
 
 
 .meta-card{
 
 
-    background:#20202b;
+background:#202431;
 
-    padding:15px;
 
-    border-radius:15px;
+padding:15px;
 
-    margin-top:10px;
+
+border-radius:18px;
+
+
+margin-top:10px;
 
 
 }
-
-
 
 
 
@@ -389,15 +525,19 @@ button:active{
 .barra{
 
 
-    height:12px;
+height:12px;
 
-    background:#333;
 
-    border-radius:20px;
+background:#333844;
 
-    overflow:hidden;
 
-    margin:15px 0;
+border-radius:20px;
+
+
+overflow:hidden;
+
+
+margin:15px 0;
 
 
 }
@@ -409,9 +549,36 @@ button:active{
 .progresso{
 
 
-    height:100%;
+height:100%;
 
-    background:#00e676;
+
+background:#00d084;
+
+
+transition:.5s;
+
+
+}
+
+
+
+
+
+
+
+
+/* =====================================
+   GRAFICO
+===================================== */
+
+
+canvas{
+
+
+width:100%!important;
+
+
+max-height:300px;
 
 
 }
@@ -420,54 +587,50 @@ button:active{
 
 
 
-hr{
 
 
-    border:none;
-
-    border-top:1px solid #333;
-
-    margin:20px 0;
-
-
-}
-
-
-
-
+/* =====================================
+   MENU INFERIOR
+===================================== */
 
 
 .menu{
 
 
-    position:fixed;
+position:fixed;
 
 
-    bottom:0;
+bottom:0;
 
 
-    left:0;
+left:0;
 
 
-    width:100%;
+width:100%;
 
 
-    background:#111118;
+height:75px;
 
 
-    display:flex;
+background:#11131a;
 
 
-    justify-content:space-around;
+display:flex;
 
 
-    padding:10px 5px;
+justify-content:space-around;
 
 
-    border-top:1px solid #292933;
+align-items:center;
 
 
-    z-index:100;
+border-top:
+
+
+1px solid #292d3a;
+
+
+z-index:999;
 
 
 }
@@ -479,19 +642,22 @@ hr{
 .menu button{
 
 
-    background:none;
+background:none;
 
 
-    width:20%;
+width:20%;
 
 
-    padding:8px 2px;
+padding:5px;
 
 
-    margin:0;
+margin:0;
 
 
-    font-size:12px;
+font-size:12px;
+
+
+color:white;
 
 
 }
@@ -503,7 +669,7 @@ hr{
 .menu button:hover{
 
 
-    background:#22222d;
+background:#202431;
 
 
 }
@@ -511,16 +677,96 @@ hr{
 
 
 
+
+
+
+/* =====================================
+   PERFIL
+===================================== */
+
+
+#perfil .card{
+
+
+background:#202431;
+
+
+}
+
+
+
+
+
+
+
+/* =====================================
+   MOBILE
+===================================== */
 
 
 @media(max-width:600px){
 
 
+
 .dashboard{
 
-    grid-template-columns:1fr;
+
+grid-template-columns:1fr;
+
 
 }
+
+
+
+.top h1{
+
+
+font-size:22px;
+
+
+}
+
+
+
+.saldo-box span{
+
+
+font-size:30px;
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+/* =====================================
+   SCROLL
+===================================== */
+
+
+::-webkit-scrollbar{
+
+
+width:5px;
+
+
+}
+
+
+
+::-webkit-scrollbar-thumb{
+
+
+background:#7c3cff;
+
+
+border-radius:20px;
 
 
 }
