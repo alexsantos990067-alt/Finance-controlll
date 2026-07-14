@@ -18,10 +18,8 @@
 
 <header class="top">
 
-<div>
 <h1>Finance Control AI PRO</h1>
 <p>Seu assistente financeiro inteligente</p>
-</div>
 
 </header>
 
@@ -41,14 +39,13 @@ Aqui está sua situação financeira atual.
 
 <div class="money">
 
-R$ 1.600,00
+R$ <span id="salario">1600</span>,00
 
 <span>
 Salário mensal
 </span>
 
 </div>
-
 
 </section>
 
@@ -101,6 +98,7 @@ Após pagamentos
 Honda CB300F
 </strong>
 
+
 <div class="progress">
 
 <div id="barraMeta"></div>
@@ -127,9 +125,7 @@ Honda CB300F
 
 
 <p id="mensagemIA">
-
-Analisando sua vida financeira...
-
+Analisando...
 </p>
 
 
@@ -138,6 +134,7 @@ Analisando sua vida financeira...
 
 
 </section>
+
 
 
 
@@ -147,7 +144,39 @@ Analisando sua vida financeira...
 
 
 <h2>
-📅 Planejamento de parcelas
+💸 Adicionar gasto
+</h2>
+
+
+<input id="nomeGasto" placeholder="Nome do gasto">
+
+
+<input id="valorGasto" 
+type="number"
+placeholder="Valor">
+
+
+<button onclick="adicionarGasto()">
+Adicionar
+</button>
+
+
+<div id="listaGastos"></div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+📅 Parcelas
 </h2>
 
 
@@ -156,60 +185,68 @@ Analisando sua vida financeira...
 
 
 <div>
-
 <h3>🏦 Consórcio</h3>
-
-<p>
-R$ 481,38/mês
-</p>
-
-<span>
-60 meses
-</span>
-
+<p>R$481,38</p>
+<span>60 meses</span>
 </div>
 
 
 
 <div>
-
 <h3>💻 PC</h3>
-
-<p>
-R$ 178,55/mês
-</p>
-
-<span>
-9 parcelas
-</span>
-
+<p>R$178,55</p>
+<span>9 meses</span>
 </div>
-
-
 
 
 
 <div>
-
 <h3>💾 SSD</h3>
-
-<p>
-R$ 298,67/mês
-</p>
-
-<span>
-4 parcelas
-</span>
-
+<p>R$298,67</p>
+<span>4 meses</span>
 </div>
 
 
-
 </div>
-
 
 
 </section>
+
+
+
+
+
+
+
+<section class="card">
+
+
+<h2>
+📈 Investimentos
+</h2>
+
+
+<input id="metaInvestimento"
+placeholder="Meta (ex: 5000)"
+type="number">
+
+
+<input id="mesesInvestimento"
+placeholder="Meses"
+type="number">
+
+
+<button onclick="calcularInvestimento()">
+Calcular
+</button>
+
+
+<p id="resultadoInvestimento"></p>
+
+
+</section>
+
+
 
 
 
@@ -223,17 +260,13 @@ R$ 298,67/mês
 </h2>
 
 
-
-<div class="objetivos">
-
-
 <button>
 🏍 Comprar CB300F
 </button>
 
 
 <button>
-💰 Criar Reserva
+💰 Reserva financeira
 </button>
 
 
@@ -242,11 +275,9 @@ R$ 298,67/mês
 </button>
 
 
-
-</div>
-
-
 </section>
+
+
 
 
 
@@ -256,7 +287,7 @@ R$ 298,67/mês
 
 
 <h2>
-📊 Resumo da IA
+📊 Resumo IA
 </h2>
 
 
@@ -267,8 +298,8 @@ Carregando análise...
 </div>
 
 
-
 </section>
+
 
 
 
@@ -277,36 +308,34 @@ Carregando análise...
 
 
 
+
+
 <nav class="menu">
 
 
 <button>
-🏠
-<br>
+🏠<br>
 Início
 </button>
 
 
 
-<button>
-💳
-<br>
+<button onclick="mostrarGastos()">
+💳<br>
 Gastos
 </button>
 
 
 
-<button>
-🎯
-<br>
-Metas
+<button onclick="mostrarInvestimentos()">
+📈<br>
+Investimentos
 </button>
 
 
 
 <button>
-👤
-<br>
+👤<br>
 Perfil
 </button>
 
