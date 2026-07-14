@@ -1200,23 +1200,15 @@ campo.innerHTML =
 // GRÁFICO
 // ================================
 
-
 function criarGrafico(){
 
-
-let canvas =
-document.getElementById(
-"graficoFinanceiro"
-);
+let canvas = document.getElementById("graficoFinanceiro");
 
 
-
-if(!canvas)return;
-
+if(!canvas) return;
 
 
-let ctx =
-canvas.getContext("2d");
+let ctx = canvas.getContext("2d");
 
 
 
@@ -1228,31 +1220,25 @@ grafico.destroy();
 
 
 
-
-
-grafico =
-new Chart(ctx,{
+grafico = new Chart(ctx, {
 
 type:"doughnut",
-
 
 data:{
 
 
 labels:[
 
-"Gastos",
+"💸 Gastos",
 
-"Investimentos",
+"📈 Investimentos",
 
-"Livre"
+"💰 Livre"
 
 ],
 
 
-
 datasets:[{
-
 
 data:[
 
@@ -1260,10 +1246,7 @@ totalGastos(),
 
 totalInvestimentos(),
 
-Math.max(
-saldoAtual(),
-0
-)
+Math.max(saldoAtual(),0)
 
 ]
 
@@ -1277,26 +1260,33 @@ saldoAtual(),
 options:{
 
 
-responsive:true
+responsive:true,
+
+
+plugins:{
+
+
+legend:{
+
+
+position:"bottom"
 
 
 }
+
+
+}
+
+
+
+}
+
 
 
 });
 
 
-
 }
-
-
-
-
-
-
-
-
-
 // ================================
 // LIMPAR DADOS
 // ================================
