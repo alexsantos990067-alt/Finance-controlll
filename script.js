@@ -1657,7 +1657,27 @@ mostrarFaturas();
 
 
 
+// ======================================
+// CORREÇÃO DE ATUALIZAÇÃO V3
+// ======================================
 
+window.addEventListener("load",()=>{
+
+    setTimeout(()=>{
+
+        atualizarDashboard();
+
+        criarGrafico();
+
+        criarGraficoEvolucao();
+
+        atualizarMeta();
+
+        previsao6Meses();
+
+    },500);
+
+});
 
 
 // ======================================
