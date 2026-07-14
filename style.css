@@ -68,11 +68,11 @@ padding:15px;
 
 .tela{
 
-display:none;
+display:block;
+
 animation:entrada .3s ease;
 
 }
-
 
 
 @keyframes entrada{
