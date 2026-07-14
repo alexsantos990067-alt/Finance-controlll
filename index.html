@@ -39,10 +39,10 @@ Aqui está sua situação financeira atual.
 
 <div class="money">
 
-R$ <span id="salario">1600</span>,00
+R$ <span id="saldo">1600</span>
 
 <span>
-Salário mensal
+Saldo disponível
 </span>
 
 </div>
@@ -51,86 +51,42 @@ Salário mensal
 
 
 
-
 <section class="dashboard">
 
 
 <div class="card">
 
-<h3>💳 Compromissos</h3>
+<h3>💸 Gastos</h3>
 
-<strong id="compromissos">
+<strong id="totalGastos">
 R$ 0
 </strong>
-
-<p>
-Consórcio + Parcelas
-</p>
 
 </div>
 
 
 
-
 <div class="card">
 
-<h3>💰 Livre no mês</h3>
+<h3>📈 Investimentos</h3>
 
-<strong id="livre">
+<strong id="totalInvestimentos">
 R$ 0
 </strong>
-
-<p>
-Após pagamentos
-</p>
 
 </div>
 
 
 
-
-
 <div class="card">
 
-<h3>🏍 Meta atual</h3>
+<h3>💰 Salário</h3>
 
 <strong>
-Honda CB300F
+R$1600
 </strong>
 
-
-<div class="progress">
-
-<div id="barraMeta"></div>
-
 </div>
-
-
-<p id="metaTexto">
-0%
-</p>
-
-
-</div>
-
-
-
-
-
-<div class="card ia">
-
-<h3>
-🤖 IA Financeira
-</h3>
-
-
-<p id="mensagemIA">
-Analisando...
-</p>
-
-
-</div>
-
 
 
 </section>
@@ -139,19 +95,15 @@ Analisando...
 
 
 
-
 <section class="card">
 
-
-<h2>
-💸 Adicionar gasto
-</h2>
+<h2>💸 Adicionar gasto</h2>
 
 
 <input id="nomeGasto" placeholder="Nome do gasto">
 
 
-<input id="valorGasto" 
+<input id="valorGasto"
 type="number"
 placeholder="Valor">
 
@@ -174,40 +126,51 @@ Adicionar
 
 <section class="card">
 
-
-<h2>
-📅 Parcelas
-</h2>
+<h2>📈 Investimentos</h2>
 
 
-
-<div class="parcelas">
-
-
-<div>
-<h3>🏦 Consórcio</h3>
-<p>R$481,38</p>
-<span>60 meses</span>
-</div>
+<input id="valorInvestimento"
+type="number"
+placeholder="Valor para investir">
 
 
+<button onclick="adicionarInvestimento()">
+Investir
+</button>
 
-<div>
-<h3>💻 PC</h3>
-<p>R$178,55</p>
-<span>9 meses</span>
-</div>
+
+<div id="listaInvestimentos"></div>
+
+
+</section>
 
 
 
-<div>
-<h3>💾 SSD</h3>
-<p>R$298,67</p>
-<span>4 meses</span>
-</div>
 
 
-</div>
+
+
+
+<section class="card">
+
+<h2>🎯 Metas</h2>
+
+
+<input id="nomeMeta"
+placeholder="Nome da meta">
+
+
+<input id="valorMeta"
+type="number"
+placeholder="Valor da meta">
+
+
+<button onclick="criarMeta()">
+Criar Meta
+</button>
+
+
+<div id="listaMetas"></div>
 
 
 </section>
@@ -220,28 +183,78 @@ Adicionar
 
 <section class="card">
 
-
-<h2>
-📈 Investimentos
-</h2>
+<h2>💳 Fatura do Cartão</h2>
 
 
-<input id="metaInvestimento"
-placeholder="Meta (ex: 5000)"
-type="number">
+<input id="nomeFatura"
+placeholder="Nome da compra">
 
 
-<input id="mesesInvestimento"
-placeholder="Meses"
-type="number">
+<input id="valorFatura"
+type="number"
+placeholder="Valor total">
 
 
-<button onclick="calcularInvestimento()">
+<input id="parcelasFatura"
+type="number"
+placeholder="Quantidade de parcelas">
+
+
+<button onclick="adicionarFatura()">
+Adicionar Fatura
+</button>
+
+
+<div id="listaFaturas"></div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="card">
+
+<h2>🏦 Consórcio</h2>
+
+
+<input id="valorConsorcio"
+type="number"
+placeholder="Valor da carta">
+
+
+<input id="parcelasConsorcio"
+type="number"
+placeholder="Quantidade de meses">
+
+
+<button onclick="calcularConsorcio()">
 Calcular
 </button>
 
 
-<p id="resultadoInvestimento"></p>
+<p id="resultadoConsorcio"></p>
+
+
+</section>
+
+
+
+
+
+
+
+
+<section class="card">
+
+<h2>🔮 Previsão</h2>
+
+<p id="previsao">
+Calculando...
+</p>
 
 
 </section>
@@ -255,50 +268,18 @@ Calcular
 <section class="card">
 
 
-<h2>
-🎯 Objetivos
-</h2>
+<h2>👤 Perfil</h2>
 
 
-<button>
-🏍 Comprar CB300F
-</button>
+<button onclick="limparDados()">
 
+🗑 Limpar dados
 
-<button>
-💰 Reserva financeira
-</button>
-
-
-<button>
-📈 Investir
 </button>
 
 
 </section>
 
-
-
-
-
-
-
-<section class="card">
-
-
-<h2>
-📊 Resumo IA
-</h2>
-
-
-<div id="analise">
-
-Carregando análise...
-
-</div>
-
-
-</section>
 
 
 
@@ -313,32 +294,53 @@ Carregando análise...
 <nav class="menu">
 
 
-<button>
-🏠<br>
+<button onclick="atualizarDashboard()">
+
+🏠
+<br>
 Início
+
 </button>
 
 
 
 <button onclick="mostrarGastos()">
-💳<br>
+
+💳
+<br>
 Gastos
+
 </button>
 
 
 
 <button onclick="mostrarInvestimentos()">
-📈<br>
+
+📈
+<br>
 Investimentos
+
+</button>
+
+
+
+<button onclick="mostrarMetas()">
+
+🎯
+<br>
+Metas
+
 </button>
 
 
 
 <button>
-👤<br>
-Perfil
-</button>
 
+👤
+<br>
+Perfil
+
+</button>
 
 
 </nav>
@@ -347,7 +349,7 @@ Perfil
 
 
 
-<script src="app.js"></script>
+<script src="script.js"></script>
 
 
 </body>
