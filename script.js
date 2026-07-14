@@ -1048,59 +1048,38 @@ location.reload();
 
 
 // =====================================
-// INICIAR APP
+// INICIAR APLICATIVO CORRIGIDO
 // =====================================
 
+window.addEventListener("DOMContentLoaded",()=>{
 
-window.onload=function(){
+    // mostra a tela inicial
+    let inicio = document.getElementById("inicio");
 
-
-
-abrirTela("inicio");
-
-
-atualizarDashboard();
-
-
-mostrarFaturas();
+    if(inicio){
+        inicio.style.display="block";
+    }
 
 
-mostrarMetas();
+    // esconde as outras telas
+    let telas = document.querySelectorAll(".tela");
+
+    telas.forEach(tela=>{
+
+        if(tela.id !== "inicio"){
+
+            tela.style.display="none";
+
+        }
+
+    });
 
 
+    atualizarDashboard();
 
-};
+    mostrarFaturas();
 
+    mostrarMetas();
 
-
-
-
-
-// PWA OFFLINE
-
-
-if("serviceWorker" in navigator){
-
-
-navigator.serviceWorker.register(
-"sw.js"
-)
-
-.then(()=>{
-
-console.log(
-"App offline ativo"
-);
-
-})
-
-.catch(()=>{
-
-console.log(
-"Erro no offline"
-);
 
 });
-
-
-}
