@@ -1381,7 +1381,7 @@ window.addEventListener(
 ()=>{
 
 
-abrirTela("inicio");
+<section id="inicio" class="">
 
 
 mostrarGastos();
