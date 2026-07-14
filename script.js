@@ -1201,38 +1201,68 @@ dinheiro(mensal)
 // GRÁFICO PRINCIPAL
 // ======================================
 
+function criarGraficoEvolucao(){
 
-function criarGrafico(){
 
-
-let canvas =
-document.getElementById(
-"graficoFinanceiro"
+let canvas = document.getElementById(
+"graficoEvolucao"
 );
 
 
 
-if(!canvas)return;
+if(!canvas){
 
+console.log("Canvas evolução não encontrado");
 
-
-if(graficoFinanceiro){
-
-graficoFinanceiro.destroy();
+return;
 
 }
 
 
 
 
-graficoFinanceiro =
-new Chart(
+if(graficoEvolucao){
 
-canvas,
+graficoEvolucao.destroy();
 
-{
+}
 
-type:"doughnut",
+
+
+
+
+let saldo = saldoAtual();
+
+let aporte = totalInvestimentos();
+
+
+
+let valores = [
+
+saldo,
+
+saldo + aporte,
+
+saldo + (aporte*2),
+
+saldo + (aporte*3),
+
+saldo + (aporte*4),
+
+saldo + (aporte*5)
+
+];
+
+
+
+
+
+
+graficoEvolucao = new Chart(canvas, {
+
+
+type:"line",
+
 
 
 data:{
@@ -1240,11 +1270,17 @@ data:{
 
 labels:[
 
-"Gastos",
+"Agora",
 
-"Investimentos",
+"1 mês",
 
-"Livre"
+"2 meses",
+
+"3 meses",
+
+"4 meses",
+
+"5 meses"
 
 ],
 
@@ -1253,18 +1289,18 @@ labels:[
 datasets:[{
 
 
-data:[
+label:"Evolução financeira",
 
-totalGastos(),
+data:valores,
 
-totalInvestimentos(),
+fill:true,
 
-Math.max(saldoAtual(),0)
+tension:0.4
 
-]
 
 
 }]
+
 
 },
 
@@ -1273,7 +1309,35 @@ Math.max(saldoAtual(),0)
 options:{
 
 
-responsive:true
+responsive:true,
+
+
+plugins:{
+
+
+legend:{
+
+
+display:true
+
+
+}
+
+
+},
+
+
+
+scales:{
+
+
+y:{
+
+
+beginAtZero:true
+
+
+}
 
 
 }
@@ -1283,19 +1347,15 @@ responsive:true
 }
 
 
-);
 
+});
+
+
+
+console.log("Gráfico evolução criado");
 
 
 }
-
-
-
-
-
-
-
-
 
 // ======================================
 // GRÁFICO 6 MESES
