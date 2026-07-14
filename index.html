@@ -4,6 +4,7 @@
 <head>
 
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Finance Control AI PRO</title>
@@ -32,12 +33,12 @@ Seu assistente financeiro inteligente
 <main>
 
 
+<!-- ================= INICIO ================= -->
 
 <section id="inicio" class="tela">
 
 
 <div class="card welcome">
-
 
 <h2>
 Olá, Alex 👋
@@ -45,15 +46,15 @@ Olá, Alex 👋
 
 
 <p>
-Aqui está seu controle financeiro.
+Sua evolução financeira em um só lugar.
 </p>
 
 
 
-<div class="money">
+<div class="saldo-box">
 
 <span id="saldo">
-R$ 1.600
+R$ 1.600,00
 </span>
 
 
@@ -65,7 +66,6 @@ Saldo disponível
 </div>
 
 
-
 </div>
 
 
@@ -75,16 +75,14 @@ Saldo disponível
 <div class="dashboard">
 
 
-
 <div class="card">
 
 <h3>
 💸 Gastos
 </h3>
 
-
 <strong id="totalGastos">
-R$ 0
+R$ 0,00
 </strong>
 
 
@@ -97,12 +95,11 @@ R$ 0
 <div class="card">
 
 <h3>
-📈 Investimentos
+📈 Investido
 </h3>
-
 
 <strong id="totalInvestimentos">
-R$ 0
+R$ 0,00
 </strong>
 
 
@@ -115,12 +112,11 @@ R$ 0
 <div class="card">
 
 <h3>
-💰 Salário
+💳 Faturas
 </h3>
 
-
-<strong>
-R$ 1.600
+<strong id="totalFaturas">
+R$ 0,00
 </strong>
 
 
@@ -136,9 +132,8 @@ R$ 1.600
 🤖 IA Financeira
 </h3>
 
-
 <p id="mensagemIA">
-Analisando...
+Analisando sua vida financeira...
 </p>
 
 
@@ -147,6 +142,25 @@ Analisando...
 
 
 </div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📊 Evolução financeira
+</h2>
+
+
+<canvas id="graficoFinanceiro"></canvas>
+
+
+</div>
+
 
 
 
@@ -160,11 +174,14 @@ Analisando...
 
 
 
+
+<!-- ================= GASTOS ================= -->
+
 <section id="gastos" class="tela card">
 
 
 <h2>
-💸 Controle de Gastos
+💸 Gastos
 </h2>
 
 
@@ -175,10 +192,37 @@ placeholder="Nome do gasto">
 
 
 
-<input 
+<input
 id="valorGasto"
 type="number"
 placeholder="Valor">
+
+
+
+<select id="categoriaGasto">
+
+<option>
+Casa
+</option>
+
+<option>
+Comida
+</option>
+
+<option>
+Transporte
+</option>
+
+<option>
+Lazer
+</option>
+
+<option>
+Outros
+</option>
+
+</select>
+
 
 
 
@@ -205,6 +249,9 @@ Adicionar gasto
 
 
 
+
+<!-- ================= INVESTIMENTOS ================= -->
+
 <section id="investimentos" class="tela card">
 
 
@@ -214,20 +261,18 @@ Adicionar gasto
 
 
 
-
-<input 
+<input
 id="valorInvestimento"
 type="number"
-placeholder="Valor para investir">
+placeholder="Valor investido">
 
 
 
 <button onclick="adicionarInvestimento()">
 
-Investir
+Adicionar investimento
 
 </button>
-
 
 
 
@@ -244,22 +289,22 @@ Investir
 
 
 <h3>
-Meta de investimento
+Simular objetivo
 </h3>
 
 
 
-<input 
+<input
 id="metaInvestimento"
 type="number"
-placeholder="Valor da meta">
+placeholder="Valor desejado">
 
 
 
-<input 
+<input
 id="mesesInvestimento"
 type="number"
-placeholder="Quantidade de meses">
+placeholder="Meses">
 
 
 
@@ -282,8 +327,7 @@ Calcular
 
 
 
-
-
+<!-- ================= METAS ================= -->
 
 
 <section id="metas" class="tela card">
@@ -295,17 +339,16 @@ Calcular
 
 
 
-
-<input 
+<input
 id="nomeMeta"
 placeholder="Nome da meta">
 
 
 
-<input 
+<input
 id="valorMeta"
 type="number"
-placeholder="Valor objetivo">
+placeholder="Valor da meta">
 
 
 
@@ -317,20 +360,30 @@ Criar meta
 
 
 
-
 <div id="listaMetas">
 
 </div>
 
 
 
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ================= FATURA ================= -->
 
 
 <section id="fatura" class="tela card">
 
 
 <h2>
-💳 Fatura do Cartão
+💳 Cartão / Faturas
 </h2>
 
 
@@ -376,6 +429,10 @@ Adicionar compra
 
 
 
+
+
+
+<!-- ================= CONSORCIO ================= -->
 
 
 <section id="consorcio" class="tela card">
@@ -424,6 +481,10 @@ Calcular parcela
 
 
 
+
+<!-- ================= PERFIL ================= -->
+
+
 <section id="perfil" class="tela card">
 
 
@@ -435,17 +496,20 @@ Calcular parcela
 
 <div class="card">
 
+
 <p>
 Nome: Alex
 </p>
 
 
 <p>
-Salário: R$ 1.600
+Salário mensal: R$ 1.600
 </p>
 
 
+
 </div>
+
 
 
 
@@ -470,6 +534,11 @@ Salário: R$ 1.600
 
 
 
+
+
+
+
+<!-- ================= MENU ================= -->
 
 
 <nav class="menu">
@@ -529,20 +598,20 @@ Perfil
 
 
 
-
 </nav>
 
 
 
 
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="script.js"></script>
+
 
 
 </body>
 
 </html>
-
-
-
-</section>
