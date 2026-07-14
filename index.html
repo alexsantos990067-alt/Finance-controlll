@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Finance Control AI PRO v3</title>
+<title>Finance Control AI PRO</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -22,7 +22,7 @@
 <h1>Finance Control AI PRO</h1>
 
 <p>
-Controle sua vida financeira com inteligência
+Seu assistente financeiro inteligente
 </p>
 
 </header>
@@ -33,8 +33,6 @@ Controle sua vida financeira com inteligência
 <main>
 
 
-
-<!-- INICIO -->
 
 <section id="inicio" class="tela">
 
@@ -48,7 +46,7 @@ Olá, Alex 👋
 
 
 <p>
-Sua evolução financeira
+Sua situação financeira
 </p>
 
 
@@ -61,7 +59,7 @@ R$ 1.600,00
 
 
 <small>
-Saldo atual
+Saldo disponível
 </small>
 
 
@@ -93,6 +91,7 @@ R$ 0
 
 
 
+
 <div class="card">
 
 <h3>
@@ -106,6 +105,8 @@ R$ 0
 
 
 </div>
+
+
 
 
 
@@ -128,7 +129,9 @@ R$ 0
 
 
 
+
 <div class="card">
+
 
 <h3>
 🤖 IA Financeira
@@ -151,12 +154,11 @@ Analisando...
 
 
 
-
 <div class="card">
 
 
 <h2>
-📊 Distribuição financeira
+📊 Controle financeiro
 </h2>
 
 
@@ -174,7 +176,7 @@ Analisando...
 
 
 <h2>
-📈 Evolução dos próximos 6 meses
+📈 Evolução 6 meses
 </h2>
 
 
@@ -199,15 +201,9 @@ Analisando...
 
 <div class="barra">
 
-<div 
-id="barraMeta"
-class="progresso">
+<div id="barraMeta" class="progresso"></div>
 
 </div>
-
-
-</div>
-
 
 
 <p id="textoMeta">
@@ -232,9 +228,7 @@ Nenhuma meta criada
 
 
 <p id="previsao6Meses">
-
 Calculando...
-
 </p>
 
 
@@ -242,16 +236,10 @@ Calculando...
 
 
 
-
 </section>
 
 
 
-
-
-
-
-<!-- GASTOS -->
 
 
 <section id="gastos" class="tela card">
@@ -262,15 +250,12 @@ Calculando...
 </h2>
 
 
-
-<input
-id="nomeGasto"
+<input id="nomeGasto"
 placeholder="Nome do gasto">
 
 
 
-<input
-id="valorGasto"
+<input id="valorGasto"
 type="number"
 placeholder="Valor">
 
@@ -280,9 +265,7 @@ placeholder="Valor">
 
 <option>Casa</option>
 
-<option>Comida</option>
-
-<option>Transporte</option>
+<option>Alimentação</option>
 
 <option>Lazer</option>
 
@@ -292,29 +275,20 @@ placeholder="Valor">
 
 
 
-
 <button onclick="adicionarGasto()">
 
-Adicionar
+Adicionar gasto
 
 </button>
 
 
 
-<div id="listaGastos">
-
-</div>
+<div id="listaGastos"></div>
 
 
 </section>
 
 
-
-
-
-
-
-<!-- INVESTIMENTOS -->
 
 
 <section id="investimentos" class="tela card">
@@ -329,13 +303,13 @@ Adicionar
 <input
 id="valorInvestimento"
 type="number"
-placeholder="Valor">
+placeholder="Valor para investir">
 
 
 
 <button onclick="adicionarInvestimento()">
 
-Investir
+Adicionar investimento
 
 </button>
 
@@ -348,8 +322,10 @@ Investir
 
 
 
+
+
 <h3>
-Simular objetivo
+🎯 Simular objetivo
 </h3>
 
 
@@ -357,20 +333,20 @@ Simular objetivo
 <input
 id="metaInvestimento"
 type="number"
-placeholder="Meta">
+placeholder="Valor da meta">
 
 
 
 <input
 id="mesesInvestimento"
 type="number"
-placeholder="Meses">
+placeholder="Quantidade de meses">
 
 
 
 <button onclick="calcularInvestimento()">
 
-Calcular
+Simular
 
 </button>
 
@@ -381,19 +357,24 @@ Calcular
 </p>
 
 
+
 </section>
 
 
 
 
-<!-- METAS -->
+
+
+
+
 
 <section id="metas" class="tela card">
 
 
 <h2>
-🎯 Objetivos
+🎯 Minhas metas
 </h2>
+
 
 
 
@@ -406,7 +387,7 @@ placeholder="Nome da meta">
 <input
 id="valorMeta"
 type="number"
-placeholder="Valor desejado">
+placeholder="Valor objetivo">
 
 
 
@@ -415,6 +396,7 @@ placeholder="Valor desejado">
 Criar meta
 
 </button>
+
 
 
 
@@ -433,7 +415,6 @@ Criar meta
 
 
 
-<!-- FATURAS -->
 
 <section id="fatura" class="tela card">
 
@@ -441,6 +422,7 @@ Criar meta
 <h2>
 💳 Cartão / Parcelas
 </h2>
+
 
 
 
@@ -460,7 +442,7 @@ placeholder="Valor total">
 <input
 id="parcelasFatura"
 type="number"
-placeholder="Quantidade de parcelas">
+placeholder="Número de parcelas">
 
 
 
@@ -487,7 +469,6 @@ Adicionar compra
 
 
 
-<!-- CONSÓRCIO -->
 
 <section id="consorcio" class="tela card">
 
@@ -508,15 +489,16 @@ placeholder="Valor da carta">
 <input
 id="parcelasConsorcio"
 type="number"
-placeholder="Meses">
+placeholder="Quantidade de meses">
 
 
 
 <button onclick="calcularConsorcio()">
 
-Calcular parcela
+Calcular
 
 </button>
+
 
 
 
@@ -532,11 +514,6 @@ Calcular parcela
 
 
 
-
-
-
-<!-- PERFIL -->
-
 <section id="perfil" class="tela card">
 
 
@@ -548,14 +525,19 @@ Calcular parcela
 
 <div class="card">
 
+
 <p>
 Alex
 </p>
 
+
 <p>
-Salário:
+Salário mensal:
+<strong>
 R$ 1.600,00
+</strong>
 </p>
+
 
 
 </div>
@@ -565,7 +547,7 @@ R$ 1.600,00
 
 <button onclick="limparDados()">
 
-🗑 Limpar dados
+🗑 Apagar dados
 
 </button>
 
@@ -586,9 +568,6 @@ R$ 1.600,00
 
 
 
-
-<!-- MENU -->
-
 <nav class="menu">
 
 
@@ -604,6 +583,7 @@ Início
 
 
 
+
 <button onclick="abrirTela('gastos')">
 
 💸
@@ -611,6 +591,7 @@ Início
 Gastos
 
 </button>
+
 
 
 
@@ -626,6 +607,7 @@ Investir
 
 
 
+
 <button onclick="abrirTela('metas')">
 
 🎯
@@ -633,6 +615,7 @@ Investir
 Metas
 
 </button>
+
 
 
 
@@ -647,6 +630,7 @@ Perfil
 
 
 
+
 </nav>
 
 
@@ -654,12 +638,17 @@ Perfil
 
 
 
+
+<!-- IMPORTANTE: Chart antes do script -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 <script src="script.js"></script>
 
 
 
 </body>
+
 
 </html>
