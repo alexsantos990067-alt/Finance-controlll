@@ -7,7 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Finance Control AI PRO</title>
+<title>Finance Control AI PRO v3</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -22,7 +22,7 @@
 <h1>Finance Control AI PRO</h1>
 
 <p>
-Seu assistente financeiro inteligente
+Controle sua vida financeira com inteligência
 </p>
 
 </header>
@@ -33,12 +33,14 @@ Seu assistente financeiro inteligente
 <main>
 
 
-<!-- ================= INICIO ================= -->
+
+<!-- INICIO -->
 
 <section id="inicio" class="tela">
 
 
 <div class="card welcome">
+
 
 <h2>
 Olá, Alex 👋
@@ -46,7 +48,7 @@ Olá, Alex 👋
 
 
 <p>
-Sua evolução financeira em um só lugar.
+Sua evolução financeira
 </p>
 
 
@@ -59,7 +61,7 @@ R$ 1.600,00
 
 
 <small>
-Saldo disponível
+Saldo atual
 </small>
 
 
@@ -67,6 +69,7 @@ Saldo disponível
 
 
 </div>
+
 
 
 
@@ -82,12 +85,10 @@ Saldo disponível
 </h3>
 
 <strong id="totalGastos">
-R$ 0,00
+R$ 0
 </strong>
 
-
 </div>
-
 
 
 
@@ -95,16 +96,16 @@ R$ 0,00
 <div class="card">
 
 <h3>
-📈 Investido
+📈 Investimentos
 </h3>
 
+
 <strong id="totalInvestimentos">
-R$ 0,00
+R$ 0
 </strong>
 
 
 </div>
-
 
 
 
@@ -115,8 +116,9 @@ R$ 0,00
 💳 Faturas
 </h3>
 
+
 <strong id="totalFaturas">
-R$ 0,00
+R$ 0
 </strong>
 
 
@@ -132,13 +134,33 @@ R$ 0,00
 🤖 IA Financeira
 </h3>
 
+
 <p id="mensagemIA">
-Analisando sua vida financeira...
+Analisando...
 </p>
 
 
 </div>
 
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+📊 Distribuição financeira
+</h2>
+
+
+<canvas id="graficoFinanceiro"></canvas>
 
 
 </div>
@@ -152,15 +174,71 @@ Analisando sua vida financeira...
 
 
 <h2>
-📊 Evolução financeira
+📈 Evolução dos próximos 6 meses
 </h2>
 
 
-<canvas id="graficoFinanceiro"></canvas>
+<canvas id="graficoEvolucao"></canvas>
 
 
 </div>
 
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🎯 Meta atual
+</h2>
+
+
+<div class="barra">
+
+<div 
+id="barraMeta"
+class="progresso">
+
+</div>
+
+
+</div>
+
+
+
+<p id="textoMeta">
+Nenhuma meta criada
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+🔮 Previsão financeira
+</h2>
+
+
+<p id="previsao6Meses">
+
+Calculando...
+
+</p>
+
+
+</div>
 
 
 
@@ -173,9 +251,8 @@ Analisando sua vida financeira...
 
 
 
+<!-- GASTOS -->
 
-
-<!-- ================= GASTOS ================= -->
 
 <section id="gastos" class="tela card">
 
@@ -186,7 +263,7 @@ Analisando sua vida financeira...
 
 
 
-<input 
+<input
 id="nomeGasto"
 placeholder="Nome do gasto">
 
@@ -201,25 +278,15 @@ placeholder="Valor">
 
 <select id="categoriaGasto">
 
-<option>
-Casa
-</option>
+<option>Casa</option>
 
-<option>
-Comida
-</option>
+<option>Comida</option>
 
-<option>
-Transporte
-</option>
+<option>Transporte</option>
 
-<option>
-Lazer
-</option>
+<option>Lazer</option>
 
-<option>
-Outros
-</option>
+<option>Outros</option>
 
 </select>
 
@@ -228,7 +295,7 @@ Outros
 
 <button onclick="adicionarGasto()">
 
-Adicionar gasto
+Adicionar
 
 </button>
 
@@ -239,7 +306,6 @@ Adicionar gasto
 </div>
 
 
-
 </section>
 
 
@@ -248,9 +314,8 @@ Adicionar gasto
 
 
 
+<!-- INVESTIMENTOS -->
 
-
-<!-- ================= INVESTIMENTOS ================= -->
 
 <section id="investimentos" class="tela card">
 
@@ -264,13 +329,13 @@ Adicionar gasto
 <input
 id="valorInvestimento"
 type="number"
-placeholder="Valor investido">
+placeholder="Valor">
 
 
 
 <button onclick="adicionarInvestimento()">
 
-Adicionar investimento
+Investir
 
 </button>
 
@@ -279,11 +344,6 @@ Adicionar investimento
 <div id="listaInvestimentos">
 
 </div>
-
-
-
-
-<hr>
 
 
 
@@ -297,7 +357,7 @@ Simular objetivo
 <input
 id="metaInvestimento"
 type="number"
-placeholder="Valor desejado">
+placeholder="Meta">
 
 
 
@@ -321,20 +381,18 @@ Calcular
 </p>
 
 
-
 </section>
 
 
 
 
-<!-- ================= METAS ================= -->
-
+<!-- METAS -->
 
 <section id="metas" class="tela card">
 
 
 <h2>
-🎯 Metas financeiras
+🎯 Objetivos
 </h2>
 
 
@@ -348,7 +406,7 @@ placeholder="Nome da meta">
 <input
 id="valorMeta"
 type="number"
-placeholder="Valor da meta">
+placeholder="Valor desejado">
 
 
 
@@ -375,15 +433,13 @@ Criar meta
 
 
 
-
-<!-- ================= FATURA ================= -->
-
+<!-- FATURAS -->
 
 <section id="fatura" class="tela card">
 
 
 <h2>
-💳 Cartão / Faturas
+💳 Cartão / Parcelas
 </h2>
 
 
@@ -431,9 +487,7 @@ Adicionar compra
 
 
 
-
-<!-- ================= CONSORCIO ================= -->
-
+<!-- CONSÓRCIO -->
 
 <section id="consorcio" class="tela card">
 
@@ -454,7 +508,7 @@ placeholder="Valor da carta">
 <input
 id="parcelasConsorcio"
 type="number"
-placeholder="Quantidade de meses">
+placeholder="Meses">
 
 
 
@@ -481,9 +535,7 @@ Calcular parcela
 
 
 
-
-<!-- ================= PERFIL ================= -->
-
+<!-- PERFIL -->
 
 <section id="perfil" class="tela card">
 
@@ -496,16 +548,14 @@ Calcular parcela
 
 <div class="card">
 
-
 <p>
-Nome: Alex
+Alex
 </p>
 
-
 <p>
-Salário mensal: R$ 1.600
+Salário:
+R$ 1.600,00
 </p>
-
 
 
 </div>
@@ -515,7 +565,7 @@ Salário mensal: R$ 1.600
 
 <button onclick="limparDados()">
 
-🗑 Apagar todos os dados
+🗑 Limpar dados
 
 </button>
 
@@ -537,11 +587,10 @@ Salário mensal: R$ 1.600
 
 
 
-
-<!-- ================= MENU ================= -->
-
+<!-- MENU -->
 
 <nav class="menu">
+
 
 
 <button onclick="abrirTela('inicio')">
@@ -599,7 +648,6 @@ Perfil
 
 
 </nav>
-
 
 
 
