@@ -1,25 +1,26 @@
-// =====================================
+// ======================================
 // FINANCE CONTROL AI PRO
-// SCRIPT PRINCIPAL
-// =====================================
+// SCRIPT FINAL
+// ======================================
 
 
-let dados = JSON.parse(localStorage.getItem("financeAI")) || {
+let dados = JSON.parse(
+localStorage.getItem("financeAI")
+)
+||
+{
 
-    salario:1600,
+salario:1600,
 
-    gastos:[],
+gastos:[],
 
-    investimentos:[],
+investimentos:[],
 
-    metas:[],
+metas:[],
 
-    faturas:[],
+faturas:[],
 
-    consorcio:{
-        valor:0,
-        parcelas:0
-    }
+consorcio:{}
 
 };
 
@@ -27,47 +28,76 @@ let dados = JSON.parse(localStorage.getItem("financeAI")) || {
 
 
 
+
+let grafico;
+
+
+
+
+
+// ================================
+// SALVAR
+// ================================
+
+
 function salvarDados(){
 
-    localStorage.setItem(
-        "financeAI",
-        JSON.stringify(dados)
-    );
+localStorage.setItem(
+"financeAI",
+JSON.stringify(dados)
+);
 
 }
 
 
 
 
+
+
+
+// ================================
+// DINHEIRO
+// ================================
 
 
 function dinheiro(valor){
 
-    return Number(valor).toLocaleString(
-        "pt-BR",
-        {
-            style:"currency",
-            currency:"BRL"
-        }
-    );
+return Number(valor)
+.toLocaleString(
+"pt-BR",
+{
+style:"currency",
+currency:"BRL"
+}
+);
 
 }
 
 
 
 
+
+
+
+
+// ================================
+// TOTAIS
+// ================================
 
 
 function totalGastos(){
 
-    return dados.gastos.reduce(
-        (total,item)=>
-        total + Number(item.valor),
-        0
-    );
+
+return dados.gastos.reduce(
+
+(a,b)=>a+Number(b.valor),
+
+0
+
+);
+
 
 }
-
 
 
 
@@ -75,14 +105,36 @@ function totalGastos(){
 
 function totalInvestimentos(){
 
-    return dados.investimentos.reduce(
-        (total,item)=>
-        total + Number(item.valor),
-        0
-    );
+
+return dados.investimentos.reduce(
+
+(a,b)=>a+Number(b.valor),
+
+0
+
+);
+
 
 }
 
+
+
+
+
+
+function totalFaturas(){
+
+
+return dados.faturas.reduce(
+
+(a,b)=>a+Number(b.valor),
+
+0
+
+);
+
+
+}
 
 
 
@@ -91,7 +143,13 @@ function totalInvestimentos(){
 
 function saldoAtual(){
 
-    return dados.salario - totalGastos();
+
+return dados.salario
+-
+totalGastos()
+-
+totalFaturas();
+
 
 }
 
@@ -101,54 +159,77 @@ function saldoAtual(){
 
 
 
-
-// =====================================
+// ================================
 // DASHBOARD
-// =====================================
+// ================================
 
 
 function atualizarDashboard(){
 
 
 
-let saldo=document.getElementById("saldo");
+let saldo=document.getElementById(
+"saldo"
+);
 
 
-if(saldo){
+if(saldo)
 
-saldo.innerHTML=dinheiro(saldoAtual());
-
-}
-
-
-
-
-let gastos=document.getElementById("totalGastos");
-
-
-if(gastos){
-
-gastos.innerHTML=dinheiro(totalGastos());
-
-}
+saldo.innerHTML=
+dinheiro(saldoAtual());
 
 
 
 
-let investimentos=document.getElementById("totalInvestimentos");
+
+let gastos=document.getElementById(
+"totalGastos"
+);
 
 
-if(investimentos){
+if(gastos)
 
-investimentos.innerHTML=dinheiro(totalInvestimentos());
+gastos.innerHTML=
+dinheiro(totalGastos());
 
-}
+
+
+
+
+let inv=document.getElementById(
+"totalInvestimentos"
+);
+
+
+if(inv)
+
+inv.innerHTML=
+dinheiro(totalInvestimentos());
+
+
+
+
+
+
+let fat=document.getElementById(
+"totalFaturas"
+);
+
+
+if(fat)
+
+fat.innerHTML=
+dinheiro(totalFaturas());
+
 
 
 
 
 atualizarIA();
 
+criarGrafico();
+
+
 
 }
 
@@ -158,22 +239,24 @@ atualizarIA();
 
 
 
-// =====================================
-// SISTEMA DE TELAS
-// =====================================
+// ================================
+// TROCA DE TELAS
+// ================================
 
 
 function abrirTela(nome){
 
 
-let telas=document.querySelectorAll(".tela");
+
+document
+.querySelectorAll(".tela")
+.forEach(
+
+t=>t.style.display="none"
+
+);
 
 
-telas.forEach(t=>{
-
-t.style.display="none";
-
-});
 
 
 
@@ -181,61 +264,61 @@ let tela=document.getElementById(nome);
 
 
 
-if(tela){
+if(tela)
 
 tela.style.display="block";
 
-}
 
 
 
-if(nome==="gastos"){
+
+if(nome==="gastos")
 
 mostrarGastos();
 
-}
 
 
-if(nome==="investimentos"){
+if(nome==="investimentos")
 
 mostrarInvestimentos();
 
-}
 
 
-if(nome==="metas"){
+if(nome==="metas")
 
 mostrarMetas();
 
+
+
+if(nome==="fatura")
+
+mostrarFaturas();
+
+
+
 }
-
-
-}
-
-
-
-
-
-
-
-
-// =====================================
+// ================================
 // GASTOS
-// =====================================
+// ================================
 
 
 function adicionarGasto(){
 
 
-
-let nome=document.getElementById("nomeGasto").value;
-
-
-let valor=document.getElementById("valorGasto").value;
+let nome=
+document.getElementById("nomeGasto").value;
 
 
+let valor=
+document.getElementById("valorGasto").value;
 
-if(nome==="" || valor===""){
+
+let categoria=
+document.getElementById("categoriaGasto").value;
+
+
+
+if(!nome || !valor){
 
 alert("Preencha os dados");
 
@@ -252,9 +335,12 @@ nome:nome,
 
 valor:Number(valor),
 
+categoria:categoria,
+
 data:new Date().toLocaleDateString()
 
 });
+
 
 
 
@@ -266,7 +352,6 @@ mostrarGastos();
 
 
 atualizarDashboard();
-
 
 
 
@@ -285,11 +370,14 @@ document.getElementById("valorGasto").value="";
 
 
 
+
 function mostrarGastos(){
 
 
 
-let lista=document.getElementById("listaGastos");
+let lista=
+document.getElementById("listaGastos");
+
 
 
 if(!lista)return;
@@ -301,23 +389,31 @@ lista.innerHTML="";
 
 
 
-dados.gastos.forEach((gasto,index)=>{
+
+dados.gastos.forEach(
+(gasto,index)=>{
 
 
-lista.innerHTML+=`
+lista.innerHTML += `
 
 
 <div class="card-item">
 
 
 <span>
+
 ${gasto.nome}
+<br>
+${gasto.categoria}
+
 </span>
 
 
 
 <strong>
+
 ${dinheiro(gasto.valor)}
+
 </strong>
 
 
@@ -329,18 +425,20 @@ X
 </button>
 
 
+
 </div>
 
 
 `;
 
 
+}
 
-});
-
+);
 
 
 }
+
 
 
 
@@ -371,25 +469,34 @@ atualizarDashboard();
 
 
 
-// =====================================
+
+
+// ================================
 // INVESTIMENTOS
-// =====================================
+// ================================
+
 
 
 function adicionarInvestimento(){
 
 
-let valor=document.getElementById("valorInvestimento").value;
+
+let valor =
+document.getElementById(
+"valorInvestimento"
+).value;
 
 
 
-if(valor===""){
+
+if(!valor){
 
 alert("Digite o valor");
 
 return;
 
 }
+
 
 
 
@@ -400,6 +507,7 @@ valor:Number(valor),
 data:new Date().toLocaleDateString()
 
 });
+
 
 
 
@@ -421,13 +529,19 @@ atualizarDashboard();
 
 
 
+
 function mostrarInvestimentos(){
 
 
-let lista=document.getElementById("listaInvestimentos");
+let lista=
+document.getElementById(
+"listaInvestimentos"
+);
+
 
 
 if(!lista)return;
+
 
 
 
@@ -435,7 +549,9 @@ lista.innerHTML="";
 
 
 
-dados.investimentos.forEach((item,index)=>{
+
+dados.investimentos.forEach(
+(inv,index)=>{
 
 
 lista.innerHTML+=`
@@ -445,14 +561,20 @@ lista.innerHTML+=`
 
 
 <span>
+
 Investimento
+
 </span>
 
 
 
 <strong>
-${dinheiro(item.valor)}
+
+${dinheiro(inv.valor)}
+
 </strong>
+
+
 
 
 <button onclick="removerInvestimento(${index})">
@@ -470,7 +592,9 @@ X
 
 
 
-});
+}
+
+);
 
 
 
@@ -495,28 +619,48 @@ mostrarInvestimentos();
 atualizarDashboard();
 
 
+
 }
-// =====================================
+
+
+
+
+
+
+
+
+// ================================
 // METAS
-// =====================================
+// ================================
+
 
 
 function criarMeta(){
 
 
-let nome=document.getElementById("nomeMeta").value;
+let nome=
+document.getElementById(
+"nomeMeta"
+).value;
 
-let valor=document.getElementById("valorMeta").value;
+
+
+let valor=
+document.getElementById(
+"valorMeta"
+).value;
 
 
 
-if(nome==="" || valor===""){
+
+if(!nome || !valor){
 
 alert("Preencha a meta");
 
 return;
 
 }
+
 
 
 
@@ -533,21 +677,31 @@ atual:0
 
 
 
+
+
 salvarDados();
 
 
 mostrarMetas();
 
 
+
 }
+
+
+
+
 
 
 
 function mostrarMetas(){
 
 
+let lista=
+document.getElementById(
+"listaMetas"
+);
 
-let lista=document.getElementById("listaMetas");
 
 
 if(!lista)return;
@@ -558,22 +712,12 @@ lista.innerHTML="";
 
 
 
-dados.metas.forEach((meta,index)=>{
-
+dados.metas.forEach(
+(meta,index)=>{
 
 
 let porcentagem=
 (meta.atual/meta.valor)*100;
-
-
-
-if(porcentagem>100){
-
-porcentagem=100;
-
-}
-
-
 
 
 
@@ -584,14 +728,16 @@ lista.innerHTML+=`
 
 
 <h3>
+
 ${meta.nome}
+
 </h3>
 
 
 <p>
 
 ${dinheiro(meta.atual)}
-de
+/
 ${dinheiro(meta.valor)}
 
 </p>
@@ -601,9 +747,11 @@ ${dinheiro(meta.valor)}
 <div class="barra">
 
 <div class="progresso"
+
 style="width:${porcentagem}%">
 
 </div>
+
 
 </div>
 
@@ -611,7 +759,7 @@ style="width:${porcentagem}%">
 
 <button onclick="adicionarMeta(${index})">
 
-Adicionar valor
+Adicionar
 
 </button>
 
@@ -624,7 +772,9 @@ Adicionar valor
 
 
 
-});
+}
+
+);
 
 
 
@@ -633,10 +783,13 @@ Adicionar valor
 
 
 
+
+
 function adicionarMeta(index){
 
 
-let valor=prompt(
+let valor=
+prompt(
 "Valor para adicionar:"
 );
 
@@ -645,7 +798,9 @@ let valor=prompt(
 if(valor){
 
 
-dados.metas[index].atual += Number(valor);
+dados.metas[index].atual +=
+Number(valor);
+
 
 
 salvarDados();
@@ -657,37 +812,32 @@ mostrarMetas();
 }
 
 
+
 }
-
-
-
-
-
-
-
-// =====================================
-// FATURA CARTÃO
-// =====================================
+// ================================
+// FATURAS / CARTÃO
+// ================================
 
 
 function adicionarFatura(){
 
 
-
-let nome=document.getElementById("nomeFatura").value;
-
-
-let valor=document.getElementById("valorFatura").value;
+let nome =
+document.getElementById("nomeFatura").value;
 
 
-let parcelas=document.getElementById("parcelasFatura").value;
+let valor =
+document.getElementById("valorFatura").value;
 
+
+let parcelas =
+document.getElementById("parcelasFatura").value;
 
 
 
 if(!valor || !parcelas){
 
-alert("Preencha a fatura");
+alert("Preencha a compra");
 
 return;
 
@@ -710,10 +860,15 @@ pago:0
 
 
 
+
 salvarDados();
 
 
 mostrarFaturas();
+
+
+atualizarDashboard();
+
 
 
 }
@@ -722,12 +877,14 @@ mostrarFaturas();
 
 
 
-
-
 function mostrarFaturas(){
 
 
-let lista=document.getElementById("listaFaturas");
+let lista =
+document.getElementById(
+"listaFaturas"
+);
+
 
 
 if(!lista)return;
@@ -738,16 +895,16 @@ lista.innerHTML="";
 
 
 
-dados.faturas.forEach((fat,index)=>{
+dados.faturas.forEach(
+(fat,index)=>{
+
+
+let mensal =
+fat.valor / fat.parcelas;
 
 
 
-let mensal=
-fat.valor/fat.parcelas;
-
-
-
-lista.innerHTML+=`
+lista.innerHTML += `
 
 
 <div class="card-item">
@@ -762,6 +919,7 @@ ${fat.nome}
 ${fat.pago}/${fat.parcelas}
 
 </span>
+
 
 
 
@@ -788,11 +946,15 @@ Pagar
 
 
 
-});
+}
+
+);
 
 
 
 }
+
+
 
 
 
@@ -813,11 +975,12 @@ dados.faturas[index].parcelas
 
 
 alert(
-"🎉 Parcela finalizada! Valor liberado."
+"🎉 Compra finalizada! Valor liberado para investir."
 );
 
 
 }
+
 
 
 
@@ -827,7 +990,6 @@ salvarDados();
 mostrarFaturas();
 
 
-
 }
 
 
@@ -836,19 +998,29 @@ mostrarFaturas();
 
 
 
-// =====================================
+
+
+// ================================
 // CONSÓRCIO
-// =====================================
+// ================================
 
 
 function calcularConsorcio(){
 
 
 
-let valor=document.getElementById("valorConsorcio").value;
+let valor =
+document.getElementById(
+"valorConsorcio"
+).value;
 
 
-let parcelas=document.getElementById("parcelasConsorcio").value;
+
+let parcelas =
+document.getElementById(
+"parcelasConsorcio"
+).value;
+
 
 
 
@@ -863,8 +1035,11 @@ return;
 
 
 
+
 let mensal =
-Number(valor)/Number(parcelas);
+Number(valor) /
+Number(parcelas);
+
 
 
 
@@ -879,13 +1054,15 @@ dinheiro(mensal);
 
 
 
+dados.consorcio={
 
-dados.consorcio.valor=
-Number(valor);
+valor:Number(valor),
 
+parcelas:Number(parcelas),
 
-dados.consorcio.parcelas=
-Number(parcelas);
+mensal:mensal
+
+};
 
 
 
@@ -901,23 +1078,24 @@ salvarDados();
 
 
 
-// =====================================
-// CALCULADORA INVESTIMENTO
-// =====================================
+
+
+// ================================
+// SIMULAÇÃO INVESTIMENTO
+// ================================
 
 
 function calcularInvestimento(){
 
 
-
-let meta=
+let meta =
 document.getElementById(
 "metaInvestimento"
 ).value;
 
 
 
-let meses=
+let meses =
 document.getElementById(
 "mesesInvestimento"
 ).value;
@@ -935,23 +1113,22 @@ return;
 
 
 
-
-let mensal=
-Number(meta)/Number(meses);
+let valor =
+Number(meta) /
+Number(meses);
 
 
 
 
 document.getElementById(
 "resultadoInvestimento"
-).innerHTML=
+).innerHTML =
 
 "Você precisa investir "
 +
-dinheiro(mensal)
+dinheiro(valor)
 +
 " por mês.";
-
 
 
 
@@ -965,15 +1142,18 @@ dinheiro(mensal)
 
 
 
-// =====================================
+
+
+// ================================
 // IA FINANCEIRA
-// =====================================
+// ================================
 
 
 function atualizarIA(){
 
 
-let campo=
+
+let campo =
 document.getElementById(
 "mensagemIA"
 );
@@ -985,11 +1165,13 @@ if(!campo)return;
 
 
 
-if(totalGastos()>dados.salario){
+
+if(totalGastos() >
+dados.salario){
 
 
-campo.innerHTML=
-"⚠️ Atenção: seus gastos ultrapassam seu salário.";
+campo.innerHTML =
+"⚠️ Gastos acima do salário. Reveja suas despesas.";
 
 
 }
@@ -997,14 +1179,114 @@ campo.innerHTML=
 else{
 
 
-campo.innerHTML=
-"✅ Sua situação financeira está saudável.";
+campo.innerHTML =
+"✅ Boa! Continue controlando seus gastos e investindo.";
+
+
+}
 
 
 }
 
 
 
+
+
+
+
+
+
+// ================================
+// GRÁFICO
+// ================================
+
+
+function criarGrafico(){
+
+
+let canvas =
+document.getElementById(
+"graficoFinanceiro"
+);
+
+
+
+if(!canvas)return;
+
+
+
+let ctx =
+canvas.getContext("2d");
+
+
+
+if(grafico){
+
+grafico.destroy();
+
+}
+
+
+
+
+
+grafico =
+new Chart(ctx,{
+
+type:"doughnut",
+
+
+data:{
+
+
+labels:[
+
+"Gastos",
+
+"Investimentos",
+
+"Livre"
+
+],
+
+
+
+datasets:[{
+
+
+data:[
+
+totalGastos(),
+
+totalInvestimentos(),
+
+Math.max(
+saldoAtual(),
+0
+)
+
+]
+
+
+}]
+
+},
+
+
+
+options:{
+
+
+responsive:true
+
+
+}
+
+
+});
+
+
+
 }
 
 
@@ -1013,17 +1295,18 @@ campo.innerHTML=
 
 
 
-// =====================================
+
+
+// ================================
 // LIMPAR DADOS
-// =====================================
+// ================================
 
 
 function limparDados(){
 
 
-
 if(confirm(
-"Deseja apagar todos os dados?"
+"Apagar todos os dados?"
 )){
 
 
@@ -1032,54 +1315,83 @@ localStorage.removeItem(
 );
 
 
+
 location.reload();
 
 
-}
-
-
 
 }
 
 
+}
 
 
 
 
 
-// =====================================
-// INICIAR APLICATIVO CORRIGIDO
-// =====================================
-
-window.addEventListener("DOMContentLoaded",()=>{
-
-    // mostra a tela inicial
-    let inicio = document.getElementById("inicio");
-
-    if(inicio){
-        inicio.style.display="block";
-    }
 
 
-    // esconde as outras telas
-    let telas = document.querySelectorAll(".tela");
-
-    telas.forEach(tela=>{
-
-        if(tela.id !== "inicio"){
-
-            tela.style.display="none";
-
-        }
-
-    });
 
 
-    atualizarDashboard();
+// ================================
+// INICIAR APP
+// ================================
 
-    mostrarFaturas();
 
-    mostrarMetas();
+window.addEventListener(
+"DOMContentLoaded",
 
+()=>{
+
+
+abrirTela("inicio");
+
+
+atualizarDashboard();
+
+
+mostrarGastos();
+
+
+mostrarInvestimentos();
+
+
+mostrarMetas();
+
+
+mostrarFaturas();
+
+
+
+}
+
+);
+
+
+
+
+
+
+// ================================
+// PWA
+// ================================
+
+
+if(
+"serviceWorker" in navigator
+){
+
+
+navigator.serviceWorker.register(
+"sw.js"
+)
+
+.then(()=>{
+
+console.log(
+"PWA ativo"
+);
 
 });
+
+}
