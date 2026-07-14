@@ -1,10 +1,11 @@
 // ======================================
-// FINANCE CONTROL AI PRO
-// SCRIPT FINAL
+// FINANCE CONTROL AI PRO v3
+// SCRIPT PRINCIPAL
 // ======================================
 
 
-let dados = JSON.parse(
+let dados =
+JSON.parse(
 localStorage.getItem("financeAI")
 )
 ||
@@ -27,25 +28,31 @@ consorcio:{}
 
 
 
+let graficoFinanceiro;
+
+let graficoEvolucao;
 
 
-let grafico;
 
 
 
 
-
-// ================================
+// ======================================
 // SALVAR
-// ================================
+// ======================================
 
 
 function salvarDados(){
 
+
 localStorage.setItem(
+
 "financeAI",
+
 JSON.stringify(dados)
+
 );
+
 
 }
 
@@ -55,22 +62,31 @@ JSON.stringify(dados)
 
 
 
-// ================================
-// DINHEIRO
-// ================================
+// ======================================
+// FORMATAÇÃO
+// ======================================
 
 
 function dinheiro(valor){
 
+
 return Number(valor)
+
 .toLocaleString(
+
 "pt-BR",
+
 {
+
 style:"currency",
+
 currency:"BRL"
+
 }
+
 );
 
+
 }
 
 
@@ -80,9 +96,9 @@ currency:"BRL"
 
 
 
-// ================================
-// TOTAIS
-// ================================
+// ======================================
+// CÁLCULOS
+// ======================================
 
 
 function totalGastos(){
@@ -90,7 +106,9 @@ function totalGastos(){
 
 return dados.gastos.reduce(
 
-(a,b)=>a+Number(b.valor),
+(total,item)=>
+
+total + Number(item.valor),
 
 0
 
@@ -98,6 +116,8 @@ return dados.gastos.reduce(
 
 
 }
+
+
 
 
 
@@ -108,7 +128,9 @@ function totalInvestimentos(){
 
 return dados.investimentos.reduce(
 
-(a,b)=>a+Number(b.valor),
+(total,item)=>
+
+total + Number(item.valor),
 
 0
 
@@ -116,6 +138,7 @@ return dados.investimentos.reduce(
 
 
 }
+
 
 
 
@@ -127,7 +150,9 @@ function totalFaturas(){
 
 return dados.faturas.reduce(
 
-(a,b)=>a+Number(b.valor),
+(total,item)=>
+
+total + Number(item.valor),
 
 0
 
@@ -141,13 +166,18 @@ return dados.faturas.reduce(
 
 
 
+
 function saldoAtual(){
 
 
 return dados.salario
+
 -
+
 totalGastos()
+
 -
+
 totalFaturas();
 
 
@@ -159,51 +189,54 @@ totalFaturas();
 
 
 
-// ================================
-// DASHBOARD
-// ================================
+// ======================================
+// ATUALIZAR DASHBOARD
+// ======================================
 
 
 function atualizarDashboard(){
 
 
 
-let saldo=document.getElementById(
-"saldo"
-);
+let saldo =
+document.getElementById("saldo");
+
 
 
 if(saldo)
 
-saldo.innerHTML=
+saldo.innerHTML =
 dinheiro(saldoAtual());
 
 
 
 
 
-let gastos=document.getElementById(
-"totalGastos"
-);
+
+let gastos =
+document.getElementById("totalGastos");
+
 
 
 if(gastos)
 
-gastos.innerHTML=
+gastos.innerHTML =
 dinheiro(totalGastos());
 
 
 
 
 
-let inv=document.getElementById(
-"totalInvestimentos"
-);
 
 
-if(inv)
+let investimentos =
+document.getElementById("totalInvestimentos");
 
-inv.innerHTML=
+
+
+if(investimentos)
+
+investimentos.innerHTML =
 dinheiro(totalInvestimentos());
 
 
@@ -211,14 +244,15 @@ dinheiro(totalInvestimentos());
 
 
 
-let fat=document.getElementById(
-"totalFaturas"
-);
+
+let faturas =
+document.getElementById("totalFaturas");
 
 
-if(fat)
 
-fat.innerHTML=
+if(faturas)
+
+faturas.innerHTML =
 dinheiro(totalFaturas());
 
 
@@ -227,7 +261,17 @@ dinheiro(totalFaturas());
 
 atualizarIA();
 
+
 criarGrafico();
+
+
+criarGraficoEvolucao();
+
+
+atualizarMeta();
+
+
+previsao6Meses();
 
 
 
@@ -238,10 +282,9 @@ criarGrafico();
 
 
 
-
-// ================================
-// TROCA DE TELAS
-// ================================
+// ======================================
+// MUDAR TELAS
+// ======================================
 
 
 function abrirTela(nome){
@@ -259,16 +302,14 @@ t=>t.style.display="none"
 
 
 
-
-let tela=document.getElementById(nome);
+let tela =
+document.getElementById(nome);
 
 
 
 if(tela)
 
 tela.style.display="block";
-
-
 
 
 
@@ -297,24 +338,27 @@ mostrarFaturas();
 
 
 }
-// ================================
+// ======================================
 // GASTOS
-// ================================
+// ======================================
 
 
 function adicionarGasto(){
 
 
-let nome=
+let nome =
 document.getElementById("nomeGasto").value;
 
 
-let valor=
+
+let valor =
 document.getElementById("valorGasto").value;
 
 
-let categoria=
+
+let categoria =
 document.getElementById("categoriaGasto").value;
+
 
 
 
@@ -325,6 +369,7 @@ alert("Preencha os dados");
 return;
 
 }
+
 
 
 
@@ -340,7 +385,6 @@ categoria:categoria,
 data:new Date().toLocaleDateString()
 
 });
-
 
 
 
@@ -361,7 +405,6 @@ document.getElementById("nomeGasto").value="";
 document.getElementById("valorGasto").value="";
 
 
-
 }
 
 
@@ -374,14 +417,12 @@ document.getElementById("valorGasto").value="";
 function mostrarGastos(){
 
 
-
-let lista=
+let lista =
 document.getElementById("listaGastos");
 
 
 
 if(!lista)return;
-
 
 
 
@@ -391,6 +432,7 @@ lista.innerHTML="";
 
 
 dados.gastos.forEach(
+
 (gasto,index)=>{
 
 
@@ -403,7 +445,9 @@ lista.innerHTML += `
 <span>
 
 ${gasto.nome}
+
 <br>
+
 ${gasto.categoria}
 
 </span>
@@ -415,6 +459,7 @@ ${gasto.categoria}
 ${dinheiro(gasto.valor)}
 
 </strong>
+
 
 
 
@@ -434,7 +479,9 @@ X
 
 }
 
+
 );
+
 
 
 }
@@ -449,6 +496,7 @@ X
 function removerGasto(index){
 
 
+
 dados.gastos.splice(index,1);
 
 
@@ -461,6 +509,7 @@ mostrarGastos();
 atualizarDashboard();
 
 
+
 }
 
 
@@ -471,21 +520,18 @@ atualizarDashboard();
 
 
 
-// ================================
+// ======================================
 // INVESTIMENTOS
-// ================================
-
+// ======================================
 
 
 function adicionarInvestimento(){
-
 
 
 let valor =
 document.getElementById(
 "valorInvestimento"
 ).value;
-
 
 
 
@@ -496,6 +542,7 @@ alert("Digite o valor");
 return;
 
 }
+
 
 
 
@@ -529,11 +576,11 @@ atualizarDashboard();
 
 
 
-
 function mostrarInvestimentos(){
 
 
-let lista=
+
+let lista =
 document.getElementById(
 "listaInvestimentos"
 );
@@ -549,9 +596,10 @@ lista.innerHTML="";
 
 
 
-
 dados.investimentos.forEach(
-(inv,index)=>{
+
+(item,index)=>{
+
 
 
 lista.innerHTML+=`
@@ -570,10 +618,9 @@ Investimento
 
 <strong>
 
-${dinheiro(inv.valor)}
+${dinheiro(item.valor)}
 
 </strong>
-
 
 
 
@@ -594,11 +641,14 @@ X
 
 }
 
+
 );
 
 
 
 }
+
+
 
 
 
@@ -619,7 +669,6 @@ mostrarInvestimentos();
 atualizarDashboard();
 
 
-
 }
 
 
@@ -629,23 +678,23 @@ atualizarDashboard();
 
 
 
-// ================================
-// METAS
-// ================================
 
+// ======================================
+// METAS
+// ======================================
 
 
 function criarMeta(){
 
 
-let nome=
+let nome =
 document.getElementById(
 "nomeMeta"
 ).value;
 
 
 
-let valor=
+let valor =
 document.getElementById(
 "valorMeta"
 ).value;
@@ -678,11 +727,13 @@ atual:0
 
 
 
-
 salvarDados();
 
 
 mostrarMetas();
+
+
+atualizarDashboard();
 
 
 
@@ -693,11 +744,10 @@ mostrarMetas();
 
 
 
-
 function mostrarMetas(){
 
 
-let lista=
+let lista =
 document.getElementById(
 "listaMetas"
 );
@@ -708,16 +758,26 @@ if(!lista)return;
 
 
 
+
 lista.innerHTML="";
 
 
 
+
 dados.metas.forEach(
+
 (meta,index)=>{
 
 
-let porcentagem=
+let porcentagem =
 (meta.atual/meta.valor)*100;
+
+
+
+if(porcentagem>100)
+
+porcentagem=100;
+
 
 
 
@@ -734,17 +794,22 @@ ${meta.nome}
 </h3>
 
 
+
 <p>
 
 ${dinheiro(meta.atual)}
-/
+
+de
+
 ${dinheiro(meta.valor)}
 
 </p>
 
 
 
+
 <div class="barra">
+
 
 <div class="progresso"
 
@@ -753,13 +818,14 @@ style="width:${porcentagem}%">
 </div>
 
 
+
 </div>
 
 
 
 <button onclick="adicionarMeta(${index})">
 
-Adicionar
+Adicionar valor
 
 </button>
 
@@ -774,11 +840,13 @@ Adicionar
 
 }
 
+
 );
 
 
 
 }
+
 
 
 
@@ -788,9 +856,9 @@ Adicionar
 function adicionarMeta(index){
 
 
-let valor=
+let valor =
 prompt(
-"Valor para adicionar:"
+"Adicionar valor:"
 );
 
 
@@ -798,9 +866,7 @@ prompt(
 if(valor){
 
 
-dados.metas[index].atual +=
-Number(valor);
-
+dados.metas[index].atual += Number(valor);
 
 
 salvarDados();
@@ -809,14 +875,16 @@ salvarDados();
 mostrarMetas();
 
 
+atualizarDashboard();
+
+
 }
 
 
-
 }
-// ================================
-// FATURAS / CARTÃO
-// ================================
+// ======================================
+// FATURAS
+// ======================================
 
 
 function adicionarFatura(){
@@ -835,14 +903,14 @@ document.getElementById("parcelasFatura").value;
 
 
 
+
 if(!valor || !parcelas){
 
-alert("Preencha a compra");
+alert("Preencha os dados");
 
 return;
 
 }
-
 
 
 
@@ -857,7 +925,6 @@ parcelas:Number(parcelas),
 pago:0
 
 });
-
 
 
 
@@ -877,13 +944,12 @@ atualizarDashboard();
 
 
 
+
 function mostrarFaturas(){
 
 
 let lista =
-document.getElementById(
-"listaFaturas"
-);
+document.getElementById("listaFaturas");
 
 
 
@@ -891,12 +957,12 @@ if(!lista)return;
 
 
 
+
 lista.innerHTML="";
 
 
 
-dados.faturas.forEach(
-(fat,index)=>{
+dados.faturas.forEach((fat,index)=>{
 
 
 let mensal =
@@ -916,7 +982,7 @@ ${fat.nome}
 
 <br>
 
-${fat.pago}/${fat.parcelas}
+Parcela ${fat.pago}/${fat.parcelas}
 
 </span>
 
@@ -931,12 +997,12 @@ ${dinheiro(mensal)}
 
 
 
+
 <button onclick="pagarParcela(${index})">
 
 Pagar
 
 </button>
-
 
 
 </div>
@@ -946,15 +1012,10 @@ Pagar
 
 
 
-}
-
-);
-
+});
 
 
 }
-
-
 
 
 
@@ -975,12 +1036,11 @@ dados.faturas[index].parcelas
 
 
 alert(
-"🎉 Compra finalizada! Valor liberado para investir."
+"🎉 Parcela finalizada! Valor liberado."
 );
 
 
 }
-
 
 
 
@@ -1000,9 +1060,9 @@ mostrarFaturas();
 
 
 
-// ================================
+// ======================================
 // CONSÓRCIO
-// ================================
+// ======================================
 
 
 function calcularConsorcio(){
@@ -1010,16 +1070,12 @@ function calcularConsorcio(){
 
 
 let valor =
-document.getElementById(
-"valorConsorcio"
-).value;
+document.getElementById("valorConsorcio").value;
 
 
 
 let parcelas =
-document.getElementById(
-"parcelasConsorcio"
-).value;
+document.getElementById("parcelasConsorcio").value;
 
 
 
@@ -1034,12 +1090,8 @@ return;
 
 
 
-
-
 let mensal =
-Number(valor) /
-Number(parcelas);
-
+Number(valor) / Number(parcelas);
 
 
 
@@ -1079,13 +1131,13 @@ salvarDados();
 
 
 
-
-// ================================
-// SIMULAÇÃO INVESTIMENTO
-// ================================
+// ======================================
+// SIMULADOR
+// ======================================
 
 
 function calcularInvestimento(){
+
 
 
 let meta =
@@ -1113,7 +1165,8 @@ return;
 
 
 
-let valor =
+
+let mensal =
 Number(meta) /
 Number(meses);
 
@@ -1124,11 +1177,11 @@ document.getElementById(
 "resultadoInvestimento"
 ).innerHTML =
 
-"Você precisa investir "
+"Investindo "
 +
-dinheiro(valor)
+dinheiro(mensal)
 +
-" por mês.";
+" por mês você chega no objetivo.";
 
 
 
@@ -1144,101 +1197,61 @@ dinheiro(valor)
 
 
 
-// ================================
-// IA FINANCEIRA
-// ================================
+// ======================================
+// GRÁFICO PRINCIPAL
+// ======================================
 
 
-function atualizarIA(){
+function criarGrafico(){
 
 
-
-let campo =
+let canvas =
 document.getElementById(
-"mensagemIA"
+"graficoFinanceiro"
 );
 
 
 
-if(!campo)return;
+if(!canvas)return;
 
 
 
+if(graficoFinanceiro){
 
-
-if(totalGastos() >
-dados.salario){
-
-
-campo.innerHTML =
-"⚠️ Gastos acima do salário. Reveja suas despesas.";
-
-
-}
-
-else{
-
-
-campo.innerHTML =
-"✅ Boa! Continue controlando seus gastos e investindo.";
-
-
-}
-
+graficoFinanceiro.destroy();
 
 }
 
 
 
 
+graficoFinanceiro =
+new Chart(
 
+canvas,
 
-
-
-
-// ================================
-// GRÁFICO
-// ================================
-
-function criarGrafico(){
-
-let canvas = document.getElementById("graficoFinanceiro");
-
-
-if(!canvas) return;
-
-
-let ctx = canvas.getContext("2d");
-
-
-
-if(grafico){
-
-grafico.destroy();
-
-}
-
-
-
-grafico = new Chart(ctx, {
+{
 
 type:"doughnut",
+
 
 data:{
 
 
 labels:[
 
-"💸 Gastos",
+"Gastos",
 
-"📈 Investimentos",
+"Investimentos",
 
-"💰 Livre"
+"Livre"
 
 ],
 
 
+
 datasets:[{
+
 
 data:[
 
@@ -1260,19 +1273,7 @@ Math.max(saldoAtual(),0)
 options:{
 
 
-responsive:true,
-
-
-plugins:{
-
-
-legend:{
-
-
-position:"bottom"
-
-
-}
+responsive:true
 
 
 }
@@ -1282,22 +1283,316 @@ position:"bottom"
 }
 
 
+);
 
-});
 
 
 }
-// ================================
-// LIMPAR DADOS
-// ================================
+
+
+
+
+
+
+
+
+
+// ======================================
+// GRÁFICO 6 MESES
+// ======================================
+
+
+function criarGraficoEvolucao(){
+
+
+
+let canvas =
+document.getElementById(
+"graficoEvolucao"
+);
+
+
+
+if(!canvas)return;
+
+
+
+if(graficoEvolucao){
+
+graficoEvolucao.destroy();
+
+}
+
+
+
+let valores=[];
+
+
+
+let atual =
+saldoAtual();
+
+
+
+for(let i=0;i<6;i++){
+
+
+valores.push(
+
+atual +
+
+(totalInvestimentos()*i)
+
+);
+
+
+}
+
+
+
+
+
+graficoEvolucao =
+
+new Chart(
+
+canvas,
+
+{
+
+
+type:"line",
+
+
+data:{
+
+
+labels:[
+
+"Agora",
+
+"1 mês",
+
+"2 meses",
+
+"3 meses",
+
+"4 meses",
+
+"6 meses"
+
+],
+
+
+
+datasets:[{
+
+
+label:"Patrimônio previsto",
+
+
+data:valores
+
+
+}]
+
+
+},
+
+
+
+options:{
+
+
+responsive:true
+
+
+}
+
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================================
+// META E PREVISÃO
+// ======================================
+
+
+function atualizarMeta(){
+
+
+let barra =
+document.getElementById(
+"barraMeta"
+);
+
+
+let texto =
+document.getElementById(
+"textoMeta"
+);
+
+
+
+if(!barra || !texto)return;
+
+
+
+if(dados.metas.length===0){
+
+texto.innerHTML =
+"Nenhuma meta criada";
+
+barra.style.width="0%";
+
+return;
+
+}
+
+
+
+
+let meta=dados.metas[0];
+
+
+
+let porcentagem =
+(meta.atual/meta.valor)*100;
+
+
+
+if(porcentagem>100)
+
+porcentagem=100;
+
+
+
+barra.style.width =
+porcentagem+"%";
+
+
+
+texto.innerHTML =
+meta.nome+
+" - "+
+porcentagem.toFixed(0)
++
+"%";
+
+
+
+}
+
+
+
+
+
+function previsao6Meses(){
+
+
+let campo =
+document.getElementById(
+"previsao6Meses"
+);
+
+
+
+if(!campo)return;
+
+
+
+let futuro =
+saldoAtual() +
+(totalInvestimentos()*6);
+
+
+
+campo.innerHTML =
+
+"Previsão em 6 meses: "
++
+dinheiro(futuro);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================================
+// IA
+// ======================================
+
+
+function atualizarIA(){
+
+
+let campo =
+document.getElementById(
+"mensagemIA"
+);
+
+
+
+if(!campo)return;
+
+
+
+if(totalGastos()>dados.salario){
+
+
+campo.innerHTML =
+"⚠️ Seus gastos estão acima do salário.";
+
+
+}else{
+
+
+campo.innerHTML =
+"✅ Boa organização. Continue investindo.";
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+// ======================================
+// LIMPAR
+// ======================================
 
 
 function limparDados(){
 
 
-if(confirm(
-"Apagar todos os dados?"
-)){
+if(confirm("Apagar todos os dados?")){
 
 
 localStorage.removeItem(
@@ -1323,9 +1618,9 @@ location.reload();
 
 
 
-// ================================
-// INICIAR APP
-// ================================
+// ======================================
+// INICIALIZAÇÃO
+// ======================================
 
 
 window.addEventListener(
@@ -1362,9 +1657,12 @@ mostrarFaturas();
 
 
 
-// ================================
+
+
+
+// ======================================
 // PWA
-// ================================
+// ======================================
 
 
 if(
@@ -1374,14 +1672,7 @@ if(
 
 navigator.serviceWorker.register(
 "sw.js"
-)
-
-.then(()=>{
-
-console.log(
-"PWA ativo"
 );
 
-});
 
 }
