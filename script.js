@@ -729,3 +729,68 @@ if("serviceWorker" in navigator){
 
 
 }
+// ==========================================
+// CALCULADORA DE INVESTIMENTO
+// ==========================================
+
+function calcularInvestimento(){
+
+    let meta = document.getElementById("metaInvestimento").value;
+    let meses = document.getElementById("mesesInvestimento").value;
+
+    if(!meta || !meses){
+        alert("Preencha a meta e os meses");
+        return;
+    }
+
+
+    let valor = Number(meta) / Number(meses);
+
+
+    document.getElementById("resultadoInvestimento").innerHTML =
+    "Você precisa investir aproximadamente " 
+    + dinheiro(valor) 
+    + " por mês.";
+
+}
+
+
+
+// ==========================================
+// IA FINANCEIRA
+// ==========================================
+
+function atualizarIA(){
+
+    let mensagem = document.getElementById("mensagemIA");
+
+
+    if(mensagem){
+
+        if(totalGastos() > dados.salario){
+
+            mensagem.innerHTML =
+            "⚠️ Seus gastos estão acima do salário.";
+
+        }else{
+
+            mensagem.innerHTML =
+            "✅ Sua saúde financeira está controlada.";
+
+        }
+
+    }
+
+}
+
+
+
+// atualizar ao abrir
+
+window.addEventListener("load",()=>{
+
+    atualizarDashboard();
+
+    atualizarIA();
+
+});
