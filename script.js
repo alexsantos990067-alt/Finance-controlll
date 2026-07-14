@@ -1721,38 +1721,27 @@ mostrarFaturas();
 // CORREÇÃO DE ATUALIZAÇÃO V3
 // ======================================
 
-window.addEventListener("load",()=>{
+window.addEventListener(
+"DOMContentLoaded",
 
-    setTimeout(()=>{
-
-        atualizarDashboard();
-
-        criarGrafico();
-
-        criarGraficoEvolucao();
-
-        atualizarMeta();
-
-        previsao6Meses();
-
-    },500);
-
-});
+()=>{
 
 
-// ======================================
-// PWA
-// ======================================
+abrirTela("inicio");
 
 
-if(
-"serviceWorker" in navigator
-){
+setTimeout(()=>{
 
 
-navigator.serviceWorker.register(
-"sw.js"
-);
+atualizarDashboard();
+
+
+criarGraficoEvolucao();
+
+
+},800);
+
 
 
 }
+);
