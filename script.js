@@ -219,3 +219,513 @@ function adicionarInvestimento(){
 
 
 }
+// ==========================================
+// INVESTIMENTOS
+// ==========================================
+
+
+function mostrarInvestimentos(){
+
+    let lista = document.getElementById("listaInvestimentos");
+
+    if(!lista)return;
+
+
+    lista.innerHTML="";
+
+
+    dados.investimentos.forEach((inv,index)=>{
+
+
+        lista.innerHTML += `
+
+        <div class="card-item">
+
+        <span>
+        Investimento
+        </span>
+
+
+        <strong>
+        ${dinheiro(inv.valor)}
+        </strong>
+
+
+        <button onclick="removerInvestimento(${index})">
+        ✕
+        </button>
+
+
+        </div>
+
+        `;
+
+
+    });
+
+}
+
+
+
+function removerInvestimento(index){
+
+    dados.investimentos.splice(index,1);
+
+    salvarDados();
+
+    atualizarDashboard();
+
+}
+
+
+
+// ==========================================
+// METAS FINANCEIRAS
+// ==========================================
+
+
+function criarMeta(){
+
+
+    let nome=document.getElementById("nomeMeta").value;
+
+    let valor=document.getElementById("valorMeta").value;
+
+
+
+    if(nome==="" || valor===""){
+
+        alert("Preencha a meta");
+
+        return;
+
+    }
+
+
+
+    dados.metas.push({
+
+        nome:nome,
+
+        valor:Number(valor),
+
+        atual:0
+
+    });
+
+
+
+    salvarDados();
+
+    atualizarDashboard();
+
+
+
+}
+
+
+
+
+function mostrarMetas(){
+
+
+    let area=document.getElementById("listaMetas");
+
+
+    if(!area)return;
+
+
+
+    area.innerHTML="";
+
+
+
+    dados.metas.forEach((meta,index)=>{
+
+
+        let porcentagem=(meta.atual/meta.valor)*100;
+
+
+        if(porcentagem>100){
+            porcentagem=100;
+        }
+
+
+
+        area.innerHTML += `
+
+
+        <div class="meta-card">
+
+
+        <h3>
+        ${meta.nome}
+        </h3>
+
+
+        <p>
+        ${dinheiro(meta.atual)}
+        de ${dinheiro(meta.valor)}
+        </p>
+
+
+        <div class="barra">
+
+            <div class="progresso"
+            style="width:${porcentagem}%">
+            </div>
+
+        </div>
+
+
+
+        <button onclick="adicionarNaMeta(${index})">
+
+        Adicionar valor
+
+        </button>
+
+
+        </div>
+
+
+        `;
+
+
+    });
+
+
+
+}
+
+
+
+
+function adicionarNaMeta(index){
+
+
+    let valor=prompt("Quanto adicionar?");
+
+
+    if(valor){
+
+
+        dados.metas[index].atual += Number(valor);
+
+
+        salvarDados();
+
+        atualizarDashboard();
+
+
+    }
+
+
+}
+
+
+
+// ==========================================
+// FATURA DO CARTÃO
+// ==========================================
+
+
+function adicionarFatura(){
+
+
+    let nome=document.getElementById("nomeFatura").value;
+
+    let valor=document.getElementById("valorFatura").value;
+
+    let parcelas=document.getElementById("parcelasFatura").value;
+
+
+
+    if(!valor || !parcelas){
+
+        alert("Preencha a fatura");
+
+        return;
+
+    }
+
+
+
+    dados.faturas.push({
+
+
+        nome:nome,
+
+        valor:Number(valor),
+
+        parcelas:Number(parcelas),
+
+        pago:0
+
+
+    });
+
+
+
+    salvarDados();
+
+    atualizarFaturas();
+
+
+
+}
+
+
+
+
+function atualizarFaturas(){
+
+
+    let lista=document.getElementById("listaFaturas");
+
+
+    if(!lista)return;
+
+
+
+    lista.innerHTML="";
+
+
+
+    dados.faturas.forEach((fat,index)=>{
+
+
+        let parcela=fat.valor/fat.parcelas;
+
+
+
+        lista.innerHTML += `
+
+
+        <div class="card-item">
+
+
+        <span>
+
+        ${fat.nome}
+
+        <br>
+
+        ${fat.pago}/${fat.parcelas} parcelas
+
+        </span>
+
+
+
+        <strong>
+
+        ${dinheiro(parcela)}
+
+        /mês
+
+        </strong>
+
+
+
+        <button onclick="pagarParcela(${index})">
+
+        Pagar
+
+        </button>
+
+
+
+        </div>
+
+
+        `;
+
+
+
+    });
+
+
+
+}
+
+
+
+
+function pagarParcela(index){
+
+
+    dados.faturas[index].pago++;
+
+
+
+    if(dados.faturas[index].pago >= dados.faturas[index].parcelas){
+
+
+        alert("🎉 Fatura finalizada! Valor liberado para investir.");
+
+
+    }
+
+
+
+    salvarDados();
+
+    atualizarFaturas();
+
+
+
+}
+// ==========================================
+// CONSÓRCIO
+// ==========================================
+
+
+function calcularConsorcio(){
+
+    let valor = document.getElementById("valorConsorcio").value;
+    let parcelas = document.getElementById("parcelasConsorcio").value;
+
+
+    if(!valor || !parcelas){
+
+        alert("Preencha os dados do consórcio");
+
+        return;
+
+    }
+
+
+    dados.consorcio.valor = Number(valor);
+    dados.consorcio.parcelas = Number(parcelas);
+
+
+    let mensal = Number(valor) / Number(parcelas);
+
+
+    let resultado = document.getElementById("resultadoConsorcio");
+
+
+    if(resultado){
+
+        resultado.innerHTML =
+        "Parcela estimada: " + dinheiro(mensal);
+
+    }
+
+
+    salvarDados();
+
+}
+
+
+
+// ==========================================
+// LIMPAR TODOS OS DADOS
+// ==========================================
+
+
+function limparDados(){
+
+
+    let confirmar = confirm(
+        "Deseja apagar todos os dados do aplicativo?"
+    );
+
+
+    if(confirmar){
+
+
+        localStorage.removeItem("financeAI");
+
+
+        location.reload();
+
+
+    }
+
+
+}
+
+
+
+// ==========================================
+// PREVISÃO FINANCEIRA
+// ==========================================
+
+
+function previsao6Meses(){
+
+
+    let saldo = saldoAtual();
+
+
+    let previsao = saldo * 6;
+
+
+
+    let area=document.getElementById("previsao");
+
+
+    if(area){
+
+        area.innerHTML =
+        "Previsão de saldo em 6 meses: "
+        + dinheiro(previsao);
+
+    }
+
+
+
+}
+
+
+
+// ==========================================
+// CARREGAR APLICATIVO
+// ==========================================
+
+
+window.onload=function(){
+
+
+    atualizarDashboard();
+
+
+    atualizarFaturas();
+
+
+    previsao6Meses();
+
+
+};
+
+
+
+// ==========================================
+// SERVICE WORKER PWA
+// ==========================================
+
+
+if("serviceWorker" in navigator){
+
+
+    navigator.serviceWorker.register("sw.js")
+
+    .then(()=>{
+
+        console.log(
+        "Aplicativo funcionando offline"
+        );
+
+    })
+
+    .catch(()=>{
+
+        console.log(
+        "Erro no Service Worker"
+        );
+
+    });
+
+
+}
